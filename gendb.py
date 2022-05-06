@@ -1,4 +1,3 @@
-from tabnanny import check
 from sqlalchemy import *
 
 engine = create_engine('sqlite:///database.db', echo = True)

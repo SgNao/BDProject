@@ -2,6 +2,10 @@ from flask import *
 from flask_login import *
 from sqlalchemy import *
 
+# export FLASK_APP=Login.py
+# export FLASK_ENV=development
+# flask run
+
 app = Flask(__name__)
 engine = create_engine('sqlite:///database.db', echo=True)
 app.config['SECRET_KEY'] = 'ubersecret'

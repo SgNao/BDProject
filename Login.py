@@ -21,7 +21,7 @@ class User(UserMixin): # costruttore di classe
         #self.active = active
 
 def get_user_by_email(email):
-    conn = engine.connect ()
+    conn = engine.connect()
     rs = conn.execute('SELECT * FROM Utenti WHERE Email = ?', email)
     user = rs.fetchone()
     conn.close()
@@ -61,14 +61,14 @@ def login():
         else :
             return redirect (url_for ('home'))
     else :
-        return redirect ( url_for ('home'))
+        return redirect (url_for ('home'))
 
 @app.route ('/private')
 @login_required # richiede autenticazione
 def private():
-    conn = engine.connect ()
+    conn = engine.connect()
     users = conn.execute('SELECT * FROM Utenti')
-    resp = make_response(render_template("private.html ", users = users))
+    resp = make_response(render_template("private.html", users = users))
     conn.close()
     return resp
 

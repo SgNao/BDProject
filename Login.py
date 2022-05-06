@@ -10,7 +10,8 @@ login_manager.init_app(app)
 
 
 class User(UserMixin): # costruttore di classe
-    def __init__ (self, email, nome, cognome, nick, birthday, Password): #active=True
+    def __init__ (self, id, email, nome, cognome, nick, birthday, Password): #active=True
+        self.id = id
         self.email = email
         self.nome = nome
         self.cognome = cognome
@@ -24,18 +25,16 @@ def get_user_by_email(email):
     rs = conn.execute('SELECT * FROM Utenti WHERE Email = ?', email)
     user = rs.fetchone()
     conn.close()
-    return User(user.Email, user.Nome, user.Cognome, user.Nickname, user.Data_Nascita, user.Password)
+    return User(user.Id_Utenti, user.Email, user.Nome, user.Cognome, user.Nickname, user.Data_Nascita, user.Password)
 
-def get_id(self):
-    return get_user_by_email(self.email)
 
 @login_manager.user_loader
-def load_user (email): #user_id
-    #conn = engine.connect()
-    #rs = conn.execute('SELECT * FROM Users WHERE Email = ?', email) # id , user_id
-    #user = rs.fetchone ()
-    #conn.close()
-    return get_user_by_email(email) #User(user.id, user.email, user.pwd)
+def load_user (user_id):
+    conn = engine.connect()
+    rs = conn.execute('SELECT * FROM Utenti WHERE Id_Utenti = ?', user_id)
+    user = rs.fetchone ()
+    conn.close()
+    return User(user.Id_Utenti, user.Email, user.Nome, user.Cognome, user.Nickname, user.Data_Nascita, user.Password)
 
 @app.route ('/')
 def home ():

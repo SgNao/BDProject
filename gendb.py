@@ -92,6 +92,7 @@ AttPlaylist = Table('AttributoPlaylist', metadata,
 
 metadata.create_all(engine)
 
+"""
 conn = engine.connect()
 ins = "INSERT INTO Utenti VALUES (?,?,?,?,?,?,?)"
 conn.execute(ins, [None,'alice@gmail.com', 'alice', 'A', 'Ali', '2022-05-06', 'love'])
@@ -100,3 +101,4 @@ conn.execute(ins, [None,'bob@gmail.com', 'bob', 'B', 'Bo', '2022-05-06', 'milk']
 user_list = conn.execute("SELECT * FROM Utenti")
 for u in user_list:
     print(u)
+"""

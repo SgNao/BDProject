@@ -30,12 +30,15 @@ for c in data:
                 ins = "INSERT INTO Utenti VALUES (?,?,?,?,?,?,?)"
                 head, *tail = c[1]
                 # None per avere un Integer con autoincremento
+                # Mettere gli autoincrement per primi per poter estrarre i None
                 if (c[1])[0] == "None":
                     conn.execute(ins, [None]+tail)
+                # se non inseriamo None in autoincrement per un qualche motivo, sbloccare ramo else
                 #else:
                     #conn.execute(ins, c[1])
         case _:
             print("Something went wrong")
+        #Inserire tutti gli altri casi e modificare il numero di ?, oltre che execute statement se c'è None
 """
         case "Artisti":
                 ins = "INSERT INTO Artisti VALUES (?,?,?,?,?,?,?)"

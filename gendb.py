@@ -3,6 +3,7 @@ from sqlalchemy import *
 engine = create_engine('sqlite:///database.db', echo = True)
 metadata = MetaData()
 
+# Mettere gli autoincrement per primi per poter estrarre i None nel popbd
 users = Table('Utenti', metadata, 
         Column('Id_Utenti', Integer, primary_key=True, nullable=False, autoincrement=True),
         Column('Email', String, nullable=False),

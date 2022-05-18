@@ -1,5 +1,5 @@
 from flask import *
-from flask_login import *
+from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user, login_remembered
 from sqlalchemy import *
 
 # export FLASK_APP=Login.py
@@ -98,7 +98,7 @@ def tosongs():
 @login_required
 def songs():
     conn = engine.connect()
-    songlist = conn.execute('SELECT Titolo, Durata, Anno, Genere FROM Canzoni')
+    songlist = conn.execute('SELECT * FROM Canzoni')
     resp = make_response(render_template("songs.html", songs=songlist))
     conn.close()
     return resp

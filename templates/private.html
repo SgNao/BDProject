@@ -6,7 +6,7 @@
     Benvenuto nell'area riservata! Sei l'utente {{ current_user.email }}!
     
     {% for user in users %}
-    <p> {{ user.id }} , {{ user.email}} </p>
+    <p> {{ user.Id_Utenti }} , {{ user.Email}} </p>
     {% endfor %}
 
     <form action="/logout" method="GET">

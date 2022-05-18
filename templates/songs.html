@@ -19,13 +19,9 @@
         </tr>
         </thead>
         <tbody>
+        
             {% for song in songlist %}
-                <tr>
-                    <td>{{ song[0] }}</td>
-                    <td>{{ song[1] }}</td>
-                    <td>{{ song[2] }}</td>
-                    <td>{{ song[3] }}</td>
-                </tr>
+                <p> {{ song.Titolo }} , {{ song.Durata}} </p>
             {% endfor %}
         </tbody>
     </table>

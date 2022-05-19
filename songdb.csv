@@ -1,4 +1,4 @@
-Utenti,None,alice@gmail.com,alice,A,Ali,2022-05-06,love,99999999,99999999
-Utenti,None,bob@gmail.com,bob,B,Bo,2202-05-06,milk,99999999,99999999
-Artisti,1,SIcuramente e' Mahmood,2022,99999999,99999999,99999999,99999999,99999999,99999999
+Utenti,1,admin@admin,admin,admin,admin,2022-05-06,admin,,
+Utenti,2,mahmood@gmail.com,Alessandro,Mahmoud,Mahmood,1992-09-12,mah,,
+Artisti,2,Vincitore di Sanremo giovani nel 2018,2022,,,,,,
 Canzoni,None,Brividi,2022,180,Pop,Eurovision,0,Italiano,1

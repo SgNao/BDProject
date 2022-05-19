@@ -12,7 +12,7 @@ users = Table('Utenti', metadata,
         Column('Nickname', String(32), nullable=True, unique=True),
         Column('Data_Nascita', Date, nullable=False),
         Column('Password', String(16), nullable=False),
-        Index('idx_email', 'Email'),
+        Index('idx_email', 'Email')
         )
 
 artist = Table('Artisti', metadata,
@@ -92,14 +92,3 @@ AttPlaylist = Table('AttributoPlaylist', metadata,
         )
 
 metadata.create_all(engine)
-
-"""
-conn = engine.connect()
-ins = "INSERT INTO Utenti VALUES (?,?,?,?,?,?,?)"
-conn.execute(ins, [None,'alice@gmail.com', 'alice', 'A', 'Ali', '2022-05-06', 'love'])
-conn.execute(ins, [None,'bob@gmail.com', 'bob', 'B', 'Bo', '2022-05-06', 'milk'])
-# None per avere un Integer con autoincremento
-user_list = conn.execute("SELECT * FROM Utenti")
-for u in user_list:
-    print(u)
-"""

@@ -32,9 +32,9 @@ print(data)
 #popolo db
 engine = create_engine('sqlite:///database.db', echo = True)
 conn = engine.connect()
-for c in data:
-        head, *tail = c
-        if(sys.version_info[0]<3 or sys.version_info[1]<10):
+if(sys.version_info[0]>=3 or sys.version_info[1]>=10):
+        for c in data:
+                head, *tail = c
                 match head:
                         case "Utenti":
                                 ins = "INSERT INTO Utenti VALUES (?,?,?,?,?,?,?,?,?)"
@@ -102,7 +102,9 @@ for c in data:
                                 conn.execute(ins, tail)
                         case _:
                                 print("Something went wrong")
-        else:
+else:
+        for c in data:
+                head, *tail = c
                 if(head == "Utenti"):
                         ins = "INSERT INTO Utenti VALUES (?,?,?,?,?,?,?,?,?)"
                         # None per avere un Integer con autoincremento. Mettere gli autoincrement per primi per poter estrarre i None
@@ -111,61 +113,61 @@ for c in data:
                                 conn.execute(ins, [None]+tail2)
                         else:
                                 conn.execute(ins, tail)
-                        if(head == "Artisti"):
-                                ins = "INSERT INTO Artisti VALUES (?,?)"
-                                conn.execute(ins, tail)
-                        elif(head == "Playlist"):
-                                ins = "INSERT INTO Playlist VALUES (?,?,?,?,?)"
-                                # None per avere un Integer con autoincremento. Mettere gli autoincrement per primi per poter estrarre i None
-                                head2, *tail2 = tail
-                                if head2 == "None":
-                                        conn.execute(ins, [None]+tail2)
-                                else:
-                                        conn.execute(ins, tail)
-                        elif(head == "Canzoni"):
-                                ins = "INSERT INTO Canzoni VALUES (?,?,?,?,?,?,?)"
-                                # None per avere un Integer con autoincremento. Mettere gli autoincrement per primi per poter estrarre i None
-                                head2, *tail2 = tail
-                                if head2 == "None":
-                                        conn.execute(ins, [None]+tail2)
-                                else:
-                                        conn.execute(ins, tail)
-                        elif(head == "Album"):
-                                ins = "INSERT INTO Album VALUES (?,?,?,?,?,?,?)"
-                                # None per avere un Integer con autoincremento. Mettere gli autoincrement per primi per poter estrarre i None
-                                head2, *tail2 = tail
-                                if head2 == "None":
-                                        conn.execute(ins, [None]+tail2)
-                                else:
-                                        conn.execute(ins, tail)
-                        elif(head == "Statistiche"):
-                                ins = "INSERT INTO Statistiche VALUES (?,?,?,?,?,?,?,?,?)"
-                                # None per avere un Integer con autoincremento. Mettere gli autoincrement per primi per poter estrarre i None
-                                head2, *tail2 = tail
-                                if head2 == "None":
-                                        conn.execute(ins, [None]+tail2)
-                                else:
-                                        conn.execute(ins, tail)
-                        elif(head == "Tag"):
-                                ins = "INSERT INTO Tag VALUES (?)"
-                                conn.execute(ins, tail)
-                        elif(head == "Raccolte"):
-                                ins = "INSERT INTO Raccolte VALUES (?,?)"
-                                conn.execute(ins, tail)
-                        elif(head == "Raccolte"):
-                                ins = "INSERT INTO Contenuto VALUES (?,?)"
-                                conn.execute(ins, tail)
-                        elif(head == "AttributoCanzone"):
-                                ins = "INSERT INTO AttributoCanzone VALUES (?,?)"
-                                conn.execute(ins, tail)
-                        elif(head == "AttributoAlbum"):
-                                ins = "INSERT INTO AttributoAlbum VALUES (?,?)"
-                                conn.execute(ins, tail)
-                        elif(head == "AttributoPlaylist"):
-                                ins = "INSERT INTO AttributoPlaylist VALUES (?,?)"
-                                conn.execute(ins, tail)
-                        elif(head == "StatCanzoni"):
-                                ins = "INSERT INTO StatCanzoni VALUES (?,?)"
-                                conn.execute(ins, tail)
+                elif(head == "Artisti"):
+                        ins = "INSERT INTO Artisti VALUES (?,?)"
+                        conn.execute(ins, tail)
+                elif(head == "Playlist"):
+                        ins = "INSERT INTO Playlist VALUES (?,?,?,?,?)"
+                        # None per avere un Integer con autoincremento. Mettere gli autoincrement per primi per poter estrarre i None
+                        head2, *tail2 = tail
+                        if head2 == "None":
+                                conn.execute(ins, [None]+tail2)
                         else:
-                                print("Something went wrong")
+                                conn.execute(ins, tail)
+                elif(head == "Canzoni"):
+                        ins = "INSERT INTO Canzoni VALUES (?,?,?,?,?,?,?)"
+                        # None per avere un Integer con autoincremento. Mettere gli autoincrement per primi per poter estrarre i None
+                        head2, *tail2 = tail
+                        if head2 == "None":
+                                conn.execute(ins, [None]+tail2)
+                        else:
+                                conn.execute(ins, tail)
+                elif(head == "Album"):
+                        ins = "INSERT INTO Album VALUES (?,?,?,?,?,?,?)"
+                        # None per avere un Integer con autoincremento. Mettere gli autoincrement per primi per poter estrarre i None
+                        head2, *tail2 = tail
+                        if head2 == "None":
+                                conn.execute(ins, [None]+tail2)
+                        else:
+                                conn.execute(ins, tail)
+                elif(head == "Statistiche"):
+                        ins = "INSERT INTO Statistiche VALUES (?,?,?,?,?,?,?,?,?)"
+                        # None per avere un Integer con autoincremento. Mettere gli autoincrement per primi per poter estrarre i None
+                        head2, *tail2 = tail
+                        if head2 == "None":
+                                conn.execute(ins, [None]+tail2)
+                        else:
+                                conn.execute(ins, tail)
+                elif(head == "Tag"):
+                        ins = "INSERT INTO Tag VALUES (?)"
+                        conn.execute(ins, tail)
+                elif(head == "Raccolte"):
+                        ins = "INSERT INTO Raccolte VALUES (?,?)"
+                        conn.execute(ins, tail)
+                elif(head == "Raccolte"):
+                        ins = "INSERT INTO Contenuto VALUES (?,?)"
+                        conn.execute(ins, tail)
+                elif(head == "AttributoCanzone"):
+                        ins = "INSERT INTO AttributoCanzone VALUES (?,?)"
+                        conn.execute(ins, tail)
+                elif(head == "AttributoAlbum"):
+                        ins = "INSERT INTO AttributoAlbum VALUES (?,?)"
+                        conn.execute(ins, tail)
+                elif(head == "AttributoPlaylist"):
+                        ins = "INSERT INTO AttributoPlaylist VALUES (?,?)"
+                        conn.execute(ins, tail)
+                elif(head == "StatCanzoni"):
+                        ins = "INSERT INTO StatCanzoni VALUES (?,?)"
+                        conn.execute(ins, tail)
+                else:
+                        print("Something went wrong else else")

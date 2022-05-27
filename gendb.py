@@ -13,7 +13,7 @@ users = Table('Utenti', metadata,
         Column('Bio', String(144), nullable=True),
         Column('DataNascita', Date, nullable=False),
         Column('Password', String(16), nullable=False),
-        Column('Ruolo', Integer, CheckConstraint('Ruolo>0 && Ruolo <4'), nullable=False),
+        Column('Ruolo', Integer, CheckConstraint('Ruolo>0'),CheckConstraint('Ruolo <4'), nullable=False),
         #Index('idx_email', 'Email')
         )
 
@@ -103,7 +103,7 @@ AttPlaylist = Table('AttributoPlaylist', metadata,
         )
 
 StatCanzoni = Table('StatCanzoni', metadata,
-        Column('IdAnalitica', Integer, ForeignKey('Statistiche.IdStatistica', onupdate='CASCADE', ondelete='CASCADE'), nullable=False),
+        Column('IdStatistica', Integer, ForeignKey('Statistiche.IdStatistica', onupdate='CASCADE', ondelete='CASCADE'), nullable=False),
         Column('IdCanzone', Integer, ForeignKey('Canzoni.IdCanzone', onupdate='CASCADE', ondelete='CASCADE'), nullable=False),
         PrimaryKeyConstraint('IdStatistica', 'IdCanzone', name='StatCanzoniPK')
         )

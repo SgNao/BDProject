@@ -1,12 +1,27 @@
 from flask import *
-from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user, login_remembered
 from sqlalchemy import *
-import os.path
-import sys
+from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user, login_remembered
 from Login import LoginBP
+from User import UserBP
+from Song import SongBP
+
+'''
+export FLASK_APP=main.py
+export FLASK_ENV=development
+flask run
+
+set FLASK_APP=main.py
+set FLASK_ENV=development
+$env:FLASK_APP = "main.py"
+flask run
+'''
 
 app = Flask(__name__)
+
 app.register_blueprint(LoginBP)
+app.register_blueprint(UserBP)
+app.register_blueprint(SongBP)
+
 engine = create_engine('sqlite:///database.db', echo=True)
 app.config['SECRET_KEY'] = 'ubersecret'
 login_manager = LoginManager()
@@ -17,9 +32,8 @@ login_manager.init_app(app)
 def inject_enumerate():
     return dict(enumerate=enumerate, str=str, len=len)
 
-
-class User(UserMixin):  # costruttore di classe
-    def __init__(self, id, email, nome, cognome, nick, birthday, Password):  # active=True
+class User(UserMixin):
+    def __init__(self, id, email, nome, cognome, nick, birthday, Password):
         self.id = id
         self.email = email
         self.nome = nome
@@ -27,8 +41,6 @@ class User(UserMixin):  # costruttore di classe
         self.nick = nick
         self.birthday = birthday
         self.Password = Password
-        # self.active = active
-
 
 def get_user_by_email(email):
     conn = engine.connect()
@@ -46,16 +58,42 @@ def load_user(user_id):
     conn.close()
     return User(user.IdUtenti, user.Email, user.Nome, user.Cognome, user.Nickname, user.DataNascita, user.Password)
 
-'''
-export FLASK_APP=main.py
-export FLASK_ENV=development
-flask run
+@app.route('/')
+def home():
+    # current_user identifica l’utente attuale utente anonimo prima dell’autenticazione
+    latest_songs = [{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                    {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                    {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                    {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                    {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"}] #Implementare query che ritorna le 5 canzoni più recenti
+    most_played_songs = [{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                         {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                         {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                         {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                         {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"}] #Implementare query che ritorna le 5 canzoni più riprodotte
+    all_songs = [{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"}] #Implementare query che ritorna tutte le canzoni
+    if current_user.is_authenticated:
+        user={'Nome':'Donald','Cognome':'Duck', 'Nickname':'Ducky','Ruolo':'UTENTE'}#Implementare query che ritorna l'utente attuale
+        recommended_songs = [{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                             {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                             {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                             {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                             {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"}] #Implementare query che ritorna le canzoni consigliate per l'utente
 
-set FLASK_APP=main.py
-set FLASK_ENV=development
-$env:FLASK_APP = "main.py"
-flask run
-'''
+        return render_template("Index.html", user=user, all_songs=all_songs, latest_songs=latest_songs, most_played_songs=most_played_songs, recommended_songs=recommended_songs)
+    return render_template("Index.html",  all_songs=all_songs, latest_songs=latest_songs, most_played_songs=most_played_songs)
+
 '''
 # Controllo che esista database e, in caso non esistesse, lo genero
 try:

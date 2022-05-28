@@ -130,9 +130,9 @@
         <div id="container1">
             <table id="tabella1">
                 <tr>
-                    <td class="button"><a href={{url_for('LoginBP.home')}} class="text-button">Musica</a></td>
+                    <td class="button"><a href={{url_for('home')}} class="text-button">Musica</a></td>
                     {% if user %}
-                    <td class="button"><a href={{url_for('LoginBP.private')}} class="text-button">{{user.Nickname}}</a></td>
+                    <td class="button"><a href={{url_for('User.private')}} class="text-button">{{user.Nickname}}</a></td>
                     {% endif %}
                     <td id="serch-container">
                         <table id="search-table">

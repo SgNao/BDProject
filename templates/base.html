@@ -1,14 +1,151 @@
+<!DOCTYPE html>
 <html>
-<body>
-    <h1>
-        Progetto di Basi di Dati
-    </h1>
-    Per proseguire bisogna prima autenticarsi. <br>
+    <head>
+        <title>UniveMusic</title>
+        <div id="logo">
+            <table id="tabella0">
+                <tr>
+                    <td id="title-cell"><h1 id="titolo1">Unive</h1><h1 id="titolo2">Music</h1></td>
+                    <td><a href={{url_for('LoginBP.Accedi')}}><table id="tabella00">
+                        <tr>
+                            <td class="link-cell">
+                                <p class="link">Accedi</p>
+                            </td>
+                            <td class="log-cell">
+                                <img src="{{ url_for('static', filename='Img/user.png') }}" id="log-img">
+                            </td>
+                        </tr>
+                    </table></a></td>
+                </tr>
+            </table>
+        </div>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stile.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stile3.css') }}" />
+        <script type="text/javascript">
+            
+            function CancellaRaccolta(){document.getElementById("NewPlaylist2").style.display = "block";}
+            function ConfermaCancellaRaccolta(){document.getElementById("NewPlaylist2").style.display = "none";}
+            function Elimina(){
+                var elements = document.getElementsByClassName("footprint-hastag-2");
+                for(var i = 0, length = elements.length; i < length; i++){
+                    elements[i].style.display ="table-cell";
+                }
+                var elements = document.getElementsByClassName("footprint-hastag");
+                for(var i = 0, length = elements.length; i < length; i++){
+                    elements[i].style.display ="none";
+                }
+                document.getElementById("Del").style.display="none"
+                document.getElementById("Mod").style.display="none"
+                document.getElementById("Elimina_tutto").style.display="table-cell"
+                document.getElementById("Fatto").style.display="table-cell"
+            }
 
-    <form action="/login" method="POST">
-        Email: <input name="user" type="text">
-        Password: <input name="pass" type="password">
-        <input type="submit" value="Login">
-    </form>
-</body>
+            function SalvaModifiche(){
+                var elements = document.getElementsByClassName("footprint-hastag-2");
+                for(var i = 0, length = elements.length; i < length; i++){
+                    elements[i].style.display ="none";
+                }
+                var elements = document.getElementsByClassName("footprint-hastag-3");
+                for(var i = 0, length = elements.length; i < length; i++){
+                    elements[i].style.display ="none";
+                }
+                var elements = document.getElementsByClassName("footprint-hastag");
+                for(var i = 0, length = elements.length; i < length; i++){
+                    elements[i].style.display ="table-cell";
+                }
+                var elements = document.getElementsByClassName("CreazionePlaylist");
+                for(var i = 0, length = elements.length; i < length; i++){
+                    elements[i].style.display ="none";
+                }
+                document.getElementById("Del").style.display="table-cell"
+                document.getElementById("Mod").style.display="table-cell"
+                document.getElementById("Fatto").style.display="none"
+                document.getElementById("Elimina_tutto").style.display="none"
+            }
+
+            function Select(id){
+                document.getElementById(id).style.borderTop ="1px solid white";
+                document.getElementById(id).style.background ="#00323F"
+                document.getElementById(id).style.color ="white"
+            }
+
+            function Deselect(id){
+                document.getElementById(id).style.borderTop ="1px solid darkgrey";
+                document.getElementById(id).style.background ="white"
+                document.getElementById(id).style.color ="#003e4f"
+            }
+
+            function EliminaOver(id){
+                document.getElementById(id).style.border="1px solid red"
+                document.getElementById(id).style.backgroundColor="white"
+                document.getElementById(id).style.color="#b81a19"
+            }
+
+            function EliminaOut(id){
+                document.getElementById(id).style.border="1px solid white"
+                document.getElementById(id).style.backgroundColor="#b81a19"
+                document.getElementById(id).style.color="white"
+            }
+
+            function ShowSettings(){
+                document.getElementById("cell-edit-img").style.display="table-cell"
+                document.getElementById("cell-edit-img-2").style.display="table-cell"
+            }
+
+            function Cancella(id_E, id_C){
+                document.getElementById(id_E).style.display="none"
+                document.getElementById(id_C).style.display="table-cell"
+            }
+
+            function Espandi(){
+                document.getElementById('ESPANDI').style.display="none"
+                var elements = document.getElementsByClassName("altri");
+                for(var i = 0, length = elements.length; i < length; i++){
+                    elements[i].style.display ="table-cell";
+                }
+            }
+
+            function Riduci(){
+                document.getElementById('ESPANDI').style.display="table-cell"
+                var elements = document.getElementsByClassName("altri");
+                for(var i = 0, length = elements.length; i < length; i++){
+                    elements[i].style.display ="none";
+                }
+            }
+
+            function Select_Espandi(ID){
+                document.getElementById(ID).style.backgroundColor="white"
+                document.getElementById(ID).style.color="#00323F"
+                document.getElementById(ID).style.border="1px solid #00323F"
+            }
+
+            function DeSelect_Espandi(ID){
+                document.getElementById(ID).style.backgroundColor="#00323F"
+                document.getElementById(ID).style.color="white"
+                document.getElementById(ID).style.border="1px solid white"
+            }
+        </script>
+    </head>
+    <body>
+        <div id="container1">
+            <table id="tabella1">
+                <tr>
+                    <td class="button"><a href={{url_for('LoginBP.home')}} class="text-button">Musica</a></td>
+                    {% if user %}
+                    <td class="button"><a href={{url_for('LoginBP.private')}} class="text-button">{{user.Nickname}}</a></td>
+                    {% endif %}
+                    <td id="serch-container">
+                        <table id="search-table">
+                            <tr>
+                                <td id="search-cell"><input id="search" type="search" placeholder="Cerca in UniveMusic"></td>
+                                <td id="search-button-cell"><input id="search-button" type="button" value="Cerca"></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        {% block pagebody %}
+        {% endblock %}
+    </body>
 </html>

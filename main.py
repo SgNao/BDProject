@@ -7,9 +7,15 @@ from Login import LoginBP
 
 app = Flask(__name__)
 app.register_blueprint(LoginBP)
+engine = create_engine('sqlite:///database.db', echo=True)
 app.config['SECRET_KEY'] = 'ubersecret'
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+# IMPORTANTE NON TOGLIERE
+@app.context_processor
+def inject_enumerate():
+    return dict(enumerate=enumerate, str=str, len=len)
 
 
 class User(UserMixin):  # costruttore di classe
@@ -29,25 +35,25 @@ def get_user_by_email(email):
     rs = conn.execute('SELECT * FROM Utenti WHERE Email = ?', email)
     user = rs.fetchone()
     conn.close()
-    return User(user.Id_Utenti, user.Email, user.Nome, user.Cognome, user.Nickname, user.Data_Nascita, user.Password)
+    return User(user.IdUtenti, user.Email, user.Nome, user.Cognome, user.Nickname, user.DataNascita, user.Password)
 
 
 @login_manager.user_loader
 def load_user(user_id):
     conn = engine.connect()
-    rs = conn.execute('SELECT * FROM Utenti WHERE Id_Utenti = ?', user_id)
+    rs = conn.execute('SELECT * FROM Utenti WHERE IdUtenti = ?', user_id)
     user = rs.fetchone()
     conn.close()
-    return User(user.Id_Utenti, user.Email, user.Nome, user.Cognome, user.Nickname, user.Data_Nascita, user.Password)
+    return User(user.IdUtenti, user.Email, user.Nome, user.Cognome, user.Nickname, user.DataNascita, user.Password)
 
 '''
-export FLASK_APP=Login.py
+export FLASK_APP=main.py
 export FLASK_ENV=development
 flask run
 
-set FLASK_APP=Login.py
+set FLASK_APP=main.py
 set FLASK_ENV=development
-$env:FLASK_APP = "Login.py"
+$env:FLASK_APP = "main.py"
 flask run
 '''
 '''

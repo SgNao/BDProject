@@ -4,7 +4,7 @@
         <div id="container2"><h2 id="subtitle">ACCEDI</h2></div>
         <div id="container3">
             <table id="log-table"> 
-                <form action="/login" method="POST">
+                <form action={{url_for('LoginBP.login')}} method="POST">
                     <tr>
                         <td id="log-img-cell" colspan="3"><img src="{{ url_for('static', filename='Img/man.png') }}" id="log-img-3"></td>
                     </tr>

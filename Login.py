@@ -20,7 +20,7 @@ LoginBP = Blueprint('LoginBP', __name__)
 engine = create_engine('sqlite:///database.db', echo=True)
 
 # IMPORTANTE NON TOGLIERE
-@app.context_processor
+@LoginBP.context_processor
 def inject_enumerate():
     return dict(enumerate=enumerate, str=str, len=len)
 '''
@@ -48,22 +48,21 @@ def get_user_by_email(email):
     rs = conn.execute('SELECT * FROM Utenti WHERE Email = ?', email)
     user = rs.fetchone()
     conn.close()
-    return User(user.Id_Utenti, user.Email, user.Nome, user.Cognome, user.Nickname, user.Data_Nascita, user.Password)
+    return User(user.IdUtenti, user.Email, user.Nome, user.Cognome, user.Nickname, user.DataNascita, user.Password)
 
 
 @login_manager.user_loader
 def load_user(user_id):
     conn = engine.connect()
-    rs = conn.execute('SELECT * FROM Utenti WHERE Id_Utenti = ?', user_id)
+    rs = conn.execute('SELECT * FROM Utenti WHERE IdUtenti = ?', user_id)
     user = rs.fetchone()
     conn.close()
-    return User(user.Id_Utenti, user.Email, user.Nome, user.Cognome, user.Nickname, user.Data_Nascita, user.Password)
+    return User(user.IdUtenti, user.Email, user.Nome, user.Cognome, user.Nickname, user.DataNascita, user.Password)
 '''
 
 @LoginBP.route('/')
 def home():
     # current_user identifica l’utente attuale utente anonimo prima dell’autenticazione
-
     latest_songs = [{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
                     {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
                     {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
@@ -74,7 +73,6 @@ def home():
                          {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
                          {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
                          {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"}] #Implementare query che ritorna le 5 canzoni più riprodotte
-
     all_songs = [{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
                  {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
                  {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
@@ -87,7 +85,6 @@ def home():
                  {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
                  {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
                  {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"}] #Implementare query che ritorna tutte le canzoni
-
     if current_user.is_authenticated:
         user={'Nome':'Donald','Cognome':'Duck', 'Nickname':'Ducky','Ruolo':'UTENTE'}#Implementare query che ritorna l'utente attuale
         recommended_songs = [{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
@@ -111,17 +108,24 @@ def login():
         real_pwd = rs.fetchone()
         conn.close()
 
+        print('1')
+
         if (real_pwd is not None):
+            print('2')
             if request.form['pass'] == real_pwd['Password']:
+                print('3')
                 user = main.get_user_by_email(request.form['user'])
                 login_user(user)
                 return redirect(url_for('LoginBP.home'))
             else:
-                return redirect('LoginBP.Accedi')
+                print('4')
+                return redirect(url_for('LoginBP.Accedi'))
         else:
-            return redirect('LoginBP.Accedi')#redirect(url_for('LoginBP.home'))
+            print('5')
+            return redirect(url_for('LoginBP.Accedi'))#redirect(url_for('LoginBP.home'))
     else:
-        return redirect('LoginBP.Accedi')#redirect(url_for('LoginBP.home'))
+        print('6')
+        return redirect(url_for('LoginBP.Accedi'))#redirect(url_for('LoginBP.home'))
 
 
 @LoginBP.route('/private')
@@ -152,7 +156,7 @@ def private():
 @login_required  # richiede autenticazione
 def logout():
     logout_user()
-    return redirect(url_for('home'))
+    return redirect(url_for('LoginBP.home'))
 
 
 @LoginBP.route('/tosongs')

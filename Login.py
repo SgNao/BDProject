@@ -15,6 +15,7 @@ set FLASK_ENV=development
 $env:FLASK_APP = "Login.py"
 flask run
 '''
+#FUNZIONAAAAA
 
 LoginBP = Blueprint('LoginBP', __name__)
 engine = create_engine('sqlite:///database.db', echo=True)

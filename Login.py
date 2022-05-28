@@ -4,6 +4,7 @@ from sqlalchemy import *
 import os.path
 import sys
 import main
+from werkzeug.security import *
 
 '''
 export FLASK_APP=Login.py
@@ -113,7 +114,8 @@ def login():
 
         if (real_pwd is not None):
             print('2')
-            if request.form['pass'] == real_pwd['Password']:
+            #if request.form['pass'] == real_pwd['Password']:
+            if (check_password_hash(real_pwd, request.form['pass'])):
                 print('3')
                 user = main.get_user_by_email(request.form['user'])
                 login_user(user)

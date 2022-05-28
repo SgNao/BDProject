@@ -2,6 +2,7 @@ from flask import *
 from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user, login_remembered
 from sqlalchemy import *
 import sys
+from werkzeug.security import *
 
 # funzione per estrarre da file csv
 def load_data(data_file):
@@ -39,6 +40,8 @@ if(sys.version_info[0]>=3 or sys.version_info[1]>=10):
                         case "Utenti":
                                 ins = "INSERT INTO Utenti VALUES (?,?,?,?,?,?,?,?,?)"
                                 # None per avere un Integer con autoincremento. Mettere gli autoincrement per primi per poter estrarre i None
+                                tail[4] = generate_password_hash(tail[4])
+                                print(tail)
                                 head2, *tail2 = tail
                                 if head2 == "None":
                                         conn.execute(ins, [None]+tail2)

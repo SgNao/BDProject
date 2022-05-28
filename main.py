@@ -7,6 +7,38 @@ from Login import LoginBP
 
 app = Flask(__name__)
 app.register_blueprint(LoginBP)
+app.config['SECRET_KEY'] = 'ubersecret'
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+
+class User(UserMixin):  # costruttore di classe
+    def __init__(self, id, email, nome, cognome, nick, birthday, Password):  # active=True
+        self.id = id
+        self.email = email
+        self.nome = nome
+        self.cognome = cognome
+        self.nick = nick
+        self.birthday = birthday
+        self.Password = Password
+        # self.active = active
+
+
+def get_user_by_email(email):
+    conn = engine.connect()
+    rs = conn.execute('SELECT * FROM Utenti WHERE Email = ?', email)
+    user = rs.fetchone()
+    conn.close()
+    return User(user.Id_Utenti, user.Email, user.Nome, user.Cognome, user.Nickname, user.Data_Nascita, user.Password)
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    conn = engine.connect()
+    rs = conn.execute('SELECT * FROM Utenti WHERE Id_Utenti = ?', user_id)
+    user = rs.fetchone()
+    conn.close()
+    return User(user.Id_Utenti, user.Email, user.Nome, user.Cognome, user.Nickname, user.Data_Nascita, user.Password)
 
 '''
 export FLASK_APP=Login.py

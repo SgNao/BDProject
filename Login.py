@@ -3,6 +3,7 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, cur
 from sqlalchemy import *
 import os.path
 import sys
+import main
 
 '''
 export FLASK_APP=Login.py
@@ -15,7 +16,9 @@ $env:FLASK_APP = "Login.py"
 flask run
 '''
 
-#LoginBP = Blueprint('LoginBP', __name__)
+LoginBP = Blueprint('LoginBP', __name__)
+engine = create_engine('sqlite:///database.db', echo=True)
+'''
 app = Flask(__name__)
 engine = create_engine('sqlite:///database.db', echo=True)
 app.config['SECRET_KEY'] = 'ubersecret'
@@ -50,9 +53,9 @@ def load_user(user_id):
     user = rs.fetchone()
     conn.close()
     return User(user.Id_Utenti, user.Email, user.Nome, user.Cognome, user.Nickname, user.Data_Nascita, user.Password)
+'''
 
-
-@app.route('/')
+@LoginBP.route('/')
 def home():
     # current_user identifica l’utente attuale utente anonimo prima dell’autenticazione
     if current_user.is_authenticated:
@@ -60,7 +63,7 @@ def home():
     return render_template("base.html")
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@LoginBP.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         conn = engine.connect()
@@ -70,18 +73,18 @@ def login():
 
         if (real_pwd is not None):
             if request.form['pass'] == real_pwd['Password']:
-                user = get_user_by_email(request.form['user'])
+                user = main.get_user_by_email(request.form['user'])
                 login_user(user)
-                return redirect(url_for('private'))
+                return redirect(url_for('LoginBP.private'))
             else:
-                return redirect(url_for('home'))
+                return redirect('LoginBP/')
         else:
-            return redirect(url_for('home'))
+            return redirect('LoginBP/')#redirect(url_for('LoginBP.home'))
     else:
-        return redirect(url_for('home'))
+        return redirect('LoginBP/')#redirect(url_for('LoginBP.home'))
 
 
-@app.route('/private')
+@LoginBP.route('/private')
 @login_required  # richiede autenticazione
 def private():
     conn = engine.connect()
@@ -91,20 +94,20 @@ def private():
     return resp
 
 
-@app.route('/logout')
+@LoginBP.route('/logout')
 @login_required  # richiede autenticazione
 def logout():
     logout_user()
     return redirect(url_for('home'))
 
 
-@app.route('/tosongs')
+@LoginBP.route('/tosongs')
 @login_required
 def tosongs():
     return redirect(url_for('songs'))
 
 
-@app.route('/songs')
+@LoginBP.route('/songs')
 @login_required
 def songs():
     conn = engine.connect()

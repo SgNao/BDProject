@@ -33,7 +33,7 @@ def login():
                 print('3')
                 user = Main.get_user_by_email(request.form['user'])
                 login_user(user)
-                return redirect(url_for('Main.home'))
+                return redirect(url_for('home'))
             else:
                 print('4')
                 return redirect(url_for('LoginBP.Accedi'))

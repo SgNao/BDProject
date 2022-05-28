@@ -18,6 +18,11 @@ flask run
 
 LoginBP = Blueprint('LoginBP', __name__)
 engine = create_engine('sqlite:///database.db', echo=True)
+
+# IMPORTANTE NON TOGLIERE
+@app.context_processor
+def inject_enumerate():
+    return dict(enumerate=enumerate, str=str, len=len)
 '''
 app = Flask(__name__)
 engine = create_engine('sqlite:///database.db', echo=True)
@@ -58,10 +63,45 @@ def load_user(user_id):
 @LoginBP.route('/')
 def home():
     # current_user identifica l’utente attuale utente anonimo prima dell’autenticazione
-    if current_user.is_authenticated:
-        return redirect(url_for('private'))
-    return render_template("base.html")
 
+    latest_songs = [{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                    {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                    {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                    {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                    {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"}] #Implementare query che ritorna le 5 canzoni più recenti
+    most_played_songs = [{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                         {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                         {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                         {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                         {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"}] #Implementare query che ritorna le 5 canzoni più riprodotte
+
+    all_songs = [{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"}] #Implementare query che ritorna tutte le canzoni
+
+    if current_user.is_authenticated:
+        user={'Nome':'Donald','Cognome':'Duck', 'Nickname':'Ducky','Ruolo':'UTENTE'}#Implementare query che ritorna l'utente attuale
+        recommended_songs = [{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                             {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                             {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                             {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                             {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"}] #Implementare query che ritorna le canzoni consigliate per l'utente
+
+        return render_template("Index.html", user=user, all_songs=all_songs, latest_songs=latest_songs, most_played_songs=most_played_songs, recommended_songs=recommended_songs)
+    return render_template("Index.html",  all_songs=all_songs, latest_songs=latest_songs, most_played_songs=most_played_songs)
+
+@LoginBP.route('/Accedi')
+def Accedi():
+    return render_template("Accedi.html")
 
 @LoginBP.route('/login', methods=['GET', 'POST'])
 def login():
@@ -75,21 +115,35 @@ def login():
             if request.form['pass'] == real_pwd['Password']:
                 user = main.get_user_by_email(request.form['user'])
                 login_user(user)
-                return redirect(url_for('LoginBP.private'))
+                return redirect(url_for('LoginBP.home'))
             else:
-                return redirect('LoginBP/')
+                return redirect('LoginBP.Accedi')
         else:
-            return redirect('LoginBP/')#redirect(url_for('LoginBP.home'))
+            return redirect('LoginBP.Accedi')#redirect(url_for('LoginBP.home'))
     else:
-        return redirect('LoginBP/')#redirect(url_for('LoginBP.home'))
+        return redirect('LoginBP.Accedi')#redirect(url_for('LoginBP.home'))
 
 
 @LoginBP.route('/private')
 @login_required  # richiede autenticazione
 def private():
     conn = engine.connect()
-    users = conn.execute('SELECT * FROM Utenti')
-    resp = make_response(render_template("private.html", users=users))
+    #users = conn.execute("SELECT * FROM Utenti")
+    user={'Nome':'Donald','Cognome':'Duck', 'Nickname':'Ducky','Ruolo':'UTENTE'}#Implementare query che ritorna l'utente attuale
+    playlists=[{'Nome':'Giro a Paperopoli','Descrizione':'Le migliori canzoni paperopolesi'}]#Implementare query che ricava le playlist dell'utente
+    playlist_songs = [{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"}] #E le relative canzoni
+    resp = make_response(render_template("UserPage.html", user=user, playlists=playlists, playlist_songs=playlist_songs))
     conn.close()
     return resp
 

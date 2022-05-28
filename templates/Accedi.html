@@ -1,0 +1,25 @@
+{% extends "Base.html" %}
+
+{% block pagebody %}
+        <div id="container2"><h2 id="subtitle">ACCEDI</h2></div>
+        <div id="container3">
+            <table id="log-table"> 
+                <form action="/login" method="POST">
+                    <tr>
+                        <td id="log-img-cell" colspan="3"><img src="{{ url_for('static', filename='Img/man.png') }}" id="log-img-3"></td>
+                    </tr>
+                    <tr>
+                        <td class="input-cell-3" colspan="3"><input name="user" type="text" placeholder="Email" class="input-3"></td>
+                    </tr>
+                    <tr>
+                        <td class="input-cell-3" colspan="3"><input name="pass" type="password" placeholder="Password" class="input-3"></td>
+                    </tr>
+                    <tr>
+                        <td id="submit-cell-3" colspan="3">
+                            <input type="submit" id="button-3" value="Accedi"> 
+                        </td>
+                    </tr>
+                </form>
+            </table>
+        </div>
+{% endblock%}

@@ -1,0 +1,177 @@
+{% extends "Base.html" %}
+
+{% block pagebody %}
+        <div id="container2">
+            <h2 id="subtitle">{{user.Nickname}}</h2>
+        </div>
+        <div id="NewPlaylist2">
+            <table id="Playlist-table" style="border-collapse: collapse;">
+                <tr>
+                    <td colspan="2" style="text-align: center;background-color: #00323F;"><h2 style="margin-top:4%; margin-bottom: 3%; color:white">ELIMINA PLAYLIST</h2></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center;"><h5>Sei sicuro di voler cancellare la raccolta Giorno al mare ?</h5></td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;width: 50%;"><input id="button-4-bis" style="margin-bottom: 10%;" type="submit" value="Annulla" onclick="ConfermaCancellaRaccolta()"></td>
+                    <td style="text-align: left;width: 50%;"><input id="button-4-bis"  style="margin-bottom: 10%;" type="submit" value="Elimina" onclick="ConfermaCancellaRaccolta()"></td>
+                </tr>
+            </table>
+        </div>
+        <div id="container3">
+            <table class="tabella3">
+                <tr><td colspan="5">
+                    <table style="width: 100%;margin-bottom: 1%;margin-top: 1%;border-collapse: collapse;"><tr>
+                        <td style="width: 22%;text-align: left;margin: 0%;border-bottom: 1px solid darkgray;"><h1 id="Playlist">Le tue raccolte</h1></td>
+                        <td style="width: 10%;vertical-align: bottom;border-bottom: 1px solid darkgray;text-align: left;">
+                            <a href="NuovoRaccolta.html"><h5 id="NuovaRaccolta">Nuova raccolta</h5></a>
+                        </td>
+                        <td style="width: 9%;vertical-align: bottom;border-bottom: 1px solid darkgray;text-align: left;">
+                           <a href="DatiPersonali.html"><h5 id="NuovaRaccolta">Dati Personali</h5></a>
+                        </td>
+                        <td style="width: 6%;vertical-align: bottom;border-bottom: 1px solid darkgray;text-align: left;">
+                            <a href="Produzioni.html"><h5 id="NuovaRaccolta">Produzioni</h5></a>
+                        </td>
+                        <td style="width: 48%;border-bottom: 1px solid darkgray;"></td>
+                    </tr></table>
+                </td></tr>
+                {% for i,playlist in enumerate(playlists) %}
+                <tr>
+                    <td colspan="5">
+                        <table style="width: 100%;font-family: Helvetica;border-collapse: collapse;">
+                            <tr>
+                                <td>
+                                    <table style="width:100%">
+                                        <tr>
+                                            <td style="width: 15%;"><h3 class="text-section-2">{{playlist.Nome}}</h3></td>
+                                            <td style="width: 58%;"></td>
+                                            <td id="Mod">
+                                                <a id="Mod_link" href="ModificaRaccolta.html"><h5 style="margin: 0%;">Modifica</h5></a>
+                                            </td>
+                                            <td id="Del" onmousedown="Elimina()"><h5 style="margin: 0%;">Elimina</h5></td>
+                                            <td id="Elimina_tutto" onmousedown="CancellaRaccolta()"><h5 style="margin: 0%;">Elimina Raccolta</h5></td>
+                                            <td id="Fatto" onmousedown="SalvaModifiche()"><h5 style="margin: 0%;">Fatto</h5></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <table style="width: 100%;">
+                                        <tr>
+                                            <td style="width: 92%;text-align: left;"><p style="color: #2F2F2F;margin-bottom:1%;margin-top: 0%;">{{playlist.Descrizione}}</p></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                {% for j,song in enumerate(playlist_songs) %}
+                {% if j!=0 and j%5== 0 %}
+                </tr>
+                {% endif %}
+                {% if j%5 == 0 %}
+                <tr>
+                {% endif %}
+                    {% if j >= 4 %}
+                    <td style="display: none;" class="altri">
+                    {% else %}
+                    <td>
+                    {% endif %}
+                        <table class="tabella4" onmouseover="Select('S_{{j}}ID_{{i}}')" onmouseout="Deselect('S_{{j}}ID_{{i}}')">
+                            <tr><td class="img-cell" colspan="2"><div class="img"></div></td></tr>
+                            <tr><td class="manual-title-cell" colspan="2"><a href="Song.html"><h3 class="manual-title">{{song.Titolo}}</h3></a></td></tr>
+                            <tr>
+                                <td class="footprint">
+                                    <h4 class="footprint-text"> Guns N' Roses </h4> 
+                                </td>
+                                <td class="footprint-anno">
+                                    <h5 class="footprint-text-anno"> {{song.Anno}} </h5>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="footprint-hastag" colspan="2" id="S_{{j}}ID_{{i}}">
+                                    <h5 class="footprint-text-hastag"> {{song.Tag}} </h5>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" onmousedown="Cancella('S_{{j}}E_{{i}}', 'S_{{j}}C_{{i}}')" onmouseover="EliminaOver('S_{{j}}E_{{i}}')" onmouseout="EliminaOut('S_{{j}}E_{{i}}')" class="footprint-hastag-2" id="S_{{j}}E_{{i}}">
+                                    <h5 class="footprint-text-hastag">Elimina</h5>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="footprint-hastag-3" id="S_{{j}}C_{{i}}">
+                                    <h5 class="footprint-text-hastag">Cancellata</h5>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    {% if j==4 %}
+                    <td id="ESPANDI">
+                        <table class="tabella4">
+                            <tr><td class="manual-title-cell" colspan="2"><h3 class="manual-title" style="color: white;">-</h3></td></tr>
+                            <tr><td class="img-cell" colspan="2"><img id="img2" src="{{ url_for('static', filename='Img/down-arrow.png') }}"></td></tr>
+                            <tr>
+                                <td class="footprint">
+                                    <h4 class="footprint-text" style="color: white;"> - </h4>
+                                </td>
+                                <td class="footprint-anno">
+                                    <h5 class="footprint-text-anno" style="color: white;"> - </h5>
+                                </td>
+                            </tr><tr>
+                                <td colspan="2" style="background-color: #00323F; color: white;" class="footprint-hastag-bis" id="ESPANDI-BUTTON" 
+                                onmousedown="Espandi()" onmouseover="Select_Espandi('ESPANDI-BUTTON')" onmouseout="DeSelect_Espandi('ESPANDI-BUTTON')">
+                                    <h5 class="footprint-text-hastag"> ESPANDI </h5>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" id="footprint-hastag-2-bis">
+                                    <h5 class="footprint-text-hastag">Elimina</h5>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="footprint-hastag-3">
+                                    <h5 class="footprint-text-hastag">Cancellata</h5>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    {% endif %}
+                    {% if j == len(playlist_songs)-1 %}
+                    <td style="display: none;" class="altri">
+                        <table class="tabella4">
+                            <tr><td class="manual-title-cell" colspan="2"><h3 class="manual-title" style="color: white;">-</h3></td></tr>
+                            <tr><td class="img-cell" colspan="2"><img id="img2" src="{{ url_for('static', filename='Img/up-arrow.png') }}"></td></tr>
+                            <tr>
+                                <td class="footprint">
+                                    <h4 class="footprint-text" style="color: white;"> - </h4>
+                                </td>
+                                <td class="footprint-anno">
+                                    <h5 class="footprint-text-anno" style="color: white;"> - </h5>
+                                </td>
+                            </tr><tr>
+                                <td colspan="2" style="background-color: #00323F; color: white;" class="footprint-hastag-bis" id="RIDUCI-BUTTON" 
+                                onmousedown="Riduci()" onmouseover="Select_Espandi('RIDUCI-BUTTON')" onmouseout="DeSelect_Espandi('RIDUCI-BUTTON')">
+                                    <h5 class="footprint-text-hastag"> RIDUCI </h5>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" id="footprint-hastag-2-bis">
+                                    <h5 class="footprint-text-hastag">Elimina</h5>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="footprint-hastag-3">
+                                    <h5 class="footprint-text-hastag">Cancellata</h5>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    {% endif %}
+                {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+{% endblock%}

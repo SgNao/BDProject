@@ -1,0 +1,161 @@
+{% extends "Base.html" %}
+
+{% block pagebody %}
+        <div id="container2">
+            <h2 id="subtitle">MUSICA</h2>
+        </div>
+        <div id="container3">
+            <table class="tabella3">
+                {% if user %}
+                <tr><td colspan="5"><h2 class="text-section">Consigliate</h2></td></tr>
+                <tr>
+                    {% for i,song in enumerate(latest_songs) %}
+                    <td>
+                        <table class="tabella4" onmouseover="Select('S1_ID_{{i}}')" onmouseout="Deselect('S1_ID_{{i}}')">
+                            <tr><td class="img-cell" colspan="2"><div class="img"></div></td></tr>
+                            <tr><td class="manual-title-cell" colspan="2"><a href="Song.html"><h3 class="manual-title">{{song.Titolo}}</h3></a></td></tr>
+                            <tr>
+                                <td class="footprint">
+                                    <h4 class="footprint-text"> Guns N' Roses </h4> 
+                                </td>
+                                <td class="footprint-anno">
+                                    <h5 class="footprint-text-anno"> {{song.Anno}} </h5>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="footprint-hastag" colspan="2" id="S1_ID_{{i}}">
+                                    <h5 class="footprint-text-hastag"> {{song.Tag}} </h5>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    {% endfor %}
+                </tr>
+                {% endif %}
+                <tr><td colspan="5"><h2 class="text-section">Novità</h2></td></tr>
+                <tr>
+                    {% for i,song in enumerate(latest_songs) %}
+                    <td>
+                        <table class="tabella4" onmouseover="Select('S2_ID_{{i}}')" onmouseout="Deselect('S2_ID_{{i}}')">
+                            <tr><td class="img-cell" colspan="2"><div class="img"></div></td></tr>
+                            <tr><td class="manual-title-cell" colspan="2"><a href="Song.html"><h3 class="manual-title">{{song.Titolo}}</h3></a></td></tr>
+                            <tr>
+                                <td class="footprint">
+                                    <h4 class="footprint-text"> Guns N' Roses </h4> 
+                                </td>
+                                <td class="footprint-anno">
+                                    <h5 class="footprint-text-anno"> {{song.Anno}} </h5>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="footprint-hastag" colspan="2" id="S2_ID_{{i}}">
+                                    <h5 class="footprint-text-hastag"> {{song.Tag}} </h5>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    {% endfor %}
+                </tr>
+                <tr><td colspan="5"><h2 class="text-section">Più riprodotte</h2></td></tr>
+                <tr>
+                    {% for i,song in enumerate(most_played_songs) %}
+                    <td>
+                        <table class="tabella4" onmouseover="Select('S3_ID_{{i}}')" onmouseout="Deselect('S3_ID_{{i}}')">
+                            <tr><td class="img-cell" colspan="2"><div class="img"></div></td></tr>
+                            <tr><td class="manual-title-cell" colspan="2"><a href="Song.html"><h3 class="manual-title">{{song.Titolo}}</h3></a></td></tr>
+                            <tr>
+                                <td class="footprint">
+                                    <h4 class="footprint-text"> Guns N' Roses </h4> 
+                                </td>
+                                <td class="footprint-anno">
+                                    <h5 class="footprint-text-anno"> {{song.Anno}} </h5>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="footprint-hastag" colspan="2" id="S3_ID_{{i}}">
+                                    <h5 class="footprint-text-hastag"> {{song.Tag}} </h5>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    {% endfor %}
+                </tr>
+                <tr><td colspan="5"><h2 class="text-section">Tutta la musica</h2></td></tr>
+                {% for i,song in enumerate(all_songs) %}
+                {% if i!=0 and i%5== 0 %}
+                </tr>
+                {% endif %}
+                {% if i%5 == 0 %}
+                <tr>
+                {% endif %}
+                    {% if i >= 4 %}
+                    <td style="display: none;" class="altri">
+                    {% else %}
+                    <td>
+                    {% endif %}
+                        <table class="tabella4" onmouseover="Select('S4_ID_{{i}}')" onmouseout="Deselect('S4_ID_{{i}}')">
+                            <tr><td class="img-cell" colspan="2"><div class="img"></div></td></tr>
+                            <tr><td class="manual-title-cell" colspan="2"><a href="Song.html"><h3 class="manual-title">{{song.Titolo}}</h3></a></td></tr>
+                            <tr>
+                                <td class="footprint">
+                                    <h4 class="footprint-text"> Guns N' Roses </h4> 
+                                </td>
+                                <td class="footprint-anno">
+                                        <h5 class="footprint-text-anno"> {{song.Anno}} </h5>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="footprint-hastag" colspan="2" id="S4_ID_{{i}}">
+                                    <h5 class="footprint-text-hastag"> {{song.Tag}} </h5>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    {% if i==4 %}
+                    <td id="ESPANDI">
+                        <table class="tabella4">
+                            <tr><td class="manual-title-cell" colspan="2"><h3 class="manual-title" style="color: white;">-</h3></td></tr>
+                            <tr><td class="img-cell" colspan="2"><img id="img2" src="{{ url_for('static', filename='Img/down-arrow.png') }}"></td></tr>
+                            <tr>
+                                <td class="footprint">
+                                    <h4 class="footprint-text" style="color: white;"> - </h4>
+                                </td>
+                                <td class="footprint-anno">
+                                    <h5 class="footprint-text-anno" style="color: white;"> - </h5>
+                                </td>
+                            </tr><tr>
+                                <td colspan="2" style="background-color: #00323F; color: white;" class="footprint-hastag-bis" id="ESPANDI-BUTTON" 
+                                onmousedown="Espandi()" onmouseover="Select_Espandi('ESPANDI-BUTTON')" onmouseout="DeSelect_Espandi('ESPANDI-BUTTON')">
+                                    <h5 class="footprint-text-hastag"> ESPANDI </h5>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    {% endif %}
+                    {% if i == len(all_songs)-1 %}
+                    <td style="display: none;" class="altri">
+                        <table class="tabella4">
+                            <tr><td class="manual-title-cell" colspan="2"><h3 class="manual-title" style="color: white;">-</h3></td></tr>
+                            <tr><td class="img-cell" colspan="2"><img id="img2" src="{{ url_for('static', filename='Img/up-arrow.png') }}"></td></tr>
+                            <tr>
+                                <td class="footprint">
+                                    <h4 class="footprint-text" style="color: white;"> - </h4>
+                                </td>
+                                <td class="footprint-anno">
+                                    <h5 class="footprint-text-anno" style="color: white;"> - </h5>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="background-color: #00323F; color: white;" class="footprint-hastag-bis" id="RIDUCI-BUTTON" 
+                                onmousedown="Riduci()" onmouseover="Select_Espandi('RIDUCI-BUTTON')" onmouseout="DeSelect_Espandi('RIDUCI-BUTTON')">
+                                    <h5 class="footprint-text-hastag"> RIDUCI </h5>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    {% endif %}
+                {% endfor %}
+                </tr>
+            </table>
+        </div>
+{% endblock%}

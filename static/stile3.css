@@ -1,0 +1,104 @@
+#log-table{
+    width: 30%;
+    border-collapse: collapse;
+    margin-top: 2%;
+    margin-left: 35%;
+    border: 1px solid lightgrey;
+}
+#log-img-cell{
+    text-align: center;
+}
+#log-img-3{
+    margin-top: 2%;
+    width: 30%;
+}
+.input-cell-3{
+    padding: 3%;
+}
+.input-cell-3-bis{
+    width: 50%;
+    padding: 3%;
+}
+.input-3{
+    width: 90%;
+    margin-left: 4%;
+    height: 30px;
+    border: 2px solid lightgrey;
+    font-size: medium;
+    color: #2F2F2F;
+}
+.input-3:hover{
+    border: 2px solid darkgrey;
+}
+#submit-cell-3{
+    text-align: center;
+    padding: 3%;
+}
+#button-3{
+    width: 30%;
+    margin-right: 5%;
+    font-family: Helvetica;
+    font-size: large;
+    font-weight: bold;
+    border: 2px solid #006062;
+    background-color: #006062;
+    color: white;
+    padding: 3%;
+    margin-bottom: 2%;
+}
+#button-3:hover{
+    background-color:white;
+    color: #006062;
+}
+#pwd-table{
+    margin-left: 10%;
+    width: 80%;
+}
+.pwd-cell-3{
+    width: 40%;
+    text-align: left;
+}
+.pwd-3{
+    font-weight: normal;
+    font-family: Helvetica;
+    color: #2F2F2F;
+}
+#check-cell{
+    width: 5%;
+    text-align: left;
+}
+#check-3{
+    margin-bottom: 30%;
+}
+.text-cell-3{
+    width: 55%;
+    text-align: right;
+}
+.text-3{
+    font-weight: normal;
+    font-family: Helvetica;
+    color: #2F2F2F;
+}
+#tabella00-3{ 
+    margin-left: 55%;
+    width: 45%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    color: #008250;
+}
+#tabella00-3:hover{
+    color: white;
+}
+#log-card-img{
+    width: 100%;
+    margin-top: 10%;
+}
+.log-cell-3{
+    width: 30%;
+    text-align: right;
+    padding: 7%;
+    padding-right: 0%;
+}
+#AlbumColor{
+    border-radius: 50%;
+}

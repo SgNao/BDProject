@@ -66,34 +66,60 @@ def load_user(user_id):
     return User(user.IdUtenti, user.Email, user.Nome, user.Cognome, user.Nickname, user.DataNascita, user.Password)
 
 
+def latest_s():
+    conn = engine.connect()
+    rs = conn.execute('SELECT Titolo, Rilascio, Lingua FROM Canzoni ORDER BY Rilascio DESC LIMIT 5')
+    latest_songs = rs.fetchone()
+    conn.close()
+    return latest_songs
+
+
+def all_s():
+    conn = engine.connect()
+    rs = conn.execute('SELECT Titolo, Rilascio, Lingua FROM Canzoni')
+    all_songs = rs.fetchone()
+    conn.close()
+    return all_songs
+
+
 @app.route('/')
 def home():
     # current_user identifica l’utente attuale utente anonimo prima dell’autenticazione
-    latest_songs = [{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                    {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                    {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                    {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                    {'Titolo': "Sweet Child O' Mine", 'Anno': 1987,
-                     'Tag': "#Rock and Roll"}]  # Implementare query che ritorna le 5 canzoni più recenti
+    # latest_songs = [{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+    #                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+    #                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+    #                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+    #                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987,
+    #                  'Tag': "#Rock and Roll"}]  # Implementare query che ritorna le 5 canzoni più recenti
+
+    latest_songs = latest_s()
+
     most_played_songs = [{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
                          {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
                          {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
                          {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
                          {'Titolo': "Sweet Child O' Mine", 'Anno': 1987,
                           'Tag': "#Rock and Roll"}]  # Implementare query che ritorna le 5 canzoni più riprodotte
-    all_songs = [{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987,
-                  'Tag': "#Rock and Roll"}]  # Implementare query che ritorna tutte le canzoni
+
+
+
+
+    # all_songs = [{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+    #              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+    #              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+    #              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+    #              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+    #              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+    #              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+    #              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+    #              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+    #              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+    #              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+    #              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987,
+    #               'Tag': "#Rock and Roll"}]  # Implementare query che ritorna tutte le canzoni
+
+    all_songs = all_s()
+
     if current_user.is_authenticated:
         user = {'Nome': 'Donald', 'Cognome': 'Duck', 'Nickname': 'Ducky',
                 'Ruolo': 'UTENTE'}  # Implementare query che ritorna l'utente attuale
@@ -104,10 +130,12 @@ def home():
                              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987,
                               'Tag': "#Rock and Roll"}]  # Implementare query che ritorna le canzoni consigliate per l'utente
 
+
         return render_template("Index.html", user=user, all_songs=all_songs, latest_songs=latest_songs,
                                most_played_songs=most_played_songs, recommended_songs=recommended_songs)
     return render_template("Index.html", all_songs=all_songs, latest_songs=latest_songs,
                            most_played_songs=most_played_songs)
+
 
 
 '''

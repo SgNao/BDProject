@@ -12,7 +12,7 @@ users = Table('Utenti', metadata,
         Column('Nickname', String(16), nullable=True, unique=True),
         Column('Bio', String(144), nullable=True),
         Column('DataNascita', Date, nullable=False),
-        Column('Password', String(160), nullable=False),
+        Column('Password', String, nullable=False),
         Column('Ruolo', Integer, CheckConstraint('Ruolo>0'),CheckConstraint('Ruolo <4'), nullable=False),
         #Index('idx_email', 'Email')
         )

@@ -2,8 +2,9 @@ from flask import *
 from sqlalchemy import *
 from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user, login_remembered
 from Login import LoginBP
-from User import UserBP
-from Song import SongBP
+from user import UserBP
+from song import SongBP
+from werkzeug.security import check_password_hash, generate_password_hash
 
 '''
 export FLASK_APP=main.py
@@ -27,10 +28,12 @@ app.config['SECRET_KEY'] = 'ubersecret'
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+
 # IMPORTANTE NON TOGLIERE
 @app.context_processor
 def inject_enumerate():
     return dict(enumerate=enumerate, str=str, len=len)
+
 
 class User(UserMixin):
     def __init__(self, id, email, nome, cognome, nick, birthday, Password):
@@ -41,6 +44,10 @@ class User(UserMixin):
         self.nick = nick
         self.birthday = birthday
         self.Password = Password
+
+    def verify_password(self, pwd):
+        return check_password_hash(self.Password, pwd)
+
 
 def get_user_by_email(email):
     conn = engine.connect()
@@ -58,6 +65,7 @@ def load_user(user_id):
     conn.close()
     return User(user.IdUtenti, user.Email, user.Nome, user.Cognome, user.Nickname, user.DataNascita, user.Password)
 
+
 @app.route('/')
 def home():
     # current_user identifica l’utente attuale utente anonimo prima dell’autenticazione
@@ -65,12 +73,14 @@ def home():
                     {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
                     {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
                     {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                    {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"}] #Implementare query che ritorna le 5 canzoni più recenti
+                    {'Titolo': "Sweet Child O' Mine", 'Anno': 1987,
+                     'Tag': "#Rock and Roll"}]  # Implementare query che ritorna le 5 canzoni più recenti
     most_played_songs = [{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
                          {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
                          {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
                          {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                         {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"}] #Implementare query che ritorna le 5 canzoni più riprodotte
+                         {'Titolo': "Sweet Child O' Mine", 'Anno': 1987,
+                          'Tag': "#Rock and Roll"}]  # Implementare query che ritorna le 5 canzoni più riprodotte
     all_songs = [{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
                  {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
                  {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
@@ -82,17 +92,23 @@ def home():
                  {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
                  {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
                  {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"}] #Implementare query che ritorna tutte le canzoni
+                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987,
+                  'Tag': "#Rock and Roll"}]  # Implementare query che ritorna tutte le canzoni
     if current_user.is_authenticated:
-        user={'Nome':'Donald','Cognome':'Duck', 'Nickname':'Ducky','Ruolo':'UTENTE'}#Implementare query che ritorna l'utente attuale
+        user = {'Nome': 'Donald', 'Cognome': 'Duck', 'Nickname': 'Ducky',
+                'Ruolo': 'UTENTE'}  # Implementare query che ritorna l'utente attuale
         recommended_songs = [{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
                              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
                              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
                              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                             {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"}] #Implementare query che ritorna le canzoni consigliate per l'utente
+                             {'Titolo': "Sweet Child O' Mine", 'Anno': 1987,
+                              'Tag': "#Rock and Roll"}]  # Implementare query che ritorna le canzoni consigliate per l'utente
 
-        return render_template("Index.html", user=user, all_songs=all_songs, latest_songs=latest_songs, most_played_songs=most_played_songs, recommended_songs=recommended_songs)
-    return render_template("Index.html",  all_songs=all_songs, latest_songs=latest_songs, most_played_songs=most_played_songs)
+        return render_template("Index.html", user=user, all_songs=all_songs, latest_songs=latest_songs,
+                               most_played_songs=most_played_songs, recommended_songs=recommended_songs)
+    return render_template("Index.html", all_songs=all_songs, latest_songs=latest_songs,
+                           most_played_songs=most_played_songs)
+
 
 '''
 # Controllo che esista database e, in caso non esistesse, lo genero

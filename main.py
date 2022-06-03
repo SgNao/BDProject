@@ -82,6 +82,16 @@ def all_s():
     return all_songs
 
 
+def most_played():
+    conn = engine.connect()
+    rs = conn.execute('SELECT C.* FROM StatCanzoni S NATURAL JOIN Canzoni C NATURAL JOIN '
+                      'STATISTICHE ST WHERE IdStatistica IN (SELECT * FROM Statistiche '
+                      'ORDER BY NRiproduzioniTotali DESC LIMIT 5)')
+    most_p = rs.fetchone()
+    conn.close()
+    return most_p
+
+
 @app.route('/')
 def home():
     # current_user identifica l’utente attuale utente anonimo prima dell’autenticazione
@@ -94,15 +104,14 @@ def home():
 
     latest_songs = latest_s()
 
-    most_played_songs = [{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                         {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                         {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                         {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                         {'Titolo': "Sweet Child O' Mine", 'Anno': 1987,
-                          'Tag': "#Rock and Roll"}]  # Implementare query che ritorna le 5 canzoni più riprodotte
+    # most_played_songs = [{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+    #                      {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+    #                      {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+    #                      {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+    #                      {'Titolo': "Sweet Child O' Mine", 'Anno': 1987,
+    #                       'Tag': "#Rock and Roll"}]  # Implementare query che ritorna le 5 canzoni più riprodotte
 
-
-
+    most_played_songs = most_played()
 
     # all_songs = [{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
     #              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
@@ -121,21 +130,21 @@ def home():
     all_songs = all_s()
 
     if current_user.is_authenticated:
-        user = {'Nome': 'Donald', 'Cognome': 'Duck', 'Nickname': 'Ducky',
-                'Ruolo': 'UTENTE'}  # Implementare query che ritorna l'utente attuale
+        # user = {'Nome': 'Donald', 'Cognome': 'Duck', 'Nickname': 'Ducky',
+        #         'Ruolo': 'UTENTE'}  # Implementare query che ritorna l'utente attuale
+        user = current_user.__getattribute__(id)  # controllare con currUser() di user.py
         recommended_songs = [{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
                              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
                              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
                              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
                              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987,
-                              'Tag': "#Rock and Roll"}]  # Implementare query che ritorna le canzoni consigliate per l'utente
-
+                              'Tag': "#Rock and Roll"}]  # Implementare query che ritorna le canzoni consigliate per
+        # l'utente
 
         return render_template("Index.html", user=user, all_songs=all_songs, latest_songs=latest_songs,
                                most_played_songs=most_played_songs, recommended_songs=recommended_songs)
     return render_template("Index.html", all_songs=all_songs, latest_songs=latest_songs,
                            most_played_songs=most_played_songs)
-
 
 
 '''

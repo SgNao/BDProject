@@ -85,7 +85,7 @@ def all_s():
 def most_played():
     conn = engine.connect()
     rs = conn.execute('SELECT C.* FROM StatCanzoni S NATURAL JOIN Canzoni C NATURAL JOIN '
-                      'STATISTICHE ST WHERE IdStatistica IN (SELECT * FROM Statistiche '
+                      'Statistiche ST WHERE IdStatistica IN (SELECT * FROM Statistiche '
                       'ORDER BY NRiproduzioniTotali DESC LIMIT 5)')
     most_p = rs.fetchone()
     conn.close()

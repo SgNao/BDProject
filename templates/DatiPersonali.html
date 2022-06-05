@@ -10,10 +10,10 @@
                     <table style="width: 100%;margin-bottom: 1%;margin-top: 1%;border-collapse: collapse;"><tr>
                         <td style="width: 15%;text-align: left;margin: 0%;border-bottom: 1px solid darkgray;"><h1 id="Playlist">{{user.Nickname}}</h1></td>
                         <td style="width: 6%;vertical-align: bottom;border-bottom: 1px solid darkgray;text-align: left;">
-                            <a href="{{url_for('private')}}"><h5 id="NuovaRaccolta">Raccolte</h5></a>
+                            <a href="{{url_for('UserBP.private')}}"><h5 id="NuovaRaccolta">Raccolte</h5></a>
                         </td>
                         <td style="width: 6%;vertical-align: bottom;border-bottom: 1px solid darkgray;text-align: left;">
-                            <a href="{{url_for('get_albums')}}"><h5 id="NuovaRaccolta">Produzioni</h5></a>
+                            <a href="{{url_for('ArtistBP.get_albums')}}"><h5 id="NuovaRaccolta">Produzioni</h5></a>
                         </td>
                         <td style="width: 73%;border-bottom: 1px solid darkgray;"></td>
                     </tr></table>
@@ -28,7 +28,7 @@
                                         <td style="width: 15%;" id="Nome_Mod_1"><h4 class="text-section-2">{{user.DataNascita}}</h4></td>
                                         <td style="width: 64%;"></td>
                                         <td id="Mod">
-                                            <a id="Mod_link" href="{{url_for('ModData')}}"><h5 style="margin: 0%;">Modifica</h5></a>
+                                            <a id="Mod_link" href="{{url_for('UserBP.ModData')}}"><h5 style="margin: 0%;">Modifica</h5></a>
                                         </td>
                                     </tr>
                                 </table>

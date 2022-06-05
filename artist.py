@@ -19,7 +19,7 @@ def NewAlbum():
         data = (request.form["Titolo"], request.form["Rilascio"], request.form["Colore"], "0", request.form["CasaDiscografica"], current_user.id)
         rs = conn.execute('INSERT INTO Album (Titolo, Rilascio, Colore, NCanzoni, CasaDiscografica,IdArtista) VALUES (?,?,?,?,?,?)', data)
         conn.close()
-        return redirect(url_for('Produzioni'))
+        return redirect(url_for('ArtistBP.get_albums'))
     else:
         return render_template("NuovoAlbum.html")
 
@@ -43,7 +43,7 @@ def NewSong(IdAlbum):
         data = [IdAlbum, IdCanzone[0]]
         rs = conn.execute('INSERT INTO Contenuto (IdAlbum, IdCanzone) VALUES (?,?)', data)
         conn.close()
-        return redirect(url_for('get_albums'))
+        return redirect(url_for('ArtistBP.get_albums'))
     else:
          return render_template("NuovaCanzone.html")
 

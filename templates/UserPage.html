@@ -24,13 +24,13 @@
                     <table style="width: 100%;margin-bottom: 1%;margin-top: 1%;border-collapse: collapse;"><tr>
                         <td style="width: 22%;text-align: left;margin: 0%;border-bottom: 1px solid darkgray;"><h1 id="Playlist">Le tue raccolte</h1></td>
                         <td style="width: 10%;vertical-align: bottom;border-bottom: 1px solid darkgray;text-align: left;">
-                            <a href="{{url_for('NewPlaylist')}}"><h5 id="NuovaRaccolta">Nuova raccolta</h5></a>
+                            <a href="{{url_for('UserBP.NewPlaylist')}}"><h5 id="NuovaRaccolta">Nuova raccolta</h5></a>
                         </td>
                         <td style="width: 9%;vertical-align: bottom;border-bottom: 1px solid darkgray;text-align: left;">
-                            <a href="{{url_for('get_data')}}"><h5 id="NuovaRaccolta">Dati Personali</h5></a>
+                            <a href="{{url_for('UserBP.get_data')}}"><h5 id="NuovaRaccolta">Dati Personali</h5></a>
                         </td>
                         <td style="width: 6%;vertical-align: bottom;border-bottom: 1px solid darkgray;text-align: left;">
-                            <a href="{{url_for('get_albums')}}"><h5 id="NuovaRaccolta">Produzioni</h5></a>
+                            <a href="{{url_for('ArtistBP.get_albums')}}"><h5 id="NuovaRaccolta">Produzioni</h5></a>
                         </td>
                         <td style="width: 48%;border-bottom: 1px solid darkgray;"></td>
                     </tr></table>
@@ -46,7 +46,7 @@
                                             <td style="width: 15%;"><h3 class="text-section-2">{{playlist.Nome}}</h3></td>
                                             <td style="width: 58%;"></td>
                                             <td id="Mod">
-                                                <a id="Mod_link" href="{{url_for('ModPlaylist')}}"><h5 style="margin: 0%;">Modifica</h5></a>
+                                                <a id="Mod_link" href="{{url_for('UserBP.ModPlaylist')}}"><h5 style="margin: 0%;">Modifica</h5></a>
                                             </td>
                                             <td id="Del" onmousedown="Elimina()"><h5 style="margin: 0%;">Elimina</h5></td>
                                             <td id="Elimina_tutto" onmousedown="CancellaRaccolta()"><h5 style="margin: 0%;">Elimina Raccolta</h5></td>

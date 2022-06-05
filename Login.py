@@ -43,7 +43,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('LoginBP.home'))
+    return redirect(url_for('home'))
 
 
 @LoginBP.route('/Registrati')
@@ -60,6 +60,6 @@ def SingIn():
                           ' VALUES (?,?,?,?,?,?,?,?)', data)
         
         conn.close()
-        return redirect(url_for('Accedi'))
+        return redirect(url_for('LoginBP.Accedi'))
     else:
-        return redirect(url_for('Registrati'))
+        return redirect(url_for('LoginBP.Registrati'))

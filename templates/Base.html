@@ -7,7 +7,7 @@
                 <tr>
                     <td id="title-cell"><h1 id="titolo1">Unive</h1><h1 id="titolo2">Music</h1></td>
                     {% if current_user.is_authenticated %}
-                    <td><a href="{{url_for('logout')}}"><table id="tabella00">
+                    <td><a href="{{url_for('LoginBP.logout')}}"><table id="tabella00">
                         <tr>
                             <td class="link-cell">
                                 <p class="link">Esci</p>
@@ -18,7 +18,7 @@
                         </tr>
                     </table></a></td>
                     {% elif 'Accedi' in request.url_rule.rule %}
-                    <td><a href="{{url_for('Registrati')}}"><table id="tabella00-3">
+                    <td><a href="{{url_for('LoginBP.Registrati')}}"><table id="tabella00-3">
                         <tr>
                             <td class="link-cell">
                                 <p class="link">Registrati</p>
@@ -29,7 +29,7 @@
                         </tr>
                     </table></a></td>
                     {% else %}
-                    <td><a href="{{url_for('Accedi')}}"><table id="tabella00">
+                    <td><a href="{{url_for('LoginBP.Accedi')}}"><table id="tabella00">
                         <tr>
                             <td class="link-cell">
                                 <p class="link">Accedi</p>
@@ -178,7 +178,7 @@
                 <tr>
                     <td class="button"><a href={{url_for('home')}} class="text-button">Musica</a></td>
                     {% if user %}
-                    <td class="button"><a href={{url_for('private')}} class="text-button">{{user.Nickname}}</a></td>
+                    <td class="button"><a href={{url_for('UserBP.private')}} class="text-button">{{user.Nickname}}</a></td>
                     {% endif %}
                     <td id="serch-container">
                         <table id="search-table">

@@ -8,7 +8,7 @@ def setupConnection():
                             host="db_host", #da mettere
                             user="postgres", #da mettere
                             password="db_pass", #da mettere
-                            port="db_port") #da mettere
+                            port="5050") #da mettere
     return conn
 
 

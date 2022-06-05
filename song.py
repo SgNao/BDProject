@@ -9,23 +9,11 @@ engine = create_engine('sqlite:///database.db', echo=True)
 def inject_enumerate():
     return dict(enumerate=enumerate, str=str, len=len)
 
-@SongBP.route('/tosongs')
-def tosongs():
-    return redirect(url_for('Songs'))
-
-@SongBP.route('/songs')
-def songs():
-    conn = engine.connect()
-    songlist = conn.execute('SELECT * FROM Canzoni')
-    resp = make_response(render_template("Songs.html", songs=songlist))
-    conn.close()
-    return resp
-
 @SongBP.route('/song_stat')
 def SongStat():
     return render_template("SongStatistics.html")
 
-@app.route('/songs/<IdCanzone>')
+@SongBP.route('/songs/<IdCanzone>')
 def songs(IdCanzone):
     conn = engine.connect()
     rs = conn.execute(' SELECT * FROM Canzoni WHERE Canzoni.IdCanzone = ?', IdCanzone)

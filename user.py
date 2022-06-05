@@ -66,7 +66,7 @@ def NewPlaylist():
         data = ( current_user.id, request.form["Nome"], request.form["Descrizione"], "0")
         rs = conn.execute('INSERT INTO Playlist (IdUtente, Nome, Descrizione, NCanzoni) VALUES (?,?,?,?)', data)
         conn.close()
-        return redirect(url_for('private'))
+        return redirect(url_for('UserBP.private'))
     else:
         return render_template("NuovaRaccolta.html")
 

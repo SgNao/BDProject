@@ -9,7 +9,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 import psycopg2
 import configdb
 
-conn = configdb.setupConnection()
+#conn = configdb.setupConnection()
 
 '''
 export FLASK_APP=main.py
@@ -42,26 +42,26 @@ def inject_enumerate():
 
 
 class User(UserMixin):
-    def __init__(self, id, email, nome, cognome, nick, birthday, Password):
+    def __init__(self, id, Email, Nome, Cognome, Nickname, Bio, DataNascita, Password, Ruolo):  # active=True
         self.id = id
-        self.email = email
-        self.nome = nome
-        self.cognome = cognome
-        self.nick = nick
-        self.birthday = birthday
+        self.Email = Email
+        self.Nome = Nome
+        self.Cognome = Cognome
+        self.Nickname = Nickname
+        self.Bio = Bio
+        self.DataNascita = DataNascita
         self.Password = Password
+        self.Ruolo = Ruolo
 
     def verify_password(self, pwd):
         return check_password_hash(self.Password, pwd)
-
 
 def get_user_by_email(email):
     conn = engine.connect()
     rs = conn.execute('SELECT * FROM Utenti WHERE Email = ?', email)
     user = rs.fetchone()
     conn.close()
-    return User(user.IdUtenti, user.Email, user.Nome, user.Cognome, user.Nickname, user.DataNascita, user.Password)
-
+    return User(user.IdUtenti, user.Email, user.Nome, user.Cognome, user.Nickname, user.Bio, user.DataNascita, user.Password, user.Ruolo)
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -69,8 +69,7 @@ def load_user(user_id):
     rs = conn.execute('SELECT * FROM Utenti WHERE IdUtenti = ?', user_id)
     user = rs.fetchone()
     conn.close()
-    return User(user.IdUtenti, user.Email, user.Nome, user.Cognome, user.Nickname, user.DataNascita, user.Password)
-
+    return User(user.IdUtenti, user.Email, user.Nome, user.Cognome, user.Nickname, user.Bio, user.DataNascita, user.Password, user.Ruolo)
 
 def latest_s():
     conn = engine.connect()
@@ -79,14 +78,12 @@ def latest_s():
     conn.close()
     return latest_songs
 
-
 def all_s():
     conn = engine.connect()
     rs = conn.execute('SELECT Titolo, Rilascio, Lingua FROM Canzoni')
     all_songs = rs.fetchone()
     conn.close()
     return all_songs
-
 
 def most_played():
     conn = engine.connect()
@@ -97,23 +94,33 @@ def most_played():
     conn.close()
     return most_p
 
-
 @app.route('/')
 def home():
-    latest_songs = latest_s()
-    most_played_songs = most_played()
-    all_songs = all_s()
+    # current_user identifica l’utente attuale utente anonimo prima dell’autenticazione
+
+    conn = engine.connect()
+    
+    rs = conn.execute('SELECT IdCanzone, Titolo, Rilascio FROM Canzoni')
+    all_songs = rs.fetchall()
+
+    rs = conn.execute('SELECT IdCanzone, Titolo, Rilascio FROM Canzoni ORDER BY Rilascio DESC LIMIT 5')
+    latest_songs = rs.fetchall()
+
+    most_played_songs = [{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                         {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                         {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                         {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                         {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"}] #Implementare query che ritorna le 5 canzoni più riprodotte
 
     if current_user.is_authenticated:
-        user = current_user.__getattribute__(id)  # controllare con currUser() di user.py
         recommended_songs = [{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
                              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
                              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
                              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                             {'Titolo': "Sweet Child O' Mine", 'Anno': 1987,
-                              'Tag': "#Rock and Roll"}]  # Implementare query che ritorna le canzoni consigliate per l'utente
+                             {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"}] #Implementare query che ritorna le canzoni consigliate per l'utente
 
-        return render_template("Index.html", user=user, all_songs=all_songs, latest_songs=latest_songs,
-                               most_played_songs=most_played_songs, recommended_songs=recommended_songs)
-    return render_template("Index.html", all_songs=all_songs, latest_songs=latest_songs,
-                           most_played_songs=most_played_songs)
+        conn.close()
+        return render_template("Index.html", user=current_user, all_songs=all_songs, latest_songs=latest_songs, most_played_songs=most_played_songs, recommended_songs=recommended_songs)
+    
+    conn.close()
+    return render_template("Index.html", all_songs=all_songs, latest_songs=latest_songs, most_played_songs=most_played_songs)

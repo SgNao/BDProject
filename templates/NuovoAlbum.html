@@ -1,0 +1,38 @@
+{% extends "Base.html" %}
+
+{% block pagebody %}
+        <div id="container2"><h2 id="subtitle">NUOVO ALBUM</h2></div>
+        <div id="container3">
+            <table id="log-table"> 
+                <form action="/new_album" method="POST">
+                    <tr>
+                        <td id="log-img-cell">
+                            <table style="width: 100%; margin-top: 2%;margin-bottom: 0%;">
+                                <tr>
+                                    <td style="width: 20%;"></td>
+                                    <td style="width: 60%;">
+                                        <input type="color"  name="Colore" value="#008250" style="width: 100%;height: 100px;background-color: white;border: none;">
+                                    </td>
+                                    <td style="width: 20%;"></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="input-cell-3" colspan="2"><input type="text" name="Titolo" placeholder="Titolo" class="input-3"></td>
+                    </tr>
+                    <tr>
+                        <td class="input-cell-3" colspan="2"><input type="date"  name="Rilascio" placeholder="Rilascio" class="input-3"></td>
+                    </tr>
+                    <tr>
+                        <td class="input-cell-3" colspan="2"><input type="text" name="CasaDiscografica" placeholder="Casa discografica" class="input-3"></td>
+                    </tr>
+                    <tr>
+                        <td id="submit-cell-3" colspan="2">
+                            <input type="submit" id="button-3" value="Crea"> 
+                        </td>
+                    </tr>
+                </form>
+            </table>
+        </div>
+{% endblock %}

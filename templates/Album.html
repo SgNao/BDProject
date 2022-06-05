@@ -2,64 +2,29 @@
 
 {% block pagebody %}
         <div id="container2">
-            <h2 id="subtitle">{{user.Nickname}}</h2>
-        </div>
-        <div id="NewPlaylist2">
-            <table id="Playlist-table" style="border-collapse: collapse;">
-                <tr>
-                    <td colspan="2" style="text-align: center;background-color: #00323F;"><h2 style="margin-top:4%; margin-bottom: 3%; color:white">ELIMINA PLAYLIST</h2></td>
-                </tr>
-                <tr>
-                    <td colspan="2" style="text-align: center;"><h5>Sei sicuro di voler cancellare la raccolta Giorno al mare ?</h5></td>
-                </tr>
-                <tr>
-                    <td style="text-align: right;width: 50%;"><input id="button-4-bis" style="margin-bottom: 10%;" type="submit" value="Annulla" onclick="ConfermaCancellaRaccolta()"></td>
-                    <td style="text-align: left;width: 50%;"><input id="button-4-bis"  style="margin-bottom: 10%;" type="submit" value="Elimina" onclick="ConfermaCancellaRaccolta()"></td>
-                </tr>
-            </table>
+            <h2 id="subtitle">INFO - ALBUM</h2>
         </div>
         <div id="container3">
             <table class="tabella3">
                 <tr><td colspan="5">
                     <table style="width: 100%;margin-bottom: 1%;margin-top: 1%;border-collapse: collapse;"><tr>
-                        <td style="width: 22%;text-align: left;margin: 0%;border-bottom: 1px solid darkgray;"><h1 id="Playlist">Le tue raccolte</h1></td>
-                        <td style="width: 10%;vertical-align: bottom;border-bottom: 1px solid darkgray;text-align: left;">
-                            <a href="{{url_for('NewPlaylist')}}"><h5 id="NuovaRaccolta">Nuova raccolta</h5></a>
+                        <td style="width: 35%;text-align: left;margin: 0%;border-bottom: 1px solid darkgray;"><h1 id="Playlist">{{album.Titolo}}</h1></td>
+                        <td style="width: 8%;vertical-align: bottom;border-bottom: 1px solid darkgray;text-align: left;">
+                           <a href="{{url_for('Albumstat')}}"><h5 id="NuovaRaccolta">Statistiche</h5></a>
                         </td>
-                        <td style="width: 9%;vertical-align: bottom;border-bottom: 1px solid darkgray;text-align: left;">
-                            <a href="{{url_for('get_data')}}"><h5 id="NuovaRaccolta">Dati Personali</h5></a>
-                        </td>
-                        <td style="width: 6%;vertical-align: bottom;border-bottom: 1px solid darkgray;text-align: left;">
-                            <a href="{{url_for('get_albums')}}"><h5 id="NuovaRaccolta">Produzioni</h5></a>
-                        </td>
-                        <td style="width: 48%;border-bottom: 1px solid darkgray;"></td>
+                        <td style="width: 57%;border-bottom: 1px solid darkgray;"></td>
                     </tr></table>
                 </td></tr>
-                {% for i,playlist in enumerate(playlists) %}
                 <tr>
                     <td colspan="5">
-                        <table style="width: 100%;font-family: Helvetica;border-collapse: collapse;">
+                        <table style="width: 100%;font-family: Helvetica;border-collapse: collapse;margin-bottom: 2%;margin-top: 0%;">
                             <tr>
                                 <td>
-                                    <table style="width:100%">
+                                    <table style="width:100%; table-layout: auto;">
                                         <tr>
-                                            <td style="width: 15%;"><h3 class="text-section-2">{{playlist.Nome}}</h3></td>
-                                            <td style="width: 58%;"></td>
-                                            <td id="Mod">
-                                                <a id="Mod_link" href="{{url_for('ModPlaylist')}}"><h5 style="margin: 0%;">Modifica</h5></a>
-                                            </td>
-                                            <td id="Del" onmousedown="Elimina()"><h5 style="margin: 0%;">Elimina</h5></td>
-                                            <td id="Elimina_tutto" onmousedown="CancellaRaccolta()"><h5 style="margin: 0%;">Elimina Raccolta</h5></td>
-                                            <td id="Fatto" onmousedown="SalvaModifiche()"><h5 style="margin: 0%;">Fatto</h5></td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <table style="width: 100%;">
-                                        <tr>
-                                            <td style="width: 92%;text-align: left;"><p style="color: #2F2F2F;margin-bottom:1%;margin-top: 0%;">{{playlist.Descrizione}}</p></td>
+                                            <td style="width: 5%;"><h3 class="text-section-2" style="font-weight: lighter;margin: 0%;">{{album.Anno}}</h3></td>
+                                            <td style="width: 20%;"><h3 class="text-section-2" style="font-weight: lighter;margin: 0%;">Guns N' Roses</h3></td>
+                                            <td style="width: 70%;text-align:right;"><h4 class="text-section-2" style="margin: 0%;color: #00323F;">{{album.Casa_Discografica}}</h4></td>
                                         </tr>
                                     </table>
                                 </td>
@@ -67,7 +32,7 @@
                         </table>
                     </td>
                 </tr>
-                {% for j,song in enumerate(playlist_songs[i]) %}
+                {% for j,song in enumerate(songAlbum) %}
                 {% if j!=0 and j%5== 0 %}
                 </tr>
                 {% endif %}
@@ -143,7 +108,7 @@
                         </table>
                     </td>
                     {% endif %}
-                    {% if j == len(playlist_songs[i])-1 %}
+                    {% if j == len(songAlbum)-1 %}
                     <td style="display: none;" class="altri">
                         <table class="tabella4">
                             <tr><td class="manual-title-cell" colspan="2"><h3 class="manual-title" style="color: white;">-</h3></td></tr>
@@ -176,7 +141,6 @@
                     {% endif %}
                 {% endfor %}
                 </tr>
-                {% endfor %}
             </table>
         </div>
 {% endblock%}

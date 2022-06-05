@@ -1,0 +1,152 @@
+{% extends "Base.html" %}
+
+{% block pagebody %}
+        <div id="container2">
+            <h2 id="subtitle">INFO - CANZONE</h2>
+        </div>
+        <div id="NewPlaylist2">
+            <table id="Playlist-table" style="border-collapse: collapse;">
+                <tr>
+                    <td colspan="2" style="text-align: center;background-color: #00323F;"><h2 style="margin-top:3%; margin-bottom: 2%; color:white">AGGIUNGI A</h2></td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;"><h5 style="margin: 2%;margin-right: 5%;margin-top: 10%;">Playlist 1</h5></td>
+                    <td style="text-align: left;"><input type="checkbox" style="margin: 2%;margin-left: 5%;margin-top: 10%;"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;"><h5 style="margin: 2%;margin-right: 5%;">Playlist 2</h5></td>
+                    <td style="text-align: left;"><input type="checkbox" style="margin: 2%;margin-left: 5%;"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;"><h5 style="margin: 2%;margin-right: 5%;">Playlist 3</h5></td>
+                    <td style="text-align: left;"><input type="checkbox" style="margin: 2%;margin-left: 5%;"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;"><h5 style="margin: 2%;margin-right: 5%;">Playlist 4</h5></td>
+                    <td style="text-align: left;"><input type="checkbox" style="margin: 2%;margin-left: 5%;"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;width: 50%;"><input id="button-4-bis" style="margin-bottom: 10%;margin-top: 10%;" type="submit" value="Annulla" onclick="ConfermaCancellaRaccolta()"></td>
+                    <td style="text-align: left;width: 50%;"><input id="button-4-bis"  style="margin-bottom: 10%;margin-top: 10%;" type="submit" value="Fatto" onclick="ConfermaCancellaRaccolta()"></td>
+                </tr>
+            </table>
+        </div>
+        <div id="container3">
+            <table class="tabella3">
+                <tr><td colspan="5">
+                    <table style="width: 100%;margin-bottom: 1%;margin-top: 1%;border-collapse: collapse;"><tr>
+                        <td style="width: 30%;text-align: left;margin: 0%;border-bottom: 1px solid darkgray;"><h1 id="Playlist">{{song.Titolo}}</h1></td>
+                        <td style="width: 8%;vertical-align: bottom;border-bottom: 1px solid darkgray;text-align: left;" onmousedown="CancellaRaccolta()">
+                            <h5 id="NuovaRaccolta">Aggiungi a</h5>
+                        </td>
+                        <td style="width: 8%;vertical-align: bottom;border-bottom: 1px solid darkgray;text-align: left;">
+                           <a href="{{url_for('SongStat')}}"><h5 id="NuovaRaccolta">Statistiche</h5></a>
+                        </td>
+                        <td style="width: 74%;border-bottom: 1px solid darkgray;"></td>
+                    </tr></table>
+                </td></tr>
+                <tr><td colspan="5">
+                    <table style="width: 100%;font-family: Helvetica;border-collapse: collapse;">
+                        <tr>
+                            <td>
+                                <table style="width:100%; table-layout: auto;">
+                                    <tr>
+                                        <td style="width: 5%;"><h3 class="text-section-2" style="font-weight: lighter;margin: 0%;">{{song.Rilascio}}</h3></td>
+                                        <td style="width: 5%;"><h3 class="text-section-2" style="font-weight: lighter;margin: 0%;">{{song.Durata}}</h3></td>
+                                        <td style="width: 20%;"><h3 class="text-section-2" style="font-weight: lighter;margin: 0%;">Guns N' Roses</h3></td>
+                                        <td style="width: 70%;text-align:right;"><h4 class="text-section-2" style="margin: 0%;color: #00323F;">{{song.Tag}}</h4></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">
+                                            <a href="{{url_for('get_album_data')}}"><h3 class="text-section-2" style="color: #006840;margin-top: 1%;">Appetite for Destruction</h3></a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td></tr>
+                <tr>
+                {% for i,song in enumerate(songAlbum) %}
+                {% if i!=0 and i%5== 0 %}
+                </tr>
+                {% endif %}
+                {% if i%5 == 0 %}
+                <tr>
+                {% endif %}
+                    {% if i >= 4 %}
+                    <td style="display: none;" class="altri">
+                    {% else %}
+                    <td>
+                    {% endif %}
+                        <table class="tabella4" onmouseover="Select('S4_ID_A_{{i}}', 'S4_ID_B_{{i}}')" onmouseout="Deselect('S4_ID_A_{{i}}', 'S4_ID_B_{{i}}')">
+                            <tr><td class="img-cell" colspan="2"><div class="img"></div></td></tr>
+                            <tr><td class="manual-title-cell" colspan="2"><h3 class="manual-title">{{song.Titolo}}</h3></td></tr>
+                            <tr>
+                                <td class="footprint">
+                                    <h4 class="footprint-text"> Guns N' Roses </h4> 
+                                </td>
+                                <td class="footprint-anno">
+                                        <h5 class="footprint-text-anno"> {{song.Rilascio}} </h5>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="footprint-hastag" colspan="2" id="S4_ID_A_{{i}}">
+                                    <h5 class="footprint-text-hastag"> {{song.Tag}} </h5>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="footprint-hastag-4" colspan="2" id="S4_ID_B_{{i}}" onmouseover="Info_over('S4_ID_B_{{i}}')" onmouseout="Info_out('S4_ID_B_{{i}}')" onmousedown="Song('{{song.IdCanzone}}')">
+                                    <h5 class="footprint-text-hastag"> INFO </h5>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    {% if i==4 %}
+                    <td id="ESPANDI">
+                        <table class="tabella4">
+                            <tr><td class="manual-title-cell" colspan="2"><h3 class="manual-title" style="color: white;">-</h3></td></tr>
+                            <tr><td class="img-cell" colspan="2"><img id="img2" src="{{ url_for('static', filename='Img/down-arrow.png') }}"></td></tr>
+                            <tr>
+                                <td class="footprint">
+                                    <h4 class="footprint-text" style="color: white;"> - </h4>
+                                </td>
+                                <td class="footprint-anno">
+                                    <h5 class="footprint-text-anno" style="color: white;"> - </h5>
+                                </td>
+                            </tr><tr>
+                                <td colspan="2" style="background-color: #00323F; color: white;" class="footprint-hastag-bis" id="ESPANDI-BUTTON" 
+                                onmousedown="Espandi()" onmouseover="Select_Espandi('ESPANDI-BUTTON')" onmouseout="DeSelect_Espandi('ESPANDI-BUTTON')">
+                                    <h5 class="footprint-text-hastag"> ESPANDI </h5>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    {% endif %}
+                    {% if i == len(songAlbum)-1 %}
+                    <td style="display: none;" class="altri">
+                        <table class="tabella4">
+                            <tr><td class="manual-title-cell" colspan="2"><h3 class="manual-title" style="color: white;">-</h3></td></tr>
+                            <tr><td class="img-cell" colspan="2"><img id="img2" src="{{ url_for('static', filename='Img/up-arrow.png') }}"></td></tr>
+                            <tr>
+                                <td class="footprint">
+                                    <h4 class="footprint-text" style="color: white;"> - </h4>
+                                </td>
+                                <td class="footprint-anno">
+                                    <h5 class="footprint-text-anno" style="color: white;"> - </h5>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="background-color: #00323F; color: white;" class="footprint-hastag-bis" id="RIDUCI-BUTTON" 
+                                onmousedown="Riduci()" onmouseover="Select_Espandi('RIDUCI-BUTTON')" onmouseout="DeSelect_Espandi('RIDUCI-BUTTON')">
+                                    <h5 class="footprint-text-hastag"> RIDUCI </h5>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    {% endif %}
+                {% endfor %}
+                </tr>
+            </table>
+        </div>
+{% endblock%}

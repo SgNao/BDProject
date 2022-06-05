@@ -189,9 +189,6 @@ body{
     padding: 0%;
     color: #2F2F2F;
 }
-.manual-title:hover{
-    color:#5d5d5d;
-}
 .tabella4{
     width: 95%;
     border-collapse: separate;
@@ -204,7 +201,7 @@ body{
     background-color: white;
 }
 .img{
-    width: 100px;
+    width: 60%;
     height: 60px;
     margin-left: 20%;
     background-color: #006840;
@@ -464,11 +461,13 @@ a{
     color: #2F2F2F;
 }
 .footprint-hastag{
+    border: 1px solid white;
     border-top: 1px solid darkgray;
     display: table-cell;
-    color: #003e4f;
+    color: #00323F;
 }
 #footprint-hastag-bis{
+    border: 1px solid white;
     border-top: 1px solid darkgray;
     display: table-cell;
     color: #003e4f;
@@ -493,6 +492,16 @@ a{
     text-align: center;
     display: None;
     color: white;
+}
+.footprint-hastag-4{
+    border: 1px solid white;
+    display: none;
+    background-color: #003e4f;
+    color: white;
+    text-align: center;
+}
+.footprint-hastag-4:hover{
+    cursor: pointer;    
 }
 .footprint-text-hastag{
     font-family: Helvetica;

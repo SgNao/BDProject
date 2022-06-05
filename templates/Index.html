@@ -9,11 +9,11 @@
                 {% if user %}
                 <tr><td colspan="5"><h2 class="text-section">Consigliate</h2></td></tr>
                 <tr>
-                    {% for i,song in enumerate(latest_songs) %}
+                    {% for i,song in enumerate(recommended_songs) %}
                     <td>
-                        <table class="tabella4" onmouseover="Select('S1_ID_{{i}}')" onmouseout="Deselect('S1_ID_{{i}}')">
+                        <table class="tabella4" onmouseover="Select('S1_ID_A_{{i}}', 'S1_ID_B_{{i}}')" onmouseout="Deselect('S1_ID_A_{{i}}', 'S1_ID_B_{{i}}')">
                             <tr><td class="img-cell" colspan="2"><div class="img"></div></td></tr>
-                            <tr><td class="manual-title-cell" colspan="2"><a href="Song.html"><h3 class="manual-title">{{song.Titolo}}</h3></a></td></tr>
+                            <tr><td class="manual-title-cell" colspan="2"><h3 class="manual-title">{{song.Titolo}}</h3></td></tr>
                             <tr>
                                 <td class="footprint">
                                     <h4 class="footprint-text"> Guns N' Roses </h4> 
@@ -23,8 +23,13 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="2" class="footprint-hastag" colspan="2" id="S1_ID_{{i}}">
+                                <td colspan="2" class="footprint-hastag" colspan="2" id="S1_ID_A_{{i}}">
                                     <h5 class="footprint-text-hastag"> {{song.Tag}} </h5>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="footprint-hastag-4" colspan="2" id="S1_ID_B_{{i}}" onmouseover="Info_over('S1_ID_B_{{i}}')" onmouseout="Info_out('S1_ID_B_{{i}}')" onmousedown="Song('null')">
+                                    <h5 class="footprint-text-hastag"> INFO </h5>
                                 </td>
                             </tr>
                         </table>
@@ -36,20 +41,25 @@
                 <tr>
                     {% for i,song in enumerate(latest_songs) %}
                     <td>
-                        <table class="tabella4" onmouseover="Select('S2_ID_{{i}}')" onmouseout="Deselect('S2_ID_{{i}}')">
+                        <table class="tabella4" onmouseover="Select('S2_ID_A_{{i}}', 'S2_ID_B_{{i}}')" onmouseout="Deselect('S2_ID_A_{{i}}', 'S2_ID_B_{{i}}')">
                             <tr><td class="img-cell" colspan="2"><div class="img"></div></td></tr>
-                            <tr><td class="manual-title-cell" colspan="2"><a href="Song.html"><h3 class="manual-title">{{song.Titolo}}</h3></a></td></tr>
+                            <tr><td class="manual-title-cell" colspan="2"><h3 class="manual-title">{{song.Titolo}}</h3></td></tr>
                             <tr>
                                 <td class="footprint">
                                     <h4 class="footprint-text"> Guns N' Roses </h4> 
                                 </td>
                                 <td class="footprint-anno">
-                                    <h5 class="footprint-text-anno"> {{song.Anno}} </h5>
+                                    <h5 class="footprint-text-anno"> {{song.Rilascio}} </h5>
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="2" class="footprint-hastag" colspan="2" id="S2_ID_{{i}}">
+                                <td colspan="2" class="footprint-hastag" colspan="2" id="S2_ID_A_{{i}}">
                                     <h5 class="footprint-text-hastag"> {{song.Tag}} </h5>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="footprint-hastag-4" colspan="2" id="S2_ID_B_{{i}}" onmouseover="Info_over('S2_ID_B_{{i}}')" onmouseout="Info_out('S2_ID_B_{{i}}')" onmousedown="Song('{{song.IdCanzone}}')">
+                                    <h5 class="footprint-text-hastag"> INFO </h5>
                                 </td>
                             </tr>
                         </table>
@@ -60,9 +70,9 @@
                 <tr>
                     {% for i,song in enumerate(most_played_songs) %}
                     <td>
-                        <table class="tabella4" onmouseover="Select('S3_ID_{{i}}')" onmouseout="Deselect('S3_ID_{{i}}')">
+                        <table class="tabella4" onmouseover="Select('S3_ID_A_{{i}}', 'S3_ID_B_{{i}}')" onmouseout="Deselect('S3_ID_A_{{i}}', 'S3_ID_B_{{i}}')">
                             <tr><td class="img-cell" colspan="2"><div class="img"></div></td></tr>
-                            <tr><td class="manual-title-cell" colspan="2"><a href="Song.html"><h3 class="manual-title">{{song.Titolo}}</h3></a></td></tr>
+                            <tr><td class="manual-title-cell" colspan="2"><h3 class="manual-title">{{song.Titolo}}</h3></td></tr>
                             <tr>
                                 <td class="footprint">
                                     <h4 class="footprint-text"> Guns N' Roses </h4> 
@@ -72,8 +82,13 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="2" class="footprint-hastag" colspan="2" id="S3_ID_{{i}}">
+                                <td colspan="2" class="footprint-hastag" colspan="2" id="S3_ID_A_{{i}}">
                                     <h5 class="footprint-text-hastag"> {{song.Tag}} </h5>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="footprint-hastag-4" colspan="2" id="S3_ID_B_{{i}}" onmouseover="Info_over('S3_ID_B_{{i}}')" onmouseout="Info_out('S3_ID_B_{{i}}')" onmousedown="Song('null')">
+                                    <h5 class="footprint-text-hastag"> INFO </h5>
                                 </td>
                             </tr>
                         </table>
@@ -93,20 +108,25 @@
                     {% else %}
                     <td>
                     {% endif %}
-                        <table class="tabella4" onmouseover="Select('S4_ID_{{i}}')" onmouseout="Deselect('S4_ID_{{i}}')">
+                        <table class="tabella4" onmouseover="Select('S4_ID_A_{{i}}', 'S4_ID_B_{{i}}')" onmouseout="Deselect('S4_ID_A_{{i}}', 'S4_ID_B_{{i}}')">
                             <tr><td class="img-cell" colspan="2"><div class="img"></div></td></tr>
-                            <tr><td class="manual-title-cell" colspan="2"><a href="Song.html"><h3 class="manual-title">{{song.Titolo}}</h3></a></td></tr>
+                            <tr><td class="manual-title-cell" colspan="2"><h3 class="manual-title">{{song.Titolo}}</h3></td></tr>
                             <tr>
                                 <td class="footprint">
                                     <h4 class="footprint-text"> Guns N' Roses </h4> 
                                 </td>
                                 <td class="footprint-anno">
-                                        <h5 class="footprint-text-anno"> {{song.Anno}} </h5>
+                                        <h5 class="footprint-text-anno"> {{song.Rilascio}} </h5>
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="2" class="footprint-hastag" colspan="2" id="S4_ID_{{i}}">
+                                <td colspan="2" class="footprint-hastag" colspan="2" id="S4_ID_A_{{i}}">
                                     <h5 class="footprint-text-hastag"> {{song.Tag}} </h5>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="footprint-hastag-4" colspan="2" id="S4_ID_B_{{i}}" onmouseover="Info_over('S4_ID_B_{{i}}')" onmouseout="Info_out('S4_ID_B_{{i}}')" onmousedown="Song('{{song.IdCanzone}}')">
+                                    <h5 class="footprint-text-hastag"> INFO </h5>
                                 </td>
                             </tr>
                         </table>

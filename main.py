@@ -1,10 +1,15 @@
 from flask import *
 from sqlalchemy import *
 from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user, login_remembered
-from Login import LoginBP
+from login import LoginBP
 from user import UserBP
 from song import SongBP
+from artist import ArtistBP
 from werkzeug.security import check_password_hash, generate_password_hash
+import psycopg2
+import configdb
+
+conn = configdb.setupConnection()
 
 '''
 export FLASK_APP=main.py
@@ -22,6 +27,7 @@ app = Flask(__name__)
 app.register_blueprint(LoginBP)
 app.register_blueprint(UserBP)
 app.register_blueprint(SongBP)
+app.register_blueprint(ArtistBP)
 
 engine = create_engine('sqlite:///database.db', echo=True)
 app.config['SECRET_KEY'] = 'ubersecret'
@@ -94,74 +100,20 @@ def most_played():
 
 @app.route('/')
 def home():
-    # current_user identifica l’utente attuale utente anonimo prima dell’autenticazione
-    # latest_songs = [{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-    #                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-    #                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-    #                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-    #                 {'Titolo': "Sweet Child O' Mine", 'Anno': 1987,
-    #                  'Tag': "#Rock and Roll"}]  # Implementare query che ritorna le 5 canzoni più recenti
-
     latest_songs = latest_s()
-
-    # most_played_songs = [{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-    #                      {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-    #                      {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-    #                      {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-    #                      {'Titolo': "Sweet Child O' Mine", 'Anno': 1987,
-    #                       'Tag': "#Rock and Roll"}]  # Implementare query che ritorna le 5 canzoni più riprodotte
-
     most_played_songs = most_played()
-
-    # all_songs = [{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-    #              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-    #              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-    #              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-    #              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-    #              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-    #              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-    #              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-    #              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-    #              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-    #              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-    #              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987,
-    #               'Tag': "#Rock and Roll"}]  # Implementare query che ritorna tutte le canzoni
-
     all_songs = all_s()
 
     if current_user.is_authenticated:
-        # user = {'Nome': 'Donald', 'Cognome': 'Duck', 'Nickname': 'Ducky',
-        #         'Ruolo': 'UTENTE'}  # Implementare query che ritorna l'utente attuale
         user = current_user.__getattribute__(id)  # controllare con currUser() di user.py
         recommended_songs = [{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
                              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
                              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
                              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
                              {'Titolo': "Sweet Child O' Mine", 'Anno': 1987,
-                              'Tag': "#Rock and Roll"}]  # Implementare query che ritorna le canzoni consigliate per
-        # l'utente
+                              'Tag': "#Rock and Roll"}]  # Implementare query che ritorna le canzoni consigliate per l'utente
 
         return render_template("Index.html", user=user, all_songs=all_songs, latest_songs=latest_songs,
                                most_played_songs=most_played_songs, recommended_songs=recommended_songs)
     return render_template("Index.html", all_songs=all_songs, latest_songs=latest_songs,
                            most_played_songs=most_played_songs)
-
-
-'''
-# Controllo che esista database e, in caso non esistesse, lo genero
-try:
-    os.path.realpath('database.bd', strict=True)
-except:
-    # Il database manca, quindi provo a generarlo. Controllo che ci sia il file csv per farlo
-    # Se non c'è il file csv, mando una eccezione
-    try:
-        os.path.realpath('./songdb.csv', strict=True)
-    except:
-        raise Exception('Manca il file csv per generare il database')
-    if(sys.version_info[0]<3):
-        execfile('gendb.py')
-        execfile('popdb.py')
-    else:
-        exec(open('gendb.py').read())
-        exec(open('popdb.py').read())
-'''

@@ -1,6 +1,5 @@
 from flask import *
 from sqlalchemy import *
-#from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user, login_remembered
 
 SongBP = Blueprint('SongBP', __name__)
 engine = create_engine('sqlite:///database.db', echo=True)
@@ -14,11 +13,28 @@ def inject_enumerate():
 def tosongs():
     return redirect(url_for('Songs'))
 
-
 @SongBP.route('/songs')
 def songs():
     conn = engine.connect()
     songlist = conn.execute('SELECT * FROM Canzoni')
     resp = make_response(render_template("Songs.html", songs=songlist))
+    conn.close()
+    return resp
+
+@SongBP.route('/song_stat')
+def SongStat():
+    return render_template("SongStatistics.html")
+
+@app.route('/songs/<IdCanzone>')
+def songs(IdCanzone):
+    conn = engine.connect()
+    rs = conn.execute(' SELECT * FROM Canzoni WHERE Canzoni.IdCanzone = ?', IdCanzone)
+    songdata = rs.fetchone()
+    rs = conn.execute(' SELECT Contenuto.IdAlbum FROM Canzoni NATURAL JOIN Contenuto WHERE Canzoni.IdCanzone = ?', IdCanzone)
+    IdAlbum = rs.fetchone()
+    rs = conn.execute(' SELECT * FROM Canzoni NATURAL JOIN Contenuto WHERE Contenuto.IdAlbum = ?', IdAlbum)
+    songAlbum = rs.fetchall()
+    print(songAlbum)
+    resp = make_response(render_template("Song.html", song=songdata, songAlbum=songAlbum))
     conn.close()
     return resp

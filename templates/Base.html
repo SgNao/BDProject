@@ -6,7 +6,30 @@
             <table id="tabella0">
                 <tr>
                     <td id="title-cell"><h1 id="titolo1">Unive</h1><h1 id="titolo2">Music</h1></td>
-                    <td><a href={{url_for('LoginBP.Accedi')}}><table id="tabella00">
+                    {% if current_user.is_authenticated %}
+                    <td><a href="{{url_for('logout')}}"><table id="tabella00">
+                        <tr>
+                            <td class="link-cell">
+                                <p class="link">Esci</p>
+                            </td>
+                            <td class="log-cell">
+                                <img src="{{ url_for('static', filename='Img/user.png') }}" id="log-img">
+                            </td>
+                        </tr>
+                    </table></a></td>
+                    {% elif 'Accedi' in request.url_rule.rule %}
+                    <td><a href="{{url_for('Registrati')}}"><table id="tabella00-3">
+                        <tr>
+                            <td class="link-cell">
+                                <p class="link">Registrati</p>
+                            </td>
+                            <td class="log-cell-3">
+                                <img src="{{ url_for('static', filename='Img/user.png') }}" id="log-card-img">
+                            </td>
+                        </tr>
+                    </table></a></td>
+                    {% else %}
+                    <td><a href="{{url_for('Accedi')}}"><table id="tabella00">
                         <tr>
                             <td class="link-cell">
                                 <p class="link">Accedi</p>
@@ -16,6 +39,7 @@
                             </td>
                         </tr>
                     </table></a></td>
+                    {% endif %}
                 </tr>
             </table>
         </div>
@@ -23,6 +47,8 @@
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stile3.css') }}" />
         <script type="text/javascript">
             
+            var Active = true;  
+
             function CancellaRaccolta(){document.getElementById("NewPlaylist2").style.display = "block";}
             function ConfermaCancellaRaccolta(){document.getElementById("NewPlaylist2").style.display = "none";}
             function Elimina(){
@@ -38,6 +64,7 @@
                 document.getElementById("Mod").style.display="none"
                 document.getElementById("Elimina_tutto").style.display="table-cell"
                 document.getElementById("Fatto").style.display="table-cell"
+                globalThis.Active = false;
             }
 
             function SalvaModifiche(){
@@ -61,22 +88,37 @@
                 document.getElementById("Mod").style.display="table-cell"
                 document.getElementById("Fatto").style.display="none"
                 document.getElementById("Elimina_tutto").style.display="none"
+                globalThis.Active = true;
             }
 
-            function Select(id){
-                document.getElementById(id).style.borderTop ="1px solid white";
-                document.getElementById(id).style.background ="#00323F"
-                document.getElementById(id).style.color ="white"
+            function Select(id_A, id_B){
+                if(globalThis.Active){
+                    document.getElementById(id_A).style.display = "none"
+                    document.getElementById(id_B).style.display = "table-cell"
+                }
             }
 
-            function Deselect(id){
-                document.getElementById(id).style.borderTop ="1px solid darkgrey";
-                document.getElementById(id).style.background ="white"
-                document.getElementById(id).style.color ="#003e4f"
+            function Deselect(id_A, id_B){
+                if(globalThis.Active){
+                    document.getElementById(id_A).style.display = "table-cell"
+                    document.getElementById(id_B).style.display = "none"
+                }
+            }
+
+            function Info_over(id){
+                document.getElementById(id).style.backgroundColor = "white"
+                document.getElementById(id).style.color = "#003e4f"
+                document.getElementById(id).style.border = '1px solid #003e4f'
+            }
+
+            function Info_out(id){
+                document.getElementById(id).style.border="1px solid white"
+                document.getElementById(id).style.backgroundColor="#003e4f"
+                document.getElementById(id).style.color="white"
             }
 
             function EliminaOver(id){
-                document.getElementById(id).style.border="1px solid red"
+                document.getElementById(id).style.border="1px solid #b81a19"
                 document.getElementById(id).style.backgroundColor="white"
                 document.getElementById(id).style.color="#b81a19"
             }
@@ -124,6 +166,10 @@
                 document.getElementById(ID).style.color="white"
                 document.getElementById(ID).style.border="1px solid white"
             }
+
+            function Song(Param){
+                window.location.href='/songs/'+Param
+            }
         </script>
     </head>
     <body>
@@ -132,7 +178,7 @@
                 <tr>
                     <td class="button"><a href={{url_for('home')}} class="text-button">Musica</a></td>
                     {% if user %}
-                    <td class="button"><a href={{url_for('UserBP.private')}} class="text-button">{{user.Nickname}}</a></td>
+                    <td class="button"><a href={{url_for('private')}} class="text-button">{{user.Nickname}}</a></td>
                     {% endif %}
                     <td id="serch-container">
                         <table id="search-table">

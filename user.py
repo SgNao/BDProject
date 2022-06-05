@@ -1,4 +1,4 @@
-import flask_login
+from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user, login_remembered
 from flask import *
 from sqlalchemy import *
 from flask_login import login_required
@@ -12,14 +12,12 @@ engine = create_engine('sqlite:///database.db', echo=True)
 def inject_enumerate():
     return dict(enumerate=enumerate, str=str, len=len)
 
-
 def currUser():
     conn = engine.connect()
-    rs = conn.execute('SELECT * FROM Utenti WHERE IdUtenti = ?', flask_login.current_user.id)
+    rs = conn.execute('SELECT * FROM Utenti WHERE IdUtenti = ?', current_user.id)
     curr_user = rs.fetchone()
     conn.close()
     return curr_user
-
 
 def getPlaylist(userid):
     conn = engine.connect()
@@ -31,38 +29,67 @@ def getPlaylist(userid):
 
 def getPlaylistSongs(playlistId):
     conn = engine.connect()
-    rs = conn.execute('SELECT C.* FROM Raccolte R JOIN Canzoni C on C.IdCanzone = R.IdCanzone WHERE IdPlaylist = ?',
-                      playlistId)
+    rs = conn.execute('SELECT C.* FROM Raccolte R JOIN Canzoni C on C.IdCanzone = R.IdCanzone WHERE IdPlaylist = ?', playlistId)
     playlists_songs = rs.fetchone()
     conn.close()
     return playlists_songs
 
-
 @UserBP.route('/private')
-@login_required  # richiede autenticazione
+@login_required
 def private():
     conn = engine.connect()
-    # users = conn.execute("SELECT * FROM Utenti") user={'Nome':'Donald','Cognome':'Duck', 'Nickname':'Ducky',
-    # 'Ruolo':'UTENTE'}#Implementare query che ritorna l'utente attuale
-    user = currUser()
+    rs = conn.execute(' SELECT * FROM Playlist WHERE Playlist.IdUtente = ?', current_user.id)
+    playlists = rs.fetchall()
+    rs = conn.execute(' SELECT Raccolte.IdPlaylist, Canzoni.Titolo, Canzoni.Rilascio, Canzoni.Durata, Canzoni.Colore'  
+                      ' FROM Canzoni NATURAL JOIN Raccolte'
+                      ' WHERE Raccolte.IdPlaylist IN (SELECT Playlist.IdPlaylist FROM Playlist'
+                      ' WHERE Playlist.IdPlaylist = ?)'
+                      ' GROUP BY Raccolte.IdPlaylist, Canzoni.Titolo, Canzoni.Rilascio, Canzoni.Durata, Canzoni.Colore', current_user.id)
+    songs = rs.fetchall()
+    playlist_songs = []
+    for playlist in playlists:
+        playlist_s = []
+        for song in songs:
+            if song.IdPlaylist == playlist.IdPlaylist:
+                playlist_s.append(song)
+        playlist_songs.append(playlist_s)
+    print(playlist_songs)
+    print(playlists)
+    resp = make_response(render_template("UserPage.html", user=current_user, playlists=playlists, playlist_songs=playlist_songs))
+    conn.close()
+    return resp
 
-    # playlists=[{'Nome':'Giro a Paperopoli','Descrizione':'Le migliori canzoni paperopolesi'}]#Implementare query
-    # che ricava le playlist dell'utente
-    playlists = getPlaylist(user.IdUtente)
+@UserBP.route('/new_playlist', methods=['GET', 'POST'])
+def NewPlaylist():
+    if request.method == 'POST':
+        conn = engine.connect()
+        data = ( current_user.id, request.form["Nome"], request.form["Descrizione"], "0")
+        rs = conn.execute('INSERT INTO Playlist (IdUtente, Nome, Descrizione, NCanzoni) VALUES (?,?,?,?)', data)
+        conn.close()
+        return redirect(url_for('private'))
+    else:
+        return render_template("NuovaRaccolta.html")
 
-    # playlist_songs = [{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"}, {'Titolo': "Sweet
-    # Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"}, {'Titolo': "Sweet Child O' Mine", 'Anno': 1987,
-    # 'Tag': "#Rock and Roll"}, {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"}, {'Titolo':
-    # "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"}, {'Titolo': "Sweet Child O' Mine", 'Anno': 1987,
-    # 'Tag': "#Rock and Roll"}, {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"}, {'Titolo':
-    # "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"}, {'Titolo': "Sweet Child O' Mine", 'Anno': 1987,
-    # 'Tag': "#Rock and Roll"}, {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"}, {'Titolo':
-    # "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"}, {'Titolo': "Sweet Child O' Mine", 'Anno': 1987,
-    # 'Tag': "#Rock and Roll"}]  # E le relative canzoni
+@UserBP.route('/mod_playlist', methods=['GET', 'POST'])
+def ModPlaylist():
+    if request.method == 'POST':
+        #implementare query per creare una playlist
+        print('ciao')
+    else:
+         return render_template("ModificaRaccolta.html")
 
-    playlist_songs = getPlaylistSongs(playlists.IdPlaylist)
+@UserBP.route('/mod_data', methods=['GET', 'POST'])
+def ModData():
+    if request.method == 'POST':
+        #implementare query per creare una playlist
+        print('ciao')
+    else:
+         return render_template("ModificaDatiPersonali.html")
 
-    resp = make_response(
-        render_template("UserPage.html", user=user, playlists=playlists, playlist_songs=playlist_songs))
+@UserBP.route('/Dati_Personali')
+@login_required  # richiede autenticazione
+def get_data():
+    conn = engine.connect()
+    resp = make_response(render_template("DatiPersonali.html", user=current_user))
     conn.close()
     return resp

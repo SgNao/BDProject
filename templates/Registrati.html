@@ -1,0 +1,34 @@
+{% extends "Base.html" %}
+
+{% block pagebody %}
+        <div id="container2"><h2 id="subtitle">REGISTRATI</h2></div>
+        <div id="container3">
+            <table id="log-table"> 
+                <form action="/singin" method="POST">
+                    <tr>
+                        <td id="log-img-cell" colspan="2"><img src="{{ url_for('static', filename='Img/man.png') }}" id="log-img-3"></td>
+                    </tr>
+                    <tr>
+                        <td class="input-cell-3-bis"><input type="text" name="nickname" placeholder="Nickname" class="input-3"></td>
+                        <td class="input-cell-3"><input type="text" name="email" placeholder="Email" class="input-3"></td>
+                    </tr>
+                    <tr>
+                        <td class="input-cell-3-bis"><input type="text" name="nome" placeholder="Nome" class="input-3"></td>
+                        <td class="input-cell-3-bis"><input type="text" name="cognome" placeholder="Cognome" class="input-3"></td>
+                    </tr>
+                    <tr>
+                        <td class="input-cell-3-bis"><input type="date" name="DataNascita" class="input-3"></td>
+                        <td class="input-cell-3-bis"><input type="password" name="password" placeholder="Password" class="input-3"></td>
+                    </tr>
+                    <tr>
+                        <td class="input-cell-3" colspan="2"><input type="text" name="bio" placeholder="Biografia" class="input-3"></td>
+                    </tr>
+                    <tr>
+                        <td id="submit-cell-3" colspan="2">
+                            <input type="submit" id="button-3" value="Registrati"> 
+                        </td>
+                    </tr>
+                </form>
+            </table>
+        </div>
+{% endblock%}

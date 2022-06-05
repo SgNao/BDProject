@@ -26,31 +26,40 @@ def login():
         rs = conn.execute('SELECT Password FROM Utenti WHERE Email = ?', [request.form['user']])
         real_pwd = rs.fetchone()
         conn.close()
-
-        print('1')
-
         if real_pwd is not None:
-            print('2')
-            # if request.form['pass'] == real_pwd['Password']:
-            # if (check_password_hash(real_pwd, request.form['pass'])):
-            if main.User.verify_password(real_pwd, request.form['pass']):
-                print('3')
+            if main.User.verify_password(real_pwd, request.form['pass']): # funziona così?
                 user = main.get_user_by_email(request.form['user'])
                 login_user(user)
                 return redirect(url_for('home'))
             else:
-                print('4')
                 return redirect(url_for('LoginBP.Accedi'))
         else:
-            print('5')
-            return redirect(url_for('LoginBP.Accedi'))  # redirect(url_for('LoginBP.home'))
+            return redirect(url_for('LoginBP.Accedi'))
     else:
-        print('6')
-        return redirect(url_for('LoginBP.Accedi'))  # redirect(url_for('LoginBP.home'))
+        return redirect(url_for('LoginBP.Accedi'))
 
 
 @LoginBP.route('/logout')
-@login_required  # richiede autenticazione
+@login_required
 def logout():
     logout_user()
     return redirect(url_for('LoginBP.home'))
+
+
+@LoginBP.route('/Registrati')
+def Registrati():
+    return render_template("Registrati.html")
+
+@LoginBP.route('/singin', methods=['GET', 'POST'])
+def SingIn():
+    if request.method == 'POST':
+        conn = engine.connect()
+        pwhash = generate_password_hash(request.form["password"], method='pbkdf2:sha256:260000', salt_length=16)
+        data = (request.form["email"], request.form["nome"], request.form["cognome"], request.form["nickname"], request.form["bio"], request.form["DataNascita"], pwhash, "1")
+        rs = conn.execute('INSERT INTO Utenti (Email, Nome, Cognome, Nickname, Bio, DataNascita, Password, Ruolo)'
+                          ' VALUES (?,?,?,?,?,?,?,?)', data)
+        
+        conn.close()
+        return redirect(url_for('Accedi'))
+    else:
+        return redirect(url_for('Registrati'))

@@ -13,9 +13,8 @@ def load_data(data_file):
     
         # per ogni entry della lista (= riga csv), separa head (tabella) da tail (valori da inserire)
         data = []
-        for line in raw_lines:
+        for line in raw_lines: #for line in raw_lines[1:]:
                 values = line.split(",")
-                #head, *tail = values
                 data.append(values)
         
         # le colonne vuote si possono eliminare utiilizzando la stringa vuota

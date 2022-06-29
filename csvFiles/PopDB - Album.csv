@@ -1,0 +1,11 @@
+Album,IdAlbum,Titolo,Rilascio,Colore,NCanzoni,IdArtista
+Album,1,Kill :Em All,1983-07-25,#ff0000,10,2
+Album,2,Ride the Lightning,1984-07-27,#ff4000,8,2
+Album,3,Master of puppets,1986-03-03,#ff8000,8,2
+Album,4,... And Justice for All,1988-08-25,#ffbf00,9,2
+Album,5,Metallica,1991-08-12,#ffff00,12,2
+Album,6,Made in Heaven,1995-11-06,#bfff00,10,3
+Album,7,The Miracle,1989-05-22,#80ff00,10,3
+Album,8,A Night At The Opera,1975-11-21,#40ff00,12,3
+Album,9,News of the World,1977-10-28,#00ff00,11,3
+Album,10,The Game,1980-06-30,#00ff40,10,3

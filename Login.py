@@ -56,6 +56,7 @@ def SingIn():
         conn = engine.connect()
         pwhash = generate_password_hash(request.form["password"], method='pbkdf2:sha256:260000', salt_length=16)
         data = (request.form["email"], request.form["nome"], request.form["cognome"], request.form["nickname"], request.form["bio"], request.form["DataNascita"], pwhash, "1")
+        #sanitizzare input
         rs = conn.execute('INSERT INTO Utenti (Email, Nome, Cognome, Nickname, Bio, DataNascita, Password, Ruolo)'
                           ' VALUES (?,?,?,?,?,?,?,?)', data)
         

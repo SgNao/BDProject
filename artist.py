@@ -16,8 +16,14 @@ def inject_enumerate():
 def NewAlbum():
     if request.method == 'POST':
         conn = engine.connect()
-        data = (request.form["Titolo"], request.form["Rilascio"], request.form["Colore"], "0", request.form["CasaDiscografica"], current_user.id)
-        rs = conn.execute('INSERT INTO Album (Titolo, Rilascio, Colore, NCanzoni, CasaDiscografica,IdArtista) VALUES (?,?,?,?,?,?)', data)
+        data = (request.form["Titolo"], request.form["Rilascio"], request.form["Colore"], "0", current_user.id)
+        data2 = request.form["CasaDiscografica"]
+        # Serve sanitizzare l'input
+        rs = conn.execute('INSERT INTO Album (Titolo, Rilascio, Colore, NCanzoni, IdArtista) VALUES (?,?,?,?,?)', data)
+        # Check se casa discografica è presente
+        # Inserimento in tag se non è presente
+        # recupero id album appena inserito con key (titolo, rilascio, idartista)
+        # Inserimento in attributoAlbum in ogni caso
         conn.close()
         return redirect(url_for('ArtistBP.get_albums'))
     else:
@@ -34,14 +40,21 @@ def NewSong(IdAlbum):
     print(IdAlbum)
     if request.method == 'POST':
         conn = engine.connect()
-        data = (request.form["Titolo"], request.form["Rilascio"], request.form["Durata"], request.form["Colore"], request.form["Lingua"], current_user.id)
-        rs = conn.execute('INSERT INTO Canzoni (Titolo, Rilascio, Durata, Colore, Lingua, IdArtista) VALUES (?,?,?,?,?,?)', data)
+        data = (request.form["Titolo"], request.form["Rilascio"], request.form["Durata"], request.form["Colore"], current_user.id)
+        data2 = request.form["Lingua"]
+        #sanitizzare input
+        rs = conn.execute('INSERT INTO Canzoni (Titolo, Rilascio, Durata, Colore, IdArtista) VALUES (?,?,?,?,?)', data)
         #Sottile problema - dopo aver inserito una nuova canzone, il DB genera IdCanzone automaticamente.  
         #Questo è l'unico modo che ci è venuto in mente per recuperarlo 
-        rs = conn.execute('SELECT MAX(Canzoni.IdCanzone) FROM Canzoni WHERE Canzoni.IdArtista = ? ', [current_user.id])
+        rs = conn.execute('SELECT * FROM Canzoni WHERE Canzoni.IdArtista = ?  AND Canzoni.Titolo = ? AND Canzoni.Rilascio = ?', [current_user.id],
+            request.form["Titolo"], request.form["Rilascio"])
         IdCanzone = rs.fetchone()
         data = [IdAlbum, IdCanzone[0]]
         rs = conn.execute('INSERT INTO Contenuto (IdAlbum, IdCanzone) VALUES (?,?)', data)
+        # Check se lingua è presente
+        # Inserimento in tag se non è presente
+        # recupero id canzone appena inserita con key (titolo, rilascio, idartista)
+        # Inserimento in attributoCanzone in ogni caso
         conn.close()
         return redirect(url_for('ArtistBP.get_albums'))
     else:

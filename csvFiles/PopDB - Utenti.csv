@@ -1,0 +1,18 @@
+Utenti,IdUtenti,Email,Nome,Cognome,Nickname,Bio,DataNascita,Password,Ruolo
+Utenti,1,admin@admin,admin,admin,admin,void,2022-05-06,admin,3
+Utenti,2,metallica@gmail.com,James,Hetfield,Metallica,I Metallica sono un gruppo musicale heavy metal statunitense; formatosi a Los Angeles nel 1981.,2022-05-06,Metallica,2
+Utenti,3,queen@gmail.com,Freddie,Mercury,Queen,I Queen sono un gruppo musicale rock britannico; formatosi a Londra nel 1970 dall'incontro del cantante e pianista Freddie Mercury con il chitarrista Brian May e con il batterista Roger Taylor.,2022-05-06,Queen,2
+Utenti,4,gunsnroses@gmail.com,Guns:n:Roses,Guns:n:Roses,Guns:n:Roses,void,2022-05-06,Guns,2
+Utenti,5,ligabue@gmail.com,Luciano,Ligabue,Ligabue,void,2022-05-06,Ligabue,2
+Utenti,6,vasco@gmail.com,Vasco,Rossi,Vasco,void,2022-05-06,Vasco,2
+Utenti,7,rammstein@gmail.com,Rammstein,Rammstein,Rammstein,void,2022-05-06,Rammstein,2
+Utenti,8,sabaton@gmail.com,Sabaton,Sabaton,Sabaton,void,2022-05-06,Sabaton,2
+Utenti,9,linkinpark@gmail.com,Linkin Park,Linkin Park,Linkin Park,void,2022-05-06,LinkinPark,2
+Utenti,10,pausini@gmail.com,Laura,Pausini,Laura Pausini,void,2022-05-06,LauraPausini,2
+Utenti,11,mahmood@gmail.com,Alessandro,Mahmoud,Mahmood,void,2022-05-06,AlessandroMah,2
+Utenti,12,bocelli@gmail.com,Andrea,Bocelli,Andrea Bocelli,void,2022-05-06,AndreaBocelli,2
+Utenti,13,elisa@gmail.com,Elisa,Toffoli,Elisa,void,2022-05-06,Elisa,2
+Utenti,14,rickymartin@gmail.com,Enrique Martin,Morales,Ricky Martin,void,2022-05-06,RickyMartin,2
+Utenti,15,massimiliano@gmail.com,Massimiliano,Zuin,Massimiliano Zuin,void,1996-23-07,Massimiliano,1
+Utenti,16,marco@gmail.com,Marco,Quarta,Marco Quarta,void,2022-05-06,Marco,1
+Utenti,17,michele@gmail.com,Michele,Lattanzi,Michele Lattanzi,void,2022-05-06,Michele,1

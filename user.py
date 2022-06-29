@@ -64,6 +64,7 @@ def NewPlaylist():
     if request.method == 'POST':
         conn = engine.connect()
         data = ( current_user.id, request.form["Nome"], request.form["Descrizione"], "0")
+        # Serve sanitizzare l'input
         rs = conn.execute('INSERT INTO Playlist (IdUtente, Nome, Descrizione, NCanzoni) VALUES (?,?,?,?)', data)
         conn.close()
         return redirect(url_for('UserBP.private'))
@@ -74,6 +75,7 @@ def NewPlaylist():
 def ModPlaylist():
     if request.method == 'POST':
         #implementare query per creare una playlist
+        # Serve sanitizzare l'input
         print('ciao')
     else:
          return render_template("ModificaRaccolta.html")
@@ -82,6 +84,7 @@ def ModPlaylist():
 def ModData():
     if request.method == 'POST':
         #implementare query per creare una playlist
+        # Serve sanitizzare l'input
         print('ciao')
     else:
          return render_template("ModificaDatiPersonali.html")

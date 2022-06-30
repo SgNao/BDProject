@@ -19,7 +19,7 @@ def NewAlbum():
         data = (request.form["Titolo"], request.form["Rilascio"], request.form["Colore"], "0", current_user.id)
         data2 = request.form["CasaDiscografica"]
         # Serve sanitizzare l'input
-        rs = conn.execute('INSERT INTO Album (Titolo, Rilascio, Colore, NCanzoni, IdArtista) VALUES (?,?,?,?,?)', data)
+        rs = conn.execute('INSERT INTO album (titolo, rilascio, colore, n_canzoni, id_artista) VALUES (?,?,?,?,?)', data)
         # Check se casa discografica è presente
         # Inserimento in tag se non è presente
         # recupero id album appena inserito con key (titolo, rilascio, idartista)
@@ -43,17 +43,16 @@ def NewSong(IdAlbum):
         data = (request.form["Titolo"], request.form["Rilascio"], request.form["Durata"], request.form["Colore"], current_user.id)
         data2 = request.form["Lingua"]
         #sanitizzare input
-        rs = conn.execute('INSERT INTO Canzoni (Titolo, Rilascio, Durata, Colore, IdArtista) VALUES (?,?,?,?,?)', data)
-        #Sottile problema - dopo aver inserito una nuova canzone, il DB genera IdCanzone automaticamente.  
-        #Questo è l'unico modo che ci è venuto in mente per recuperarlo 
-        rs = conn.execute('SELECT * FROM Canzoni WHERE Canzoni.IdArtista = ?  AND Canzoni.Titolo = ? AND Canzoni.Rilascio = ?', [current_user.id],
+        rs = conn.execute('INSERT INTO canzoni (titolo, rilascio, durata, colore, id_artista) VALUES (?,?,?,?,?)', data)
+        # fare insert della lingua con data2
+        rs = conn.execute('SELECT * FROM canzoni WHERE canzoni.id_artista = ?  AND canzoni.titolo = ? AND canzoni.rilascio = ?', [current_user.id],
             request.form["Titolo"], request.form["Rilascio"])
         IdCanzone = rs.fetchone()
         data = [IdAlbum, IdCanzone[0]]
-        rs = conn.execute('INSERT INTO Contenuto (IdAlbum, IdCanzone) VALUES (?,?)', data)
+        rs = conn.execute('INSERT INTO contenuto (id_album, id_canzone) VALUES (?,?)', data)
         # Check se lingua è presente
         # Inserimento in tag se non è presente
-        # recupero id canzone appena inserita con key (titolo, rilascio, idartista)
+        # recupero id canzone appena inserita con key (titolo, rilascio, id_artista)
         # Inserimento in attributoCanzone in ogni caso
         conn.close()
         return redirect(url_for('ArtistBP.get_albums'))
@@ -68,15 +67,15 @@ def Albumstat():
 @login_required  # richiede autenticazione
 def get_albums():
     conn = engine.connect()
-    rs = conn.execute(' SELECT Album.IdAlbum, Album.Titolo, Album.Rilascio, Album.CasaDiscografica'
-                      ' FROM Album'
-                      ' WHERE Album.IdArtista = ?', current_user.id)
+    rs = conn.execute(' SELECT album.id_album, album.titolo, album.tilascio'
+                      ' FROM album'
+                      ' WHERE album.id_artista = ?', current_user.id)
     albums = rs.fetchall()
-    rs = conn.execute(' SELECT Contenuto.IdAlbum, Canzoni.Titolo, Canzoni.Rilascio, Canzoni.Durata, Canzoni.Colore'  
-                      ' FROM Canzoni NATURAL JOIN Contenuto'
-                      ' WHERE Contenuto.IdAlbum IN (SELECT Album.IdAlbum FROM Album'
-                      ' WHERE Album.IdArtista = ?)'
-                      ' GROUP BY Contenuto.IdAlbum, Canzoni.Titolo, Canzoni.Rilascio, Canzoni.Durata, Canzoni.Colore', current_user.id)
+    rs = conn.execute(' SELECT contenuto.id_album, canzoni.titolo, canzoni.rilascio, canzoni.durata, canzoni.colore, canzoni.id_canzone'  
+                      ' FROM canzoni NATURAL JOIN contenuto'
+                      ' WHERE contenuto.id_album IN (SELECT album.id_album FROM album'
+                      ' WHERE album.id_artista = ?)'
+                      ' GROUP BY contenuto.id_album, canzoni.titolo, canzoni.rilascio, canzoni.durata, canzoni.colore', current_user.id)
     songs = rs.fetchall()
     albums_songs = []
     for album in albums:

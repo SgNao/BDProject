@@ -49,8 +49,27 @@
             
             var Active = true;  
 
-            function CancellaRaccolta(){document.getElementById("NewPlaylist2").style.display = "block";}
-            function ConfermaCancellaRaccolta(){document.getElementById("NewPlaylist2").style.display = "none";}
+            function AddToPlaylist(){
+                document.getElementById("box2").style.display = "block";
+            }
+
+            function CancellaRaccolta(PlaylistName){
+                var messaggio = document.createElement('h4')
+                var testo = document.createTextNode('Sei sicuro di voler cancellare la Playlist '+PlaylistName+' ?')
+                messaggio.appendChild(testo)
+                document.getElementById("Message-box").appendChild(messaggio);
+                document.getElementById("NewPlaylist2").style.display = "block";
+            }
+            function ConfermaCancellaRaccolta(){
+                var messaggio = document.getElementById("Message-box").firstChild
+                document.getElementById("NewPlaylist2").style.display = "none";
+                document.getElementById("Message-box").removeChild(messaggio);
+            }
+            function AnnullaCancellaRaccolta(){
+                var messaggio = document.getElementById("Message-box").firstChild
+                document.getElementById("NewPlaylist2").style.display = "none";
+                document.getElementById("Message-box").removeChild(messaggio);
+            }
             function Elimina(){
                 var elements = document.getElementsByClassName("footprint-hastag-2");
                 for(var i = 0, length = elements.length; i < length; i++){

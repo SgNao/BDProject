@@ -9,7 +9,7 @@ engine = create_engine('sqlite:///database.db', echo = True)
 metadata = MetaData()
 
 users = Table('utenti', metadata, 
-        Column('id_utenti', Integer, nullable=False, autoincrement=True),
+        Column('id_utente', Integer, nullable=False, autoincrement=True),
         Column('email', String, nullable=False),
         Column('nome', String, nullable=False), 
         Column('cognome', String, nullable=False),
@@ -21,18 +21,18 @@ users = Table('utenti', metadata,
         CheckConstraint('ruolo>0 AND ruolo<4', name='check_ruolo'),
         UniqueConstraint('email', name='key_email'),
         UniqueConstraint('nickname', name='key_nickname'),
-        PrimaryKeyConstraint('id_utenti', name='pk_id_utenti')
+        PrimaryKeyConstraint('id_utente', name='pk_id_utente')
         )
 
 artist = Table('artisti', metadata,
-        Column('id_utente', Integer, ForeignKey("utenti.id_utenti", onupdate="CASCADE", ondelete="CASCADE", name='fk_utenti'), nullable=False),
+        Column('id_utente', Integer, ForeignKey("utenti.id_utente", onupdate="CASCADE", ondelete="CASCADE", name='fk_utenti'), nullable=False),
         Column('debutto', Date, nullable=True), # Data prima canzone
-        PrimaryKeyConstraint('id_utenti', name='pk_id_artista')
+        PrimaryKeyConstraint('id_utente', name='pk_id_artista')
         )
 
 playlist = Table('playlist', metadata,
         Column('id_playlist', Integer, nullable=False, autoincrement=True),
-        Column('id_utente', Integer, ForeignKey("utenti.id_utenti", onupdate="CASCADE", ondelete="CASCADE", name='fk_utenti'), nullable=False),
+        Column('id_utente', Integer, ForeignKey("utenti.id_utente", onupdate="CASCADE", ondelete="CASCADE", name='fk_utenti'), nullable=False),
         Column('nome', String, nullable=False),
         Column('descrizione', String, nullable=True),
         Column('n_canzoni', Integer, nullable=False, default=0),
@@ -162,7 +162,7 @@ def insertData(data, connection):
                         head, *tail = c
                         match head:
                                 case "Utenti":
-                                        ins = "INSERT INTO Utenti VALUES (?,?,?,?,?,?,?,?,?)"
+                                        ins = "INSERT INTO utenti VALUES (?,?,?,?,?,?,?,?,?)"
                                         # None per avere un Integer con autoincremento. Mettere gli autoincrement per primi per poter estrarre i None
                                         tail[2] = cambiaCaratteri(tail[2])
                                         tail[3] = cambiaCaratteri(tail[3])
@@ -177,10 +177,10 @@ def insertData(data, connection):
                                         else:
                                                 connection.execute(ins, tail)
                                 case "Artisti":
-                                        ins = "INSERT INTO Artisti VALUES (?,?)"
+                                        ins = "INSERT INTO artisti VALUES (?,?)"
                                         connection.execute(ins, tail)
                                 case "Playlist":
-                                        ins = "INSERT INTO Playlist VALUES (?,?,?,?,?)"
+                                        ins = "INSERT INTO playlist VALUES (?,?,?,?,?)"
                                         # None per avere un Integer con autoincremento. Mettere gli autoincrement per primi per poter estrarre i None
                                         tail[2] = cambiaCaratteri(tail[2])
                                         tail[3] = cambiaCaratteri(tail[3])
@@ -192,7 +192,7 @@ def insertData(data, connection):
                                         else:
                                                 connection.execute(ins, tail)
                                 case "Canzoni":
-                                        ins = "INSERT INTO Canzoni VALUES (?,?,?,?,?,?)"
+                                        ins = "INSERT INTO canzoni VALUES (?,?,?,?,?,?)"
                                         # None per avere un Integer con autoincremento. Mettere gli autoincrement per primi per poter estrarre i None
                                         tail[1] = cambiaCaratteri(tail[1])
                                         head2, *tail2 = tail
@@ -201,7 +201,7 @@ def insertData(data, connection):
                                         else:
                                                 connection.execute(ins, tail)
                                 case "Album":
-                                        ins = "INSERT INTO Album VALUES (?,?,?,?,?,?)"
+                                        ins = "INSERT INTO album VALUES (?,?,?,?,?,?)"
                                         # None per avere un Integer con autoincremento. Mettere gli autoincrement per primi per poter estrarre i None
                                         tail[1] = cambiaCaratteri(tail[1])
                                         head2, *tail2 = tail
@@ -210,7 +210,7 @@ def insertData(data, connection):
                                         else:
                                                 connection.execute(ins, tail)
                                 case "Statistiche":
-                                        ins = "INSERT INTO Statistiche VALUES (?,?,?,?,?,?,?,?,?)"
+                                        ins = "INSERT INTO statistiche VALUES (?,?,?,?,?,?,?,?,?)"
                                         # None per avere un Integer con autoincremento. Mettere gli autoincrement per primi per poter estrarre i None
                                         head2, *tail2 = tail
                                         if head2 == "None":
@@ -218,29 +218,29 @@ def insertData(data, connection):
                                         else:
                                                 connection.execute(ins, tail)
                                 case "Tag":
-                                        ins = "INSERT INTO Tag VALUES (?)"
+                                        ins = "INSERT INTO tag VALUES (?)"
                                         tail[0] = cambiaCaratteri(tail[0])
                                         connection.execute(ins, tail)
                                 case "Raccolte":
-                                        ins = "INSERT INTO Raccolte VALUES (?,?)"
+                                        ins = "INSERT INTO raccolte VALUES (?,?)"
                                         connection.execute(ins, tail)
                                 case "Contenuto":
-                                        ins = "INSERT INTO Contenuto VALUES (?,?)"
+                                        ins = "INSERT INTO contenuto VALUES (?,?)"
                                         connection.execute(ins, tail)
                                 case "AttributoCanzone":
-                                        ins = "INSERT INTO AttributoCanzone VALUES (?,?)"
+                                        ins = "INSERT INTO attributo_canzone VALUES (?,?)"
                                         tail[0] = cambiaCaratteri(tail[0])
                                         connection.execute(ins, tail)
                                 case "AttributoAlbum":
-                                        ins = "INSERT INTO AttributoAlbum VALUES (?,?)"
+                                        ins = "INSERT INTO attributo_album VALUES (?,?)"
                                         tail[0] = cambiaCaratteri(tail[0])
                                         connection.execute(ins, tail)
                                 case "AttributoPlaylist":
-                                        ins = "INSERT INTO AttributoPlaylist VALUES (?,?)"
+                                        ins = "INSERT INTO attributo_playlist VALUES (?,?)"
                                         tail[0] = cambiaCaratteri(tail[0])
                                         connection.execute(ins, tail)
                                 case "StatCanzoni":
-                                        ins = "INSERT INTO StatCanzoni VALUES (?,?)"
+                                        ins = "INSERT INTO statistiche_canzoni VALUES (?,?)"
                                         connection.execute(ins, tail)
                                 case _:
                                         print("Something went wrong")
@@ -248,7 +248,7 @@ def insertData(data, connection):
                 for c in data:
                         head, *tail = c
                         if(head == "Utenti"):
-                                ins = "INSERT INTO Utenti VALUES (?,?,?,?,?,?,?,?,?)"
+                                ins = "INSERT INTO utenti VALUES (?,?,?,?,?,?,?,?,?)"
                                 # None per avere un Integer con autoincremento. Mettere gli autoincrement per primi per poter estrarre i None
                                 tail[2] = cambiaCaratteri(tail[2])
                                 tail[3] = cambiaCaratteri(tail[3])
@@ -263,10 +263,10 @@ def insertData(data, connection):
                                 else:
                                         connection.execute(ins, tail)
                         elif(head == "Artisti"):
-                                ins = "INSERT INTO Artisti VALUES (?,?)"
+                                ins = "INSERT INTO artisti VALUES (?,?)"
                                 connection.execute(ins, tail)
                         elif(head == "Playlist"):
-                                ins = "INSERT INTO Playlist VALUES (?,?,?,?,?)"
+                                ins = "INSERT INTO playlist VALUES (?,?,?,?,?)"
                                 # None per avere un Integer con autoincremento. Mettere gli autoincrement per primi per poter estrarre i None
                                 if(tail[3] == "void"):
                                     tail[3] = ""
@@ -276,7 +276,7 @@ def insertData(data, connection):
                                 else:
                                         connection.execute(ins, tail)
                         elif(head == "Canzoni"):
-                                ins = "INSERT INTO Canzoni VALUES (?,?,?,?,?,?)"
+                                ins = "INSERT INTO canzoni VALUES (?,?,?,?,?,?)"
                                 # None per avere un Integer con autoincremento. Mettere gli autoincrement per primi per poter estrarre i None
                                 tail[1] = cambiaCaratteri(tail[1])
                                 head2, *tail2 = tail
@@ -285,7 +285,7 @@ def insertData(data, connection):
                                 else:
                                         connection.execute(ins, tail)
                         elif(head == "Album"):
-                                ins = "INSERT INTO Album VALUES (?,?,?,?,?,?)"
+                                ins = "INSERT INTO album VALUES (?,?,?,?,?,?)"
                                 # None per avere un Integer con autoincremento. Mettere gli autoincrement per primi per poter estrarre i None
                                 tail[1] = cambiaCaratteri(tail[1])
                                 head2, *tail2 = tail
@@ -294,7 +294,7 @@ def insertData(data, connection):
                                 else:
                                         connection.execute(ins, tail)
                         elif(head == "Statistiche"):
-                                ins = "INSERT INTO Statistiche VALUES (?,?,?,?,?,?,?,?,?)"
+                                ins = "INSERT INTO statistiche VALUES (?,?,?,?,?,?,?,?,?)"
                                 # None per avere un Integer con autoincremento. Mettere gli autoincrement per primi per poter estrarre i None
                                 head2, *tail2 = tail
                                 if head2 == "None":
@@ -302,29 +302,29 @@ def insertData(data, connection):
                                 else:
                                         connection.execute(ins, tail)
                         elif(head == "Tag"):
-                                ins = "INSERT INTO Tag VALUES (?)"
+                                ins = "INSERT INTO tag VALUES (?)"
                                 tail[0] = cambiaCaratteri(tail[0])
                                 connection.execute(ins, tail)
                         elif(head == "Raccolte"):
-                                ins = "INSERT INTO Raccolte VALUES (?,?)"
+                                ins = "INSERT INTO raccolte VALUES (?,?)"
                                 connection.execute(ins, tail)
                         elif(head == "Contenuto"):
-                                ins = "INSERT INTO Contenuto VALUES (?,?)"
+                                ins = "INSERT INTO contenuto VALUES (?,?)"
                                 connection.execute(ins, tail)
                         elif(head == "AttributoCanzone"):
-                                ins = "INSERT INTO AttributoCanzone VALUES (?,?)"
+                                ins = "INSERT INTO attributo_canzone VALUES (?,?)"
                                 tail[0] = cambiaCaratteri(tail[0])
                                 connection.execute(ins, tail)
                         elif(head == "AttributoAlbum"):
-                                ins = "INSERT INTO AttributoAlbum VALUES (?,?)"
+                                ins = "INSERT INTO attributo_album VALUES (?,?)"
                                 tail[0] = cambiaCaratteri(tail[0])
                                 connection.execute(ins, tail)
                         elif(head == "AttributoPlaylist"):
-                                ins = "INSERT INTO AttributoPlaylist VALUES (?,?)"
+                                ins = "INSERT INTO attributo_playlist VALUES (?,?)"
                                 tail[0] = cambiaCaratteri(tail[0])
                                 connection.execute(ins, tail)
                         elif(head == "StatCanzoni"):
-                                ins = "INSERT INTO StatCanzoni VALUES (?,?)"
+                                ins = "INSERT INTO statistiche_canzoni VALUES (?,?)"
                                 connection.execute(ins, tail)
                         else:
                                 print("Something went wrong else else")

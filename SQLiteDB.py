@@ -1,3 +1,4 @@
+from email.policy import default
 from flask import *
 from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user, login_remembered
 from sqlalchemy import *
@@ -7,110 +8,112 @@ from werkzeug.security import generate_password_hash
 engine = create_engine('sqlite:///database.db', echo = True)
 metadata = MetaData()
 
-users = Table('Utenti', metadata, 
-        Column('IdUtenti', Integer, primary_key=True, nullable=False, autoincrement=True),
-        Column('Email', String, nullable=False, unique=True),
-        Column('Nome', String, nullable=False), 
-        Column('Cognome', String, nullable=False),
-        Column('Nickname', String(16), nullable=True, unique=True),
-        Column('Bio', String(160), nullable=True),
-        Column('DataNascita', Date, nullable=False), # sembra che non si possa controllare a livello di DB l'età di una persona
-        Column('Password', String, nullable=False),
-        Column('Ruolo', Integer, nullable=False),
-        Index('idx_email', 'Email'),
-        CheckConstraint('Ruolo>0 AND Ruolo<4', name='checkRuolo')
-        #CheckConstraint('datetime.datetime() - DataNascita > 13', name='check13')
+users = Table('utenti', metadata, 
+        Column('id_utenti', Integer, nullable=False, autoincrement=True),
+        Column('email', String, nullable=False),
+        Column('nome', String, nullable=False), 
+        Column('cognome', String, nullable=False),
+        Column('nickname', String, nullable=True, unique=True),
+        Column('bio', String, nullable=True),
+        Column('data_nascita', Date, nullable=False),
+        Column('password', String, nullable=False),
+        Column('ruolo', Integer, nullable=False),
+        CheckConstraint('ruolo>0 AND ruolo<4', name='check_ruolo'),
+        UniqueConstraint('email', name='key_email'),
+        UniqueConstraint('nickname', name='key_nickname'),
+        PrimaryKeyConstraint('id_utenti', name='pk_id_utenti')
         )
 
-artist = Table('Artisti', metadata,
-        Column('IdUtente', Integer, ForeignKey("Utenti.IdUtenti", onupdate="CASCADE", ondelete="CASCADE"), primary_key=True, nullable=False),
-        Column('Debutto', Date, nullable=True), # Data prima canzone
-        Index('idx_Utente', 'IdUtente')
+artist = Table('artisti', metadata,
+        Column('id_utente', Integer, ForeignKey("utenti.id_utenti", onupdate="CASCADE", ondelete="CASCADE", name='fk_utenti'), nullable=False),
+        Column('debutto', Date, nullable=True), # Data prima canzone
+        PrimaryKeyConstraint('id_utenti', name='pk_id_artista')
         )
 
-playlist = Table('Playlist', metadata,
-        Column('IdPlaylist', Integer, primary_key=True, nullable=False, autoincrement=True),
-        Column('IdUtente', Integer, ForeignKey("Utenti.IdUtenti", onupdate="CASCADE", ondelete="CASCADE"), nullable=False),
-        Column('Nome', String(64), nullable=False),
-        Column('Descrizione', String(160), nullable=True),
-        Column('NCanzoni', Integer, CheckConstraint('NCanzoni>=0'), nullable=False),
-        Index('idx_playlist', 'IdUtente', 'Nome')
+playlist = Table('playlist', metadata,
+        Column('id_playlist', Integer, nullable=False, autoincrement=True),
+        Column('id_utente', Integer, ForeignKey("utenti.id_utenti", onupdate="CASCADE", ondelete="CASCADE", name='fk_utenti'), nullable=False),
+        Column('nome', String, nullable=False),
+        Column('descrizione', String, nullable=True),
+        Column('n_canzoni', Integer, nullable=False, default=0),
+        PrimaryKeyConstraint('id_playlist', name='pk_playlist'),
+        CheckConstraint('n_canzoni>=0', name='check_n_canzoni')
         )
 
-canzoni = Table('Canzoni', metadata,
-        Column('IdCanzone', Integer, primary_key=True, nullable=False, autoincrement=True),
-        Column('Titolo', String, nullable=False),
-        Column('Rilascio', Date, nullable=False),
-        Column('Durata', Integer, nullable=False),
-        Column('Colore', String, nullable=False),
-        Column('IdArtista', Integer, ForeignKey('Artisti.IdUtente', onupdate='CASCADE', ondelete='CASCADE'), nullable=False),
-        UniqueConstraint('Titolo', 'Rilascio', 'IdArtista', name='songKey'),
-        Index('idx_canzone_anno', 'Rilascio'),
-        Index('idx_canzone_Titolo', 'Titolo')
+canzoni = Table('canzoni', metadata,
+        Column('id_canzone', Integer, nullable=False, autoincrement=True),
+        Column('titolo', String, nullable=False),
+        Column('rilascio', Date, nullable=False),
+        Column('durata', Integer, nullable=False),
+        Column('colore', String, nullable=False),
+        Column('id_artista', Integer, ForeignKey('artisti.id_utente', onupdate='CASCADE', ondelete='CASCADE', name='fk_artista'), nullable=False),
+        UniqueConstraint('titolo', 'rilascio', 'id_artista', name='key_canzone'),
+        PrimaryKeyConstraint('id_canzone', name='pk_id_canzone')
         )
 
-album = Table('Album', metadata,
-        Column('IdAlbum', Integer, primary_key=True, nullable=False, autoincrement=True),
-        Column('Titolo', String, nullable=False),
-        Column('Rilascio', Date, nullable=False),
-        Column('Colore', String, nullable=False),
-        Column('NCanzoni', Integer, nullable=False),
-        Column('IdArtista', Integer, ForeignKey('Artisti.IdUtente', onupdate='CASCADE', ondelete='CASCADE'), nullable=False),
-        UniqueConstraint('Titolo', 'Rilascio', 'IdArtista', name='albumKey'),
-        Index('idx_album_titolo', 'Titolo'),
-        Index('idx_album_anno', 'Rilascio')
+album = Table('album', metadata,
+        Column('id_album', Integer, nullable=False, autoincrement=True),
+        Column('titolo', String, nullable=False),
+        Column('rilascio', Date, nullable=False),
+        Column('colore', String, nullable=False),
+        Column('n_canzoni', Integer, nullable=False, default=0),
+        Column('id_artista', Integer, ForeignKey('artisti.id_utente', onupdate='CASCADE', ondelete='CASCADE', name='fk_artista'), nullable=False),
+        UniqueConstraint('titolo', 'rilascio', 'id_artista', name='key_album'),
+        PrimaryKeyConstraint('id_album', name='pk_id_album'),
+        CheckConstraint('n_canzoni>=0', name='check_n_canzoni_album')
         )
 
-Statistiche = Table('Statistiche', metadata,
-        Column('IdStatistica', Integer, primary_key = True, nullable=False, autoincrement = True),
-        Column('13-19', Integer, nullable=False),
-        Column('20-29', Integer, nullable=False),
-        Column('30-39', Integer, nullable=False),
-        Column('40-49', Integer, nullable=False),
-        Column('50-65', Integer, nullable=False),
-        Column('65+', Integer, nullable=False),
-        Column('NRiproduzioniTotali', Integer, nullable=False),
-        Column('NRiproduzioniSettimanali', Integer, nullable=False)
+Statistiche = Table('statistiche', metadata,
+        Column('id_statistica', Integer, nullable=False, autoincrement = True),
+        Column('_13_19', Integer, nullable=False, default=0),
+        Column('_20_29', Integer, nullable=False, default=0),
+        Column('_30_39', Integer, nullable=False, default=0),
+        Column('_40_49', Integer, nullable=False, default=0),
+        Column('_50_65', Integer, nullable=False, default=0),
+        Column('_65piu', Integer, nullable=False, default=0),
+        Column('n_riproduzioni_totali', Integer, nullable=False),
+        Column('n_riproduzioni_settimanali', Integer, nullable=False),
+        PrimaryKeyConstraint('id_statistica', name='pk_id_statistica')
         )
 
-tag = Table('Tag', metadata,
-        Column('Tag', String, primary_key=True, nullable=False),
+tag = Table('tag', metadata,
+        Column('tag', String, primary_key=True, nullable=False),
         )
 
-raccolte = Table('Raccolte', metadata,
-        Column('IdPlaylist', Integer, ForeignKey('Playlist.IdPlaylist', onupdate='CASCADE', ondelete='CASCADE'), nullable=False),
-        Column('IdCanzone', Integer, ForeignKey('Canzoni.IdCanzone', onupdate='CASCADE', ondelete='CASCADE'), nullable=False),
-        PrimaryKeyConstraint('IdPlaylist', 'IdCanzone', name='RaccoltePK')
+raccolte = Table('raccolte', metadata,
+        Column('id_playlist', Integer, ForeignKey('playlist.id_playlist', onupdate='CASCADE', ondelete='CASCADE', name='fk_playlist'), nullable=False),
+        Column('id_canzone', Integer, ForeignKey('canzoni.id_canzone', onupdate='CASCADE', ondelete='CASCADE', name='fk_canzone'), nullable=False),
+        PrimaryKeyConstraint('id_playlist', 'id_canzone', name='pk_raccolte')
         )
 
-contenuto = Table('Contenuto', metadata,
-        Column('IdAlbum', Integer, ForeignKey('Album.IdAlbum', onupdate='CASCADE', ondelete='CASCADE'), nullable=False),
-        Column('IdCanzone', Integer, ForeignKey('Canzoni.IdCanzone', onupdate='CASCADE', ondelete='CASCADE'), nullable=False),
-        PrimaryKeyConstraint('IdAlbum', 'IdCanzone', name='ConteutoPK')
+contenuto = Table('contenuto', metadata,
+        Column('id_album', Integer, ForeignKey('album.id_album', onupdate='CASCADE', ondelete='CASCADE', name='fk_album'), nullable=False),
+        Column('id_canzone', Integer, ForeignKey('canzoni.id_canzone', onupdate='CASCADE', ondelete='CASCADE', name='fk_canzone'), nullable=False),
+        PrimaryKeyConstraint('id_album', 'id_canzone', name='pk_contenuto')
         )
 
-attCanzone = Table('AttributoCanzone', metadata,
-        Column('IdTag', String, ForeignKey('Tag.Tag', onupdate='CASCADE', ondelete='CASCADE'), nullable=False),
-        Column('IdCanzone', Integer, ForeignKey('Canzoni.IdCanzone', onupdate='CASCADE', ondelete='CASCADE'), nullable=False),
-        PrimaryKeyConstraint('IdTag', 'IdCanzone', name='AttributoCanzonePK')
+attCanzone = Table('attributo_canzone', metadata,
+        Column('id_tag', String, ForeignKey('tag.tag', onupdate='CASCADE', ondelete='CASCADE', name='fk_tag'), nullable=False),
+        Column('id_canzone', Integer, ForeignKey('canzoni.id_canzone', onupdate='CASCADE', ondelete='CASCADE', name='fk_canzone'), nullable=False),
+        PrimaryKeyConstraint('id_tag', 'id_canzone', name='pk_attributo_canzone')
         )
 
-attAlbum = Table('AttributoAlbum', metadata,
-        Column('IdTag', String, ForeignKey('Tag.Tag', onupdate='CASCADE', ondelete='CASCADE'), nullable=False),
-        Column('IdAlbum', Integer, ForeignKey('Album.IdAlbum', onupdate='CASCADE', ondelete='CASCADE'), nullable=False),
-        PrimaryKeyConstraint('IdTag', 'IdAlbum', name='AttributoAlbumPK')
+attAlbum = Table('attributo_album', metadata,
+        Column('id_tag', String, ForeignKey('tag.tag', onupdate='CASCADE', ondelete='CASCADE', name='fk_tag'), nullable=False),
+        Column('id_album', Integer, ForeignKey('album.id_album', onupdate='CASCADE', ondelete='CASCADE', name='fk_album'), nullable=False),
+        PrimaryKeyConstraint('id_tag', 'id_album', name='pk_attributo_album')
         )
 
-AttPlaylist = Table('AttributoPlaylist', metadata,
-        Column('IdTag', String, ForeignKey('Tag.Tag', onupdate='CASCADE', ondelete='CASCADE'), nullable=False),
-        Column('IdPlaylist', Integer, ForeignKey('Playlist.IdPlaylist', onupdate='CASCADE', ondelete='CASCADE'), nullable=False),
-        PrimaryKeyConstraint('IdTag', 'IdPlaylist', name='AttributoPlaylistPK')
+AttPlaylist = Table('attributo_playlist', metadata,
+        Column('id_tag', String, ForeignKey('tag.tag', onupdate='CASCADE', ondelete='CASCADE', name='fk_tag'), nullable=False),
+        Column('id_playlist', Integer, ForeignKey('playlist.id_playlist', onupdate='CASCADE', ondelete='CASCADE', name='fk_playlist'), nullable=False),
+        PrimaryKeyConstraint('id_tag', 'id_playlist', name='pk_attributo_playlist')
         )
 
-StatCanzoni = Table('StatCanzoni', metadata,
-        Column('IdStatistica', Integer, ForeignKey('Statistiche.IdStatistica', onupdate='CASCADE', ondelete='CASCADE'), nullable=False),
-        Column('IdCanzone', Integer, ForeignKey('Canzoni.IdCanzone', onupdate='CASCADE', ondelete='CASCADE'), nullable=False),
-        PrimaryKeyConstraint('IdStatistica', 'IdCanzone', name='StatCanzoniPK')
+StatCanzoni = Table('statistiche_canzoni', metadata,
+        Column('id_statistica', Integer, ForeignKey('statistiche.id_statistica', onupdate='CASCADE', ondelete='CASCADE', name='fk_statistica'), nullable=False),
+        Column('id_canzone', Integer, ForeignKey('canzoni.id_canzone', onupdate='CASCADE', ondelete='CASCADE', name='fk_canzone'), nullable=False),
+        PrimaryKeyConstraint('id_statistica', 'id_canzone', name='pk_statistiche_canzoni')
         )
 
 metadata.create_all(engine)

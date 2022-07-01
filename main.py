@@ -71,46 +71,23 @@ def load_user(user_id):
     conn.close()
     return User(user.id_utenti, user.email, user.nome, user.cognome, user.nickname, user.bio, user.data_nascita, user.password, user.ruolo)
 
-def latest_s():
-    conn = engine.connect()
-    rs = conn.execute('SELECT titolo, rilascio FROM canzoni ORDER BY rilascio DESC LIMIT 5')
-    latest_songs = rs.fetchone()
-    conn.close()
-    return latest_songs
-
-def all_s():
-    conn = engine.connect()
-    rs = conn.execute('SELECT titolo, rilascio FROM canzoni')
-    all_songs = rs.fetchone()
-    conn.close()
-    return all_songs
-
-def most_played():
-    conn = engine.connect()
-    rs = conn.execute('SELECT C.* FROM statistiche_canzoni S NATURAL JOIN canzoni C NATURAL JOIN '
-                      'statistiche ST WHERE id_statistica IN (SELECT * FROM statistiche '
-                      'ORDER BY n_riproduzioni_totali DESC LIMIT 5)')
-    most_p = rs.fetchone()
-    conn.close()
-    return most_p
-
 @app.route('/')
 def home():
     # current_user identifica l’utente attuale utente anonimo prima dell’autenticazione
 
     conn = engine.connect()
     
-    #rs = conn.execute('SELECT id_canzone, titolo, rilascio FROM canzoni')
-    all_songs = all_s() #rs.fetchall()
+    rs = conn.execute('SELECT id_canzone, titolo, rilascio FROM canzoni')
+    all_songs = rs.fetchall()
 
-    #rs = conn.execute('SELECT id_canzone, titolo, rilascio FROM canzoni ORDER BY rilascio DESC LIMIT 5')
-    latest_songs = latest_s() #rs.fetchall()
+    rs = conn.execute('SELECT id_canzone, titolo, rilascio FROM canzoni ORDER BY rilascio DESC LIMIT 5')
+    latest_songs = rs.fetchall()
 
-    most_played_songs = most_played() #[{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                         #{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                         #{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                         #{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                         #{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"}] #Implementare query che ritorna le 5 canzoni più riprodotte
+    most_played_songs = [{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                         {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                         {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                         {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                         {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"}] #Implementare query che ritorna le 5 canzoni più riprodotte
 
     if current_user.is_authenticated:
         recommended_songs = [{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},

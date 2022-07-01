@@ -28,9 +28,7 @@ def login():
         real_pwd = rs.fetchone()
         conn.close()
         if real_pwd is not None:
-            if main.verify_password(real_pwd, request.form['pass']): # funziona così?
-                #quale riga è quella corretta? questa o 
-                # if check_password_hash(real_pwd[0], request.form['pass']):
+            if check_password_hash(real_pwd[0], request.form['pass']):
                 user = main.get_user_by_email(request.form['user'])
                 login_user(user)
                 return redirect(url_for('home'))

@@ -1,34 +1,31 @@
 from flask import *
 from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user, login_remembered
 from sqlalchemy import *
-import psycopg2
+#import psycopg2
 
-# da riempire con dati corretti per far partire con Postgres
-def setupConnection():
-    conn = psycopg2.connect(database="DBProject",
-        host="localhost", #da mettere
-        user="postgres", #da mettere
-        password="db_pass", #da mettere
-        port="5050") #da mettere
-    return conn
+def selectDB():
+    return true
 
-# se si è fatto il setup della connessione, sostituire con true
-def isSetupDone():
-    return false
+# In questo file Python si possono settare le varie informazioni per far funzionare un database di PostGre sulla propria macchina.
+# Settare le seguenti 5 funzioni in modo che ritornino stringhe coerenti con i campi richiesti.
+# Nelle funzioni saranno presenti anche le stringhe di configurazione dello studente Massimiliano Zuin come esempio.
 
-def createConnection():
-    if (isSetupDone()):
-        return setupConnection()
-    else:
-        engine = create_engine('sqlite:///database.db', echo = True)
-        conn = engine.connect()
-        return conn
+def getDatabase():
+    # return "DBProject"
+    return "BDProject"
 
-def myExecute(conn, ins, list):
-    if (isSetupDone()):
-        conn.execute(ins, list) # da controllare cosa serve su postgress
-    else:
-        conn.execute(ins, list)
+def getHost():
+    # return "localhost" 
+    return "localhost"
 
-def myClose(conn):
-    conn.close()
+def getUser():
+    # return "postgres"
+    return "postgres"
+
+def getPassword():
+    # return "BDProject2022"
+    return "BDProject2022"
+
+def getPort():
+    # return "5432"
+    return "5432"

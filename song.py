@@ -1,5 +1,6 @@
 from flask import *
 from sqlalchemy import *
+from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user
 
 SongBP = Blueprint('SongBP', __name__)
 engine = create_engine('sqlite:///database.db', echo=True)
@@ -16,13 +17,15 @@ def SongStat():
 @SongBP.route('/songs/<IdCanzone>')
 def songs(IdCanzone):
     conn = engine.connect()
-    rs = conn.execute(' SELECT * FROM Canzoni WHERE Canzoni.IdCanzone = ?', IdCanzone)
+    rs = conn.execute(' SELECT * FROM canzoni WHERE canzoni.id_canzone = ?', IdCanzone)
     songdata = rs.fetchone()
-    rs = conn.execute(' SELECT Contenuto.IdAlbum FROM Canzoni NATURAL JOIN Contenuto WHERE Canzoni.IdCanzone = ?', IdCanzone)
+    rs = conn.execute(' SELECT contenuto.id_album FROM canzoni NATURAL JOIN contenuto WHERE canzoni.id_canzone = ?', IdCanzone)
     IdAlbum = rs.fetchone()
-    rs = conn.execute(' SELECT * FROM Canzoni NATURAL JOIN Contenuto WHERE Contenuto.IdAlbum = ?', IdAlbum)
+    rs = conn.execute(' SELECT * FROM canzoni NATURAL JOIN contenuto WHERE contenuto.id_album = ?', IdAlbum)
     songAlbum = rs.fetchall()
+    rs = conn.execute(' SELECT * FROM playlist WHERE playlist.id_utente = ?', current_user.id)
+    playlists = rs.fetchall()
     print(songAlbum)
-    resp = make_response(render_template("Song.html", song=songdata, songAlbum=songAlbum))
+    resp = make_response(render_template("Song.html", playlists=playlists, song=songdata, songAlbum=songAlbum))
     conn.close()
     return resp

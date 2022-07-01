@@ -12,16 +12,17 @@ engine = create_engine('sqlite:///database.db', echo=True)
 def inject_enumerate():
     return dict(enumerate=enumerate, str=str, len=len)
 
+
 def currUser():
     conn = engine.connect()
-    rs = conn.execute('SELECT * FROM Utenti WHERE IdUtenti = ?', current_user.id)
+    rs = conn.execute('SELECT * FROM utenti WHERE id_utente = ?', current_user.id)
     curr_user = rs.fetchone()
     conn.close()
     return curr_user
 
 def getPlaylist(userid):
     conn = engine.connect()
-    rs = conn.execute('SELECT * FROM Playlist WHERE IdUtente = ?', userid)
+    rs = conn.execute('SELECT * FROM playlist WHERE id_utente = ?', userid)
     playlists = rs.fetchone()
     conn.close()
     return playlists
@@ -29,7 +30,7 @@ def getPlaylist(userid):
 
 def getPlaylistSongs(playlistId):
     conn = engine.connect()
-    rs = conn.execute('SELECT C.* FROM Raccolte R JOIN Canzoni C on C.IdCanzone = R.IdCanzone WHERE IdPlaylist = ?', playlistId)
+    rs = conn.execute('SELECT C.* FROM raccolte R JOIN canzoni C on C.id_canzone = R.id_canzone WHERE id_playlist = ?', playlistId)
     playlists_songs = rs.fetchone()
     conn.close()
     return playlists_songs
@@ -38,13 +39,13 @@ def getPlaylistSongs(playlistId):
 @login_required
 def private():
     conn = engine.connect()
-    rs = conn.execute(' SELECT * FROM Playlist WHERE Playlist.IdUtente = ?', current_user.id)
-    playlists = rs.fetchall()
-    rs = conn.execute(' SELECT Raccolte.IdPlaylist, Canzoni.Titolo, Canzoni.Rilascio, Canzoni.Durata, Canzoni.Colore'  
-                      ' FROM Canzoni NATURAL JOIN Raccolte'
-                      ' WHERE Raccolte.IdPlaylist IN (SELECT Playlist.IdPlaylist FROM Playlist'
-                      ' WHERE Playlist.IdPlaylist = ?)'
-                      ' GROUP BY Raccolte.IdPlaylist, Canzoni.Titolo, Canzoni.Rilascio, Canzoni.Durata, Canzoni.Colore', current_user.id)
+    #rs = conn.execute(' SELECT * FROM playlist WHERE playlist.id_utente = ?', current_user.id)
+    playlists =  getPlaylist(currUser()) #rs.fetchall()
+    rs = conn.execute(' SELECT raccolte.id_playlist, canzoni.titolo, canzoni.rilascio, canzoni.durata, canzoni.colore'  
+                      ' FROM canzoni NATURAL JOIN raccolte'
+                      ' WHERE raccolte.id_playlist IN (SELECT playlist.id_playlist FROM playlist'
+                      ' WHERE playlist.id_playlist = ?)'
+                      ' GROUP BY raccolte.id_playlist, canzoni.titolo, canzoni.rilascio, canzoni.durata, canzoni.colore', current_user.id)
     songs = rs.fetchall()
     playlist_songs = []
     for playlist in playlists:
@@ -65,7 +66,7 @@ def NewPlaylist():
         conn = engine.connect()
         data = ( current_user.id, request.form["Nome"], request.form["Descrizione"], "0")
         # Serve sanitizzare l'input
-        rs = conn.execute('INSERT INTO Playlist (IdUtente, Nome, Descrizione, NCanzoni) VALUES (?,?,?,?)', data)
+        rs = conn.execute('INSERT INTO playlist (id_utente, nome, descrizione, n_canzoni) VALUES (?,?,?,?)', data)
         conn.close()
         return redirect(url_for('UserBP.private'))
     else:
@@ -79,6 +80,18 @@ def ModPlaylist():
         print('ciao')
     else:
          return render_template("ModificaRaccolta.html")
+
+@UserBP.route('/delete_playlist/<IdPlaylist>', methods=['GET', 'POST'])
+def DelPlaylist(IdPlaylist):
+    if request.method == 'POST':
+        conn = engine.connect()
+        data = ( current_user.id, request.form["Nome"], request.form["Descrizione"], "0")
+        # questa fa insert, no delete
+        rs = conn.execute('INSERT INTO playlist (id_utente, nome, descrizione, n_canzoni) VALUES (?,?,?,?)', data)
+        conn.close()
+        return redirect(url_for('UserBP.private'))
+    else:
+        return render_template("NuovaRaccolta.html")
 
 @UserBP.route('/mod_data', methods=['GET', 'POST'])
 def ModData():

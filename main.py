@@ -6,8 +6,8 @@ from user import UserBP
 from song import SongBP
 from artist import ArtistBP
 from werkzeug.security import check_password_hash, generate_password_hash
-import psycopg2
-import configdb
+#import psycopg2
+#import configdb
 
 #conn = configdb.setupConnection()
 
@@ -42,54 +42,54 @@ def inject_enumerate():
 
 
 class User(UserMixin):
-    def __init__(self, id, Email, Nome, Cognome, Nickname, Bio, DataNascita, Password, Ruolo):  # active=True
+    def __init__(self, id, email, nome, cognome, nickname, bio, data_nascita, password, ruolo):  # active=True
         self.id = id
-        self.Email = Email
-        self.Nome = Nome
-        self.Cognome = Cognome
-        self.Nickname = Nickname
-        self.Bio = Bio
-        self.DataNascita = DataNascita
-        self.Password = Password
-        self.Ruolo = Ruolo
+        self.email = email
+        self.nome = nome
+        self.cognome = cognome
+        self.nickname = nickname
+        self.bio = bio
+        self.data_nascita = data_nascita
+        self.password = password
+        self.ruolo = ruolo
 
-    def verify_password(self, pwd):
-        return check_password_hash(self.Password, pwd)
+def verify_password(self, pwd):
+    return check_password_hash(self.Password, pwd)
 
 def get_user_by_email(email):
     conn = engine.connect()
-    rs = conn.execute('SELECT * FROM Utenti WHERE Email = ?', email)
+    rs = conn.execute('SELECT * FROM utenti WHERE email = ?', email)
     user = rs.fetchone()
     conn.close()
-    return User(user.IdUtenti, user.Email, user.Nome, user.Cognome, user.Nickname, user.Bio, user.DataNascita, user.Password, user.Ruolo)
+    return User(user.id_utenti, user.email, user.nome, user.cognome, user.nickname, user.bio, user.data_nascita, user.password, user.ruolo)
 
 @login_manager.user_loader
 def load_user(user_id):
     conn = engine.connect()
-    rs = conn.execute('SELECT * FROM Utenti WHERE IdUtenti = ?', user_id)
+    rs = conn.execute('SELECT * FROM utenti WHERE id_utenti = ?', user_id)
     user = rs.fetchone()
     conn.close()
-    return User(user.IdUtenti, user.Email, user.Nome, user.Cognome, user.Nickname, user.Bio, user.DataNascita, user.Password, user.Ruolo)
+    return User(user.id_utenti, user.email, user.nome, user.cognome, user.nickname, user.bio, user.data_nascita, user.password, user.ruolo)
 
 def latest_s():
     conn = engine.connect()
-    rs = conn.execute('SELECT Titolo, Rilascio, Lingua FROM Canzoni ORDER BY Rilascio DESC LIMIT 5')
+    rs = conn.execute('SELECT titolo, rilascio FROM canzoni ORDER BY rilascio DESC LIMIT 5')
     latest_songs = rs.fetchone()
     conn.close()
     return latest_songs
 
 def all_s():
     conn = engine.connect()
-    rs = conn.execute('SELECT Titolo, Rilascio, Lingua FROM Canzoni')
+    rs = conn.execute('SELECT titolo, rilascio FROM canzoni')
     all_songs = rs.fetchone()
     conn.close()
     return all_songs
 
 def most_played():
     conn = engine.connect()
-    rs = conn.execute('SELECT C.* FROM StatCanzoni S NATURAL JOIN Canzoni C NATURAL JOIN '
-                      'Statistiche ST WHERE IdStatistica IN (SELECT * FROM Statistiche '
-                      'ORDER BY NRiproduzioniTotali DESC LIMIT 5)')
+    rs = conn.execute('SELECT C.* FROM statistiche_canzoni S NATURAL JOIN canzoni C NATURAL JOIN '
+                      'statistiche ST WHERE id_statistica IN (SELECT * FROM statistiche '
+                      'ORDER BY n_riproduzioni_totali DESC LIMIT 5)')
     most_p = rs.fetchone()
     conn.close()
     return most_p
@@ -100,17 +100,17 @@ def home():
 
     conn = engine.connect()
     
-    rs = conn.execute('SELECT IdCanzone, Titolo, Rilascio FROM Canzoni')
-    all_songs = rs.fetchall()
+    #rs = conn.execute('SELECT id_canzone, titolo, rilascio FROM canzoni')
+    all_songs = all_s() #rs.fetchall()
 
-    rs = conn.execute('SELECT IdCanzone, Titolo, Rilascio FROM Canzoni ORDER BY Rilascio DESC LIMIT 5')
-    latest_songs = rs.fetchall()
+    #rs = conn.execute('SELECT id_canzone, titolo, rilascio FROM canzoni ORDER BY rilascio DESC LIMIT 5')
+    latest_songs = latest_s() #rs.fetchall()
 
-    most_played_songs = [{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                         {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                         {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                         {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                         {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"}] #Implementare query che ritorna le 5 canzoni più riprodotte
+    most_played_songs = most_played() #[{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                         #{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                         #{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                         #{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
+                         #{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"}] #Implementare query che ritorna le 5 canzoni più riprodotte
 
     if current_user.is_authenticated:
         recommended_songs = [{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},

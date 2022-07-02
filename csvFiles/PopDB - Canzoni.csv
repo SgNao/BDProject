@@ -1,101 +1,575 @@
 Canzoni,IdCanzone,Titolo,Rilascio,Durata,Colore,IdArtista
-Canzoni,1,Hit the Lights,1983-07-25,257,#ff0000,2
-Canzoni,2,The Four Horsemen,1983-07-25,433,#ff0000,2
+Canzoni,1,Hit the lights,1983-07-25,257,#ff0000,2
+Canzoni,2,The four horsemen,1983-07-25,433,#ff0000,2
 Canzoni,3,Motorbreath,1983-07-25,188,#ff0000,2
-Canzoni,4,Jump in the Fire,1983-07-25,281,#ff0000,2
-Canzoni,5,(Anesthesia)-Pulling Teeth,1983-07-25,254,#ff0000,2
+Canzoni,4,Jump in the fire,1983-07-25,281,#ff0000,2
+Canzoni,5,(Anesthesia)-Pulling teeth,1983-07-25,254,#ff0000,2
 Canzoni,6,Whiplash,1983-07-25,249,#ff0000,2
-Canzoni,7,Phantom Lord,1983-07-25,301,#ff0000,2
-Canzoni,8,No Remorse,1983-07-25,386,#ff0000,2
-Canzoni,9,Seek & Destroy,1983-07-25,415,#ff0000,2
-Canzoni,10,Metal Militia,1983-07-25,311,#ff0000,2
-Canzoni,11,Fight Fire with Fire,1984-07-27,284,#ff4000,2
-Canzoni,12,Ride the Lightning,1984-07-27,397,#ff4000,2
-Canzoni,13,For Whom the Bell Tolls,1984-07-27,311,#ff4000,2
-Canzoni,14,Fade to Black,1984-07-27,415,#ff4000,2
-Canzoni,15,Trapped Under Ice,1984-07-27,244,#ff4000,2
+Canzoni,7,Phantom lord,1983-07-25,301,#ff0000,2
+Canzoni,8,No remorse,1983-07-25,386,#ff0000,2
+Canzoni,9,Seek & destroy,1983-07-25,415,#ff0000,2
+Canzoni,10,Metal militia,1983-07-25,311,#ff0000,2
+Canzoni,11,Fight fire with fire,1984-07-27,284,#ff4000,2
+Canzoni,12,Ride the lightning,1984-07-27,397,#ff4000,2
+Canzoni,13,For whom the bell tolls,1984-07-27,311,#ff4000,2
+Canzoni,14,Fade to black,1984-07-27,415,#ff4000,2
+Canzoni,15,Trapped under ice,1984-07-27,244,#ff4000,2
 Canzoni,16,Escape,1984-07-27,264,#ff4000,2
-Canzoni,17,Creeping Death,1984-07-27,396,#ff4000,2
-Canzoni,18,The Call of Ktulu,1984-07-27,535,#ff4000,2
+Canzoni,17,Creeping death,1984-07-27,396,#ff4000,2
+Canzoni,18,The call of ktulu,1984-07-27,535,#ff4000,2
 Canzoni,19,Battery,1986-03-03,312,#ff8000,2
-Canzoni,20,Master of Puppets,1986-03-03,515,#ff8000,2
-Canzoni,21,The Thing That Should Not Be,1986-03-03,396,#ff8000,2
-Canzoni,22,Welcome Home (Sanitarium),1986-03-03,387,#ff8000,2
-Canzoni,23,Disposable Heroes,1986-03-03,496,#ff8000,2
-Canzoni,24,Leper Messiah,1986-03-03,340,#ff8000,2
+Canzoni,20,Master of puppets,1986-03-03,515,#ff8000,2
+Canzoni,21,The thing that should not be,1986-03-03,396,#ff8000,2
+Canzoni,22,Welcome home (Sanitarium),1986-03-03,387,#ff8000,2
+Canzoni,23,Disposable heroes,1986-03-03,496,#ff8000,2
+Canzoni,24,Leper messiah,1986-03-03,340,#ff8000,2
 Canzoni,25,Orion,1986-03-03,507,#ff8000,2
 Canzoni,26,Damage; Inc.,1986-03-03,332,#ff8000,2
 Canzoni,27,Blackened,1988-08-25,400,#ffbf00,2
-Canzoni,28,... And Justice for All,1988-08-25,586,#ffbf00,2
-Canzoni,29,Eye of the Beholder,1988-08-25,390,#ffbf00,2
+Canzoni,28,... And justice for all,1988-08-25,586,#ffbf00,2
+Canzoni,29,Eye of the beholder,1988-08-25,390,#ffbf00,2
 Canzoni,30,One,1988-08-25,447,#ffbf00,2
-Canzoni,31,The Shortest Straw,1988-08-25,395,#ffbf00,2
-Canzoni,32,Harvester of Sorrow,1988-08-25,345,#ffbf00,2
-Canzoni,33,The Frayed Ends of Sanity,1988-08-25,764,#ffbf00,2
-Canzoni,34,To Live Is to Die,1988-08-25,588,#ffbf00,2
-Canzoni,35,Dyers Eve,1988-08-25,313,#ffbf00,2
-Canzoni,36,Enter Sandman,1991-08-12,329,#ffff00,2
-Canzoni,37,Sad but True,1991-08-12,324,#ffff00,2
-Canzoni,38,Holler than Thou,1991-08-12,227,#ffff00,2
-Canzoni,39,The Unforgiven,1991-08-12,386,#ffff00,2
-Canzoni,40,Wherever I May Roam,1991-08-12,402,#ffff00,2
-Canzoni,41,Don:t Tread on Me,1991-08-12,239,#ffff00,2
-Canzoni,42,Through the Never,1991-08-12,241,#ffff00,2
-Canzoni,43,Nothing Else Matters,1991-08-12,389,#ffff00,2
-Canzoni,44,Of Wolf and Man,1991-08-12,256,#ffff00,2
-Canzoni,45,The God That Failed,1991-08-12,305,#ffff00,2
-Canzoni,46,My Friend of Misery,1991-08-12,407,#ffff00,2
-Canzoni,47,The Struggle Within,1991-08-12,231,#ffff00,2
-Canzoni,48,It:s a Beautiful Day,1995-11-06,152,#bfff00,3
-Canzoni,49,Made in Heaven,1995-11-06,325,#bfff00,3
-Canzoni,50,Let Me Live,1995-11-06,285,#bfff00,3
-Canzoni,51,Mother Love,1995-11-06,286,#bfff00,3
-Canzoni,52,My Life Has Been Saved,1995-11-06,195,#bfff00,3
-Canzoni,53,I Was Born to Love You,1995-11-06,289,#bfff00,3
-Canzoni,54,Heaven for Everyone,1995-11-06,336,#bfff00,3
-Canzoni,55,Too Much Love Will Kill You,1995-11-06,258,#bfff00,3
-Canzoni,56,You Don:t Fool Me,1995-11-06,323,#bfff00,3
-Canzoni,57,A Winter:s Tale,1995-11-06,229,#bfff00,3
+Canzoni,31,The shortest straw,1988-08-25,395,#ffbf00,2
+Canzoni,32,Harvester of sorrow,1988-08-25,345,#ffbf00,2
+Canzoni,33,The frayed ends of sanity,1988-08-25,764,#ffbf00,2
+Canzoni,34,To live is to die,1988-08-25,588,#ffbf00,2
+Canzoni,35,Dyers eve,1988-08-25,313,#ffbf00,2
+Canzoni,36,Enter sandman,1991-08-12,329,#ffff00,2
+Canzoni,37,Sad but true,1991-08-12,324,#ffff00,2
+Canzoni,38,Holler than thou,1991-08-12,227,#ffff00,2
+Canzoni,39,The unforgiven,1991-08-12,386,#ffff00,2
+Canzoni,40,Wherever I may roam,1991-08-12,402,#ffff00,2
+Canzoni,41,Don:t tread on me,1991-08-12,239,#ffff00,2
+Canzoni,42,Through the never,1991-08-12,241,#ffff00,2
+Canzoni,43,Nothing else matters,1991-08-12,389,#ffff00,2
+Canzoni,44,Of wolf and man,1991-08-12,256,#ffff00,2
+Canzoni,45,The god that failed,1991-08-12,305,#ffff00,2
+Canzoni,46,My friend of misery,1991-08-12,407,#ffff00,2
+Canzoni,47,The struggle within,1991-08-12,231,#ffff00,2
+Canzoni,48,It:s a beautiful day,1995-11-06,152,#bfff00,3
+Canzoni,49,Made in heaven,1995-11-06,325,#bfff00,3
+Canzoni,50,Let me live,1995-11-06,285,#bfff00,3
+Canzoni,51,Mother love,1995-11-06,286,#bfff00,3
+Canzoni,52,My life has been saved,1995-11-06,195,#bfff00,3
+Canzoni,53,I was born to love you,1995-11-06,289,#bfff00,3
+Canzoni,54,Heaven for everyone,1995-11-06,336,#bfff00,3
+Canzoni,55,Too much love will kill you,1995-11-06,258,#bfff00,3
+Canzoni,56,You don:t fool me,1995-11-06,323,#bfff00,3
+Canzoni,57,A winter:s tale,1995-11-06,229,#bfff00,3
 Canzoni,58,Party,1989-05-22,144,#80ff00,3
-Canzoni,59,Khashoggi:s Ship,1989-05-22,148,#80ff00,3
-Canzoni,60,The Miracle,1989-05-22,302,#80ff00,3
-Canzoni,61,I Want It All,1989-05-22,281,#80ff00,3
-Canzoni,62,The Invisible Man,1989-05-22,237,#80ff00,3
-Canzoni,63,Breathru,1989-05-22,248,#80ff00,3
-Canzoni,64,Rain Must Fall,1989-05-22,263,#80ff00,3
+Canzoni,59,Khashoggi:s ship,1989-05-22,148,#80ff00,3
+Canzoni,60,The miracle,1989-05-22,302,#80ff00,3
+Canzoni,61,I want it all,1989-05-22,281,#80ff00,3
+Canzoni,62,The invisible man,1989-05-22,237,#80ff00,3
+Canzoni,63,Breakthru,1989-05-22,248,#80ff00,3
+Canzoni,64,Rain must fall,1989-05-22,263,#80ff00,3
 Canzoni,65,Scandal,1989-05-22,282,#80ff00,3
-Canzoni,66,My Baby Does Me,1989-05-22,203,#80ff00,3
-Canzoni,67,Was It All Worth It,1989-05-22,345,#80ff00,3
-Canzoni,68,Death on Two Legs (Dedicated to...),1975-11-21,223,#40ff00,3
-Canzoni,69,Lazing on a Sunday Afternoon,1975-11-21,67,#40ff00,3
-Canzoni,70,I:m in Love with My Car,1975-11-21,185,#40ff00,3
-Canzoni,71,You:re My Best Friend,1975-11-21,172,#40ff00,3
+Canzoni,66,My baby does me,1989-05-22,203,#80ff00,3
+Canzoni,67,Was it all worth it,1989-05-22,345,#80ff00,3
+Canzoni,68,Death on two legs (Dedicated to...),1975-11-21,223,#40ff00,3
+Canzoni,69,Lazing on a sunday afternoon,1975-11-21,67,#40ff00,3
+Canzoni,70,I:m in love with my car,1975-11-21,185,#40ff00,3
+Canzoni,71,You:re my best friend,1975-11-21,172,#40ff00,3
 Canzoni,72,:39,1975-11-21,211,#40ff00,3
-Canzoni,73,Sweet Lady,1975-11-21,244,#40ff00,3
-Canzoni,74,Seaside Rendezvous,1975-11-21,196,#40ff00,3
-Canzoni,75,The Prophet:s Song,1975-11-21,501,#40ff00,3
-Canzoni,76,Love of My Life,1975-11-21,219,#40ff00,3
-Canzoni,77,Good Company,1975-11-21,203,#40ff00,3
-Canzoni,78,Bohemian Rhapsody,1975-11-21,355,#40ff00,3
-Canzoni,79,God Save The Queen,1975-11-21,75,#40ff00,3
-Canzoni,80,We Will Rock You,1977-10-28,121,#00ff00,3
-Canzoni,81,We Are The Champions,1977-10-28,177,#00ff00,3
-Canzoni,82,Sheer Heart Attack,1977-10-28,204,#00ff00,3
-Canzoni,83,All Dead; All Dead,1977-10-28,191,#00ff00,3
-Canzoni,84,Spread Your Wings,1977-10-28,266,#00ff00,3
-Canzoni,85,Fight from the Inside,1977-10-28,183,#00ff00,3
-Canzoni,86,Get Down; Make Love,1977-10-28,231,#00ff00,3
-Canzoni,87,Sleeping on the Sidewalk,1977-10-28,188,#00ff00,3
-Canzoni,88,Who Needs You,1977-10-28,186,#00ff00,3
-Canzoni,89,It:s Late,1977-10-28,387,#00ff00,3
-Canzoni,90,My Melancholy Blues,1977-10-28,209,#00ff00,3
-Canzoni,91,Play The Game,1980-06-30,213,#00ff40,3
-Canzoni,92,Dragon Attack,1980-06-30,259,#00ff40,3
-Canzoni,93,Another One Bites The Dust,1980-06-30,212,#00ff40,3
-Canzoni,94,Need Your Loving Tonight,1980-06-30,169,#00ff40,3
-Canzoni,95,Crazy Little Thing Called Love,1980-06-30,168,#00ff40,3
-Canzoni,96,Rock It (Prime Jive),1980-06-30,273,#00ff40,3
-Canzoni,97,Don:t Try Suicide,1980-06-30,232,#00ff40,3
-Canzoni,98,Sail Away Sweet Sister (To the Siste I Never Had),1980-06-30,213,#00ff40,3
-Canzoni,99,Coming Soon,1980-06-30,171,#00ff40,3
-Canzoni,100,Save Me,1980-06-30,229,#00ff40,3
+Canzoni,73,Sweet lady,1975-11-21,244,#40ff00,3
+Canzoni,74,Seaside rendezvous,1975-11-21,196,#40ff00,3
+Canzoni,75,The prophet:s song,1975-11-21,501,#40ff00,3
+Canzoni,76,Love of my life,1975-11-21,219,#40ff00,3
+Canzoni,77,Good company,1975-11-21,203,#40ff00,3
+Canzoni,78,Bohemian rhapsody,1975-11-21,355,#40ff00,3
+Canzoni,79,God save the queen,1975-11-21,75,#40ff00,3
+Canzoni,80,We will rock you,1977-10-28,121,#00ff00,3
+Canzoni,81,We are the champions,1977-10-28,177,#00ff00,3
+Canzoni,82,Sheer heart attack,1977-10-28,204,#00ff00,3
+Canzoni,83,All dead; all dead,1977-10-28,191,#00ff00,3
+Canzoni,84,Spread your wings,1977-10-28,266,#00ff00,3
+Canzoni,85,Fight from the inside,1977-10-28,183,#00ff00,3
+Canzoni,86,Get down; aake love,1977-10-28,231,#00ff00,3
+Canzoni,87,Sleeping on the sidewalk,1977-10-28,188,#00ff00,3
+Canzoni,88,Who needs you,1977-10-28,186,#00ff00,3
+Canzoni,89,It:s late,1977-10-28,387,#00ff00,3
+Canzoni,90,My melancholy blues,1977-10-28,209,#00ff00,3
+Canzoni,91,Play the game,1980-06-30,213,#00ff40,3
+Canzoni,92,Dragon attack,1980-06-30,259,#00ff40,3
+Canzoni,93,Another one bites the dust,1980-06-30,212,#00ff40,3
+Canzoni,94,Need your loving tonight,1980-06-30,169,#00ff40,3
+Canzoni,95,Crazy little thing aalled love,1980-06-30,168,#00ff40,3
+Canzoni,96,Rock it (Prime jive),1980-06-30,273,#00ff40,3
+Canzoni,97,Don:t try suicide,1980-06-30,232,#00ff40,3
+Canzoni,98,Sail away sweet sister (To the sister I never had),1980-06-30,213,#00ff40,3
+Canzoni,99,Coming soon,1980-06-30,171,#00ff40,3
+Canzoni,100,Save me,1980-06-30,229,#00ff40,3
+Canzoni,101,Welcome to the jungle,1987-07-21,281,#00ff80,4
+Canzoni,102,It:s so easy,1987-07-21,201,#00ff80,4
+Canzoni,103,Nightrain,1987-07-21,266,#00ff80,4
+Canzoni,104,Out ta get me,1987-07-21,260,#00ff80,4
+Canzoni,105,Mr. Brownstone,1987-07-21,226,#00ff80,4
+Canzoni,106,Paradise city,1987-07-21,406,#00ff80,4
+Canzoni,107,My Michelle,1987-07-21,219,#00ff80,4
+Canzoni,108,Think about you,1987-07-21,230,#00ff80,4
+Canzoni,109,Sweet child o: mine,1987-07-21,355,#00ff80,4
+Canzoni,110,You:re crazy,1987-07-21,205,#00ff80,4
+Canzoni,111,Anything goes,1987-07-21,205,#00ff80,4
+Canzoni,112,Rocket queen,1987-07-21,373,#00ff80,4
+Canzoni,113,Reckless life,1988-11-29,200,#00ffbf,4
+Canzoni,114,Nice boys,1988-11-29,183,#00ffbf,4
+Canzoni,115,Move to the city,1988-11-29,222,#00ffbf,4
+Canzoni,116,Mama kin,1988-11-29,237,#00ffbf,4
+Canzoni,117,Patience,1988-11-29,356,#00ffbf,4
+Canzoni,118,Used to love her,1988-11-29,193,#00ffbf,4
+Canzoni,119,You:re crazy,1988-11-29,250,#00ffbf,4
+Canzoni,120,One in a million,1988-11-29,370,#00ffbf,4
+Canzoni,121,Right next door to hell,1991-09-17,182,#00ffff,4
+Canzoni,122,Dust N: Bones,1991-09-17,298,#00ffff,4
+Canzoni,123,Live and let die,1991-09-17,184,#00ffff,4
+Canzoni,124,Don:t cry,1991-09-17,284,#00ffff,4
+Canzoni,125,Perfect crime,1991-09-17,143,#00ffff,4
+Canzoni,126,You ain:t the first,1991-09-17,156,#00ffff,4
+Canzoni,127,Bad obsession,1991-09-17,328,#00ffff,4
+Canzoni,128,Back off bitch,1991-09-17,303,#00ffff,4
+Canzoni,129,Double talkin: jive,1991-09-17,203,#00ffff,4
+Canzoni,130,November rain,1991-09-17,537,#00ffff,4
+Canzoni,131,The garden,1991-09-17,322,#00ffff,4
+Canzoni,132,Garden of Eden,1991-09-17,281,#00ffff,4
+Canzoni,133,Don:t damn me,1991-09-17,318,#00ffff,4
+Canzoni,134,Bad apples,1991-09-17,268,#00ffff,4
+Canzoni,135,Dead horse,1991-09-17,257,#00ffff,4
+Canzoni,136,Coma,1991-09-17,613,#00ffff,4
+Canzoni,137,Civil war,1991-09-17,463,#00bfff,4
+Canzoni,138,14 years,1991-09-17,261,#00bfff,4
+Canzoni,139,Yesterdays,1991-09-17,196,#00bfff,4
+Canzoni,140,Knockin: on heaven:s door,1991-09-17,337,#00bfff,4
+Canzoni,141,Get in the ring,1991-09-17,341,#00bfff,4
+Canzoni,142,Shotgun blues,1991-09-17,203,#00bfff,4
+Canzoni,143,Breakdown,1991-09-17,424,#00bfff,4
+Canzoni,144,Pretty tied up,1991-09-17,288,#00bfff,4
+Canzoni,145,Locomotive,1991-09-17,522,#00bfff,4
+Canzoni,146,So fine,1991-09-17,247,#00bfff,4
+Canzoni,147,Estranged,1991-09-17,563,#00bfff,4
+Canzoni,148,You could be mine,1991-09-17,344,#00bfff,4
+Canzoni,149,Don:t cry - Alternate lyrics,1991-09-17,284,#00bfff,4
+Canzoni,150,My world,1991-09-17,84,#00bfff,4
+Canzoni,151,Since I don:t have you,1993-11-23,258,#0080ff,4
+Canzoni,152,New rose,1993-11-23,158,#0080ff,4
+Canzoni,153,Down on the farm,1993-11-23,208,#0080ff,4
+Canzoni,154,Human being,1993-11-23,408,#0080ff,4
+Canzoni,155,Raw power,1993-11-23,191,#0080ff,4
+Canzoni,156,Ain:t it fun,1993-11-23,305,#0080ff,4
+Canzoni,157,Buick Makane,1993-11-23,160,#0080ff,4
+Canzoni,158,Hair on the dog,1993-11-23,234,#0080ff,4
+Canzoni,159,Attitude,1993-11-23,86,#0080ff,4
+Canzoni,160,Black leather,1993-11-23,248,#0080ff,4
+Canzoni,161,You can:t put your arms around a memory,1993-11-23,215,#0080ff,4
+Canzoni,162,I don:t care about you,1993-11-23,291,#0080ff,4
+Canzoni,163,Balliamo sul mondo,1990-05-11,273,#0040ff,5
+Canzoni,164,Bambolina e barracuda,1990-05-11,314,#0040ff,5
+Canzoni,165,Piccola stella senza cielo,1990-05-11,237,#0040ff,5
+Canzoni,166,Marlon Brando è sempre lui,1990-05-11,252,#0040ff,5
+Canzoni,167,Non è tempo per noi,1990-05-11,210,#0040ff,5
+Canzoni,168,Bar Mario,1990-05-11,234,#0040ff,5
+Canzoni,169,Sogni di Rock :N: Roll,1990-05-11,237,#0040ff,5
+Canzoni,170,Radio radianti,1990-05-11,206,#0040ff,5
+Canzoni,171,Freddo come in questa palude,1990-05-11,66,#0040ff,5
+Canzoni,172,Angelo nella nebbia,1990-05-11,299,#0040ff,5
+Canzoni,173,Figlio d:un cane,1990-05-11,173,#0040ff,5
+Canzoni,174,Il muro del suono,2013-11-26,270,#0000ff,5
+Canzoni,175,Siamo chi siamo,2013-11-26,256,#0000ff,5
+Canzoni,176,Il volume delle tue bugie,2013-11-26,240,#0000ff,5
+Canzoni,177,La neve se ne frega,2013-11-26,212,#0000ff,5
+Canzoni,178,Il sale della terra,2013-11-26,238,#0000ff,5
+Canzoni,179,Capo spartivento,2013-11-26,41,#0000ff,5
+Canzoni,180,Tu sei lei,2013-11-26,263,#0000ff,5
+Canzoni,181,Nati per vivere (Adesso e qui),2013-11-26,231,#0000ff,5
+Canzoni,182,La terra trema; amore mio,2013-11-26,240,#0000ff,5
+Canzoni,183,Per sempre,2013-11-26,232,#0000ff,5
+Canzoni,184,Ciò che rimane di noi,2013-11-26,280,#0000ff,5
+Canzoni,185,Il suono; il brutto e il cattivo,2013-11-26,40,#0000ff,5
+Canzoni,186,Con la scusa del Rock;N;Roll,2013-11-26,207,#0000ff,5
+Canzoni,187,Sono sempre i sogni a dare forma al mondo,2013-11-26,274,#0000ff,5
+Canzoni,188,Vivo Morto o X,1995-09-21,257,#4000ff,5
+Canzoni,189,Seduto in riva al fosso,1995-09-21,269,#4000ff,5
+Canzoni,190,Buon compleanno; Elvis!,1995-09-21,246,#4000ff,5
+Canzoni,191,La forza della banda,1995-09-21,261,#4000ff,5
+Canzoni,192,Hai un momento; Dio?,1995-09-21,280,#4000ff,5
+Canzoni,193,Rane a Rubiera blues,1995-09-21,63,#4000ff,5
+Canzoni,194,Certe notti,1995-09-21,260,#4000ff,5
+Canzoni,195,Viva!,1995-09-21,219,#4000ff,5
+Canzoni,196,I ::ragazzi:: sono in giro,1995-09-21,262,#4000ff,5
+Canzoni,197,Quella che non sei,1995-09-21,241,#4000ff,5
+Canzoni,198,Non dovete badare al cantante,1995-09-21,216,#4000ff,5
+Canzoni,199,Un figlio di nome Elvis,1995-09-21,241,#4000ff,5
+Canzoni,200,Il cielo è vuoto o il cielo è pieno,1995-09-21,213,#4000ff,5
+Canzoni,201,Leggero,1995-09-21,254,#4000ff,5
+Canzoni,202,Ancora in piedi,1993-01-22,257,#8000ff,5
+Canzoni,203,A.A.A. Qualcuno cercasi,1993-01-22,296,#8000ff,5
+Canzoni,204,Ho messo via,1993-01-22,287,#8000ff,5
+Canzoni,205,Dove fermano i treni,1993-01-22,204,#8000ff,5
+Canzoni,206,I duri hanno due cuori,1993-01-22,249,#8000ff,5
+Canzoni,207,La ballerina del carillon,1993-01-22,224,#8000ff,5
+Canzoni,208,Prezoo,1993-01-22,40,#8000ff,5
+Canzoni,209,Lo zoo è qui,1993-01-22,239,#8000ff,5
+Canzoni,210,Piccola città eterna,1993-01-22,305,#8000ff,5
+Canzoni,211,Walter il mago,1993-01-22,259,#8000ff,5
+Canzoni,212,Pane al pane,1993-01-22,216,#8000ff,5
+Canzoni,213,Quando tocca a te,1993-01-22,334,#8000ff,5
+Canzoni,214,Sopravvissuti e sopravviventi - Tema,1993-01-22,95,#8000ff,5
+Canzoni,215,Intro,2005-09-16,67,#bf00ff,5
+Canzoni,216,Il giorno dei giorni,2005-09-16,261,#bf00ff,5
+Canzoni,217,Happy Hour,2005-09-16,254,#bf00ff,5
+Canzoni,218,L:amore conta,2005-09-16,265,#bf00ff,5
+Canzoni,219,Cosa vuoi che sia,2005-09-16,216,#bf00ff,5
+Canzoni,220,Le donne lo sanno,2005-09-16,268,#bf00ff,5
+Canzoni,221,Lettera a G,2005-09-16,321,#bf00ff,5
+Canzoni,222,Vivere a orecchio,2005-09-16,240,#bf00ff,5
+Canzoni,223,Giorno per giorno,2005-09-16,290,#bf00ff,5
+Canzoni,224,E: più forte di me,2005-09-16,242,#bf00ff,5
+Canzoni,225,Sono qui per l:amore,2005-09-16,288,#bf00ff,5
+Canzoni,226,La nostra relazione,1978-05-25,180,#ff00ff,6
+Canzoni,227,...E poi mi parli di una vita insieme,1978-05-25,267,#ff00ff,6
+Canzoni,228,Silvia,1978-05-25,211,#ff00ff,6
+Canzoni,229,Tu che dormivi piano (Volò via),1978-05-25,257,#ff00ff,6
+Canzoni,230,Jenny è pazza,1978-05-25,431,#ff00ff,6
+Canzoni,231,Ambarabaciccicocco:,1978-05-25,240,#ff00ff,6
+Canzoni,232,Ed il tempo crea noi,1978-05-25,208,#ff00ff,6
+Canzoni,233,Ciao,1978-05-25,82,#ff00ff,6
+Canzoni,234,Io non so più cosa fare,1979-04-30,238,#ff00bf,6
+Canzoni,235,Fregato; fegato spappolato,1979-04-30,195,#ff00bf,6
+Canzoni,236,Sballi ravvicinati del terzo tipo,1979-04-30,309,#ff00bf,6
+Canzoni,237,(Per quello che ho da fare) faccio il militare,1979-04-30,271,#ff00bf,6
+Canzoni,238,(Per quello che ho da fare) faccio il militare - Reprise,1979-04-30,36,#ff00bf,6
+Canzoni,239,La strega (La diva del sabato sera),1979-04-30,282,#ff00bf,6
+Canzoni,240,Albachiara,1979-04-30,245,#ff00bf,6
+Canzoni,241,Quindici anni fa,1979-04-30,310,#ff00bf,6
+Canzoni,242,Va be: (Se proprio lo devo dire),1979-04-30,189,#ff00bf,6
+Canzoni,243,Non l:hai mica capito,1980-04-03,231,#ff0080,6
+Canzoni,244,Colpa d:Alfredo,1980-04-03,297,#ff0080,6
+Canzoni,245,Susanna,1980-04-03,207,#ff0080,6
+Canzoni,246,Anima fragile,1980-04-03,224,#ff0080,6
+Canzoni,247,Alibi,1980-04-03,330,#ff0080,6
+Canzoni,248,Sensazioni forti,1980-04-03,241,#ff0080,6
+Canzoni,249,Tropico del cancro,1980-04-03,324,#ff0080,6
+Canzoni,250,Asilo ::Republic::,1980-04-03,108,#ff0080,6
+Canzoni,251,Siamo solo noi,1981-04-09,355,#ff0040,6
+Canzoni,252,Incredibile romantica,1981-04-09,260,#ff0040,6
+Canzoni,253,Dimentichiamoci questa città,1981-04-09,260,#ff0040,6
+Canzoni,254,Voglio andare al mare,1981-04-09,220,#ff0040,6
+Canzoni,255,Brava,1981-04-09,278,#ff0040,6
+Canzoni,256,Ieri ho sgozzato mio figlio,1981-04-09,202,#ff0040,6
+Canzoni,257,Che ironia,1981-04-09,229,#ff0040,6
+Canzoni,258,Valium,1981-04-09,216,#ff0040,6
+Canzoni,259,Sono ancora in coma,1982-04-13,178,#ff0000,6
+Canzoni,260,Cosa ti fai,1982-04-13,168,#ff0000,6
+Canzoni,261,Ogni volta,1982-04-13,256,#ff0000,6
+Canzoni,262,Vado al massimo,1982-04-13,251,#ff0000,6
+Canzoni,263,Credi davvero,1982-04-13,290,#ff0000,6
+Canzoni,264,Amore... Aiuto,1982-04-13,282,#ff0000,6
+Canzoni,265,Canzone,1982-04-13,257,#ff0000,6
+Canzoni,266,Splendida giornata,1982-04-13,263,#ff0000,6
+Canzoni,267,La noia,1982-04-13,250,#ff0000,6
+Canzoni,268,Wollt ihr das bett In flammen sehen?,1995-09-25,317,#ff4000,7
+Canzoni,269,Der meister,1995-09-25,250,#ff4000,7
+Canzoni,270,Weisses fleisch,1995-09-25,215,#ff4000,7
+Canzoni,271,Asche zu asche,1995-09-25,231,#ff4000,7
+Canzoni,272,Seemann,1995-09-25,288,#ff4000,7
+Canzoni,273,Du riechst so gut,1995-09-25,289,#ff4000,7
+Canzoni,274,Das alte leid,1995-09-25,344,#ff4000,7
+Canzoni,275,Heirate mich,1995-09-25,284,#ff4000,7
+Canzoni,276,Herzeleid,1995-09-25,221,#ff4000,7
+Canzoni,277,Laichzeit,1995-09-25,260,#ff4000,7
+Canzoni,278,Rammstein,1995-09-25,265,#ff4000,7
+Canzoni,279,Sehnsucht,1997-08-22,246,#ff8000,7
+Canzoni,280,Engel,1997-08-22,266,#ff8000,7
+Canzoni,281,Tier,1997-08-22,229,#ff8000,7
+Canzoni,282,Bestrafe mich,1997-08-22,217,#ff8000,7
+Canzoni,283,Du hast,1997-08-22,237,#ff8000,7
+Canzoni,284,Buck dich,1997-08-22,204,#ff8000,7
+Canzoni,285,Spiel mit mir,1997-08-22,285,#ff8000,7
+Canzoni,286,Klavier,1997-08-22,266,#ff8000,7
+Canzoni,287,Alter mann,1997-08-22,266,#ff8000,7
+Canzoni,288,Eifersucht,1997-08-22,217,#ff8000,7
+Canzoni,289,Kuss mich (Fellfrosch),1997-08-22,209,#ff8000,7
+Canzoni,290,Mein herz brennt,2001-04-02,279,#ffbf00,7
+Canzoni,291,Links,2001-04-02,216,#ffbf00,7
+Canzoni,292,Sonne,2001-04-02,272,#ffbf00,7
+Canzoni,293,Ich will,2001-04-02,217,#ffbf00,7
+Canzoni,294,Feuer frei!,2001-04-02,188,#ffbf00,7
+Canzoni,295,Mutter,2001-04-02,286,#ffbf00,7
+Canzoni,296,Spieluhr,2001-04-02,286,#ffbf00,7
+Canzoni,297,Zwitter,2001-04-02,257,#ffbf00,7
+Canzoni,298,Rein raus,2001-04-02,189,#ffbf00,7
+Canzoni,299,Adios,2001-04-02,228,#ffbf00,7
+Canzoni,300,Nebel,2001-04-02,294,#ffbf00,7
+Canzoni,301,Reise; reise,2004-09-27,285,#ffff00,7
+Canzoni,302,Mein teil,2004-09-27,272,#ffff00,7
+Canzoni,303,Dalai Lama,2004-09-27,338,#ffff00,7
+Canzoni,304,Keine lust,2004-09-27,222,#ffff00,7
+Canzoni,305,Los,2004-09-27,265,#ffff00,7
+Canzoni,306,Amerika,2004-09-27,226,#ffff00,7
+Canzoni,307,Moskau,2004-09-27,256,#ffff00,7
+Canzoni,308,Morgenstern,2004-09-27,239,#ffff00,7
+Canzoni,309,Stein um stein,2004-09-27,236,#ffff00,7
+Canzoni,310,Ohne dich,2004-09-27,272,#ffff00,7
+Canzoni,311,Amou,2004-09-27,290,#ffff00,7
+Canzoni,312,Benzin,2005-08-28,226,#bfff00,7
+Canzoni,313,Mann gegen mann,2005-08-28,231,#bfff00,7
+Canzoni,314,Rosenrot,2005-08-28,235,#bfff00,7
+Canzoni,315,Spring,2005-08-28,325,#bfff00,7
+Canzoni,316,Wo bist du?,2005-08-28,236,#bfff00,7
+Canzoni,317,Stirb nicht vor mir (Don:t die before I do),2005-08-28,246,#bfff00,7
+Canzoni,318,Zerstoren,2005-08-28,329,#bfff00,7
+Canzoni,319,Hilf mir,2005-08-28,284,#bfff00,7
+Canzoni,320,Te quiero puta!,2005-08-28,236,#bfff00,7
+Canzoni,321,Feuer und wasser,2005-08-28,313,#bfff00,7
+Canzoni,322,Ein leid,2005-08-28,224,#bfff00,7
+Canzoni,323,Papercut,2001-10-24,185,#80ff00,8
+Canzoni,324,One step closer,2001-10-24,146,#80ff00,8
+Canzoni,325,With you,2001-10-24,203,#80ff00,8
+Canzoni,326,Points of authority,2001-10-24,200,#80ff00,8
+Canzoni,327,Crawling,2001-10-24,209,#80ff00,8
+Canzoni,328,Runaway,2001-10-24,184,#80ff00,8
+Canzoni,329,By myself,2001-10-24,190,#80ff00,8
+Canzoni,330,In the end,2001-10-24,216,#80ff00,8
+Canzoni,331,A place for my head,2001-10-24,185,#80ff00,8
+Canzoni,332,Forgotten,2001-10-24,195,#80ff00,8
+Canzoni,333,Cure for the itch,2001-10-24,157,#80ff00,8
+Canzoni,334,Pushing me away,2001-10-24,192,#80ff00,8
+Canzoni,335,Foreword,2003-03-25,13,#40ff00,8
+Canzoni,336,Don:t stay,2003-03-25,187,#40ff00,8
+Canzoni,337,Somewhere I belong,2003-03-25,213,#40ff00,8
+Canzoni,338,Lying from you,2003-03-25,175,#40ff00,8
+Canzoni,339,Hit the floor,2003-03-25,164,#40ff00,8
+Canzoni,340,Easier to run,2003-03-25,204,#40ff00,8
+Canzoni,341,Faint,2003-03-25,162,#40ff00,8
+Canzoni,342,Figure 09,2003-03-25,197,#40ff00,8
+Canzoni,343,Breaking the habit,2003-03-25,196,#40ff00,8
+Canzoni,344,From the inside,2003-03-25,173,#40ff00,8
+Canzoni,345,Nobody:s listening,2003-03-25,178,#40ff00,8
+Canzoni,346,Session,2003-03-25,143,#40ff00,8
+Canzoni,347,Numb,2003-03-25,185,#40ff00,8
+Canzoni,348,Wake,2007-05-15,103,#00ff00,8
+Canzoni,349,Given up,2007-05-15,189,#00ff00,8
+Canzoni,350,Leave out all the rest,2007-05-15,209,#00ff00,8
+Canzoni,351,Bleed it out,2007-05-15,164,#00ff00,8
+Canzoni,352,Shadow of the day,2007-05-15,249,#00ff00,8
+Canzoni,353,What I:ve done,2007-05-15,205,#00ff00,8
+Canzoni,354,Hands held high,2007-05-15,233,#00ff00,8
+Canzoni,355,No more sorrow,2007-05-15,221,#00ff00,8
+Canzoni,356,Valentine:s day,2007-05-15,196,#00ff00,8
+Canzoni,357,In between,2007-05-15,196,#00ff00,8
+Canzoni,358,In pieces,2007-05-15,218,#00ff00,8
+Canzoni,359,The little things give you away,2007-05-15,383,#00ff00,8
+Canzoni,360,The requiem,2010-09-14,121,#00ff40,8
+Canzoni,361,The radiance,2010-09-14,57,#00ff40,8
+Canzoni,362,Burning in the skies,2010-09-14,253,#00ff40,8
+Canzoni,363,Empty spaces,2010-09-14,18,#00ff40,8
+Canzoni,364,When they come for me,2010-09-14,293,#00ff40,8
+Canzoni,365,Robot boy,2010-09-14,269,#00ff40,8
+Canzoni,366,Jornada del muerto,2010-09-14,94,#00ff40,8
+Canzoni,367,Waiting for the end,2010-09-14,231,#00ff40,8
+Canzoni,368,Blackout,2010-09-14,279,#00ff40,8
+Canzoni,369,Wretches and kings,2010-09-14,250,#00ff40,8
+Canzoni,370,Wisdom; justice; and love,2010-09-14,98,#00ff40,8
+Canzoni,371,Iridescent,2010-09-14,296,#00ff40,8
+Canzoni,372,Fallout,2010-09-14,83,#00ff40,8
+Canzoni,373,The catalyst,2010-09-14,339,#00ff40,8
+Canzoni,374,The messenger,2010-09-14,181,#00ff40,8
+Canzoni,375,Lost in the echo,2012-06-26,205,#00ff80,8
+Canzoni,376,In my remains,2012-06-26,200,#00ff80,8
+Canzoni,377,Burn it down,2012-06-26,230,#00ff80,8
+Canzoni,378,Lies greed misery,2012-06-26,146,#00ff80,8
+Canzoni,379,I:ll be gone,2012-06-26,211,#00ff80,8
+Canzoni,380,Castle of glass,2012-06-26,205,#00ff80,8
+Canzoni,381,Victimized,2012-06-26,106,#00ff80,8
+Canzoni,382,Roads untraveled,2012-06-26,230,#00ff80,8
+Canzoni,383,Skin to bone,2012-06-26,168,#00ff80,8
+Canzoni,384,Until it breaks,2012-06-26,223,#00ff80,8
+Canzoni,385,Tinfoil,2012-06-26,71,#00ff80,8
+Canzoni,386,Powerless,2012-06-26,224,#00ff80,8
+Canzoni,387,Non c:è,1993-04-26,278,#00ffbf,9
+Canzoni,388,Mi rubi l:anima,1993-04-26,199,#00ffbf,9
+Canzoni,389,Dove sei,1993-04-26,217,#00ffbf,9
+Canzoni,390,Baci che si rubano,1993-04-26,240,#00ffbf,9
+Canzoni,391,Tutt:al più,1993-04-26,269,#00ffbf,9
+Canzoni,392,La solitudine,1993-04-26,237,#00ffbf,9
+Canzoni,393,Perchè non torna più,1993-04-26,277,#00ffbf,9
+Canzoni,394,Il cuore non si arrende,1993-04-26,233,#00ffbf,9
+Canzoni,395,Gente,1994-02-26,274,#00ffff,9
+Canzoni,396,Lui non sta con te,1994-02-26,228,#00ffff,9
+Canzoni,397,Strani amori,1994-02-26,256,#00ffff,9
+Canzoni,398,Ragazze che,1994-02-26,260,#00ffff,9
+Canzoni,399,Il coraggio che non c'è,1994-02-26,278,#00ffff,9
+Canzoni,400,Un amico è così,1994-02-26,246,#00ffff,9
+Canzoni,401,Amori infiniti,1994-02-26,220,#00ffff,9
+Canzoni,402,Cani e gatti,1994-02-26,305,#00ffff,9
+Canzoni,403,Anni miei,1994-02-26,284,#00ffff,9
+Canzoni,404,Lettera,1994-02-26,225,#00ffff,9
+Canzoni,405,Le cose che vivi,1996-09-12,271,#00bfff,9
+Canzoni,406,Ascolta il tuo cuore,1996-09-12,280,#00bfff,9
+Canzoni,407,Incancellabile,1996-09-12,229,#00bfff,9
+Canzoni,408,Seamisai,1996-09-12,218,#00bfff,9
+Canzoni,409,Angeli nel blu,1996-09-12,317,#00bfff,9
+Canzoni,410,Mi dispiace,1996-09-12,362,#00bfff,9
+Canzoni,411,Due innamorati come noi,1996-09-12,281,#00bfff,9
+Canzoni,412,Che storia è,1996-09-12,253,#00bfff,9
+Canzoni,413,16/5/74,1996-09-12,286,#00bfff,9
+Canzoni,414,Un giorno senza te,1996-09-12,299,#00bfff,9
+Canzoni,415,La voce,1996-09-12,295,#00bfff,9
+Canzoni,416,Il mondo che vorrei,1996-09-12,253,#00bfff,9
+Canzoni,417,La mia risposta,1998-10-15,222,#0080ff,9
+Canzoni,418,Stanotte stai con me,1998-10-15,249,#0080ff,9
+Canzoni,419,Un:emergenza d:amore,1998-10-15,270,#0080ff,9
+Canzoni,420,Anna dimmi sì,1998-10-15,238,#0080ff,9
+Canzoni,421,Una storia seria,1998-10-15,280,#0080ff,9
+Canzoni,422,Come una danza,1998-10-15,319,#0080ff,9
+Canzoni,423,Che bene mi fai,1998-10-15,261,#0080ff,9
+Canzoni,424,In assenza di te,1998-10-15,271,#0080ff,9
+Canzoni,425,Succede al cuore,1998-10-15,221,#0080ff,9
+Canzoni,426,Tu cosa sogni?,1998-10-15,231,#0080ff,9
+Canzoni,427,Buone verità,1998-10-15,241,#0080ff,9
+Canzoni,428,La felicità,1998-10-15,236,#0080ff,9
+Canzoni,429,Looking For An Angel,1998-10-15,254,#0080ff,9
+Canzoni,430,Siamo noi,2000-09-15,235,#0040ff,9
+Canzoni,431,Volevo dirti che ti amo,2000-09-16,244,#0040ff,9
+Canzoni,432,Il mio sbaglio più grande,2000-09-17,185,#0040ff,9
+Canzoni,433,Tra te e il mare,2000-09-18,229,#0040ff,9
+Canzoni,434,Viaggio con te,2000-09-19,229,#0040ff,9
+Canzoni,435,Musica sarà,2000-09-20,203,#0040ff,9
+Canzoni,436,Anche se non mi vuoi,2000-09-21,236,#0040ff,9
+Canzoni,437,Fidati di me,2000-09-22,229,#0040ff,9
+Canzoni,438,Ricordami,2000-09-23,248,#0040ff,9
+Canzoni,439,Per vivere,2000-09-24,245,#0040ff,9
+Canzoni,440,Mentre la notte va,2000-09-25,210,#0040ff,9
+Canzoni,441,Come si fa,2000-09-26,250,#0040ff,9
+Canzoni,442,Jenny,2000-09-27,266,#0040ff,9
+Canzoni,443,The Extra Mile,2000-09-28,248,#0040ff,9
+Canzoni,444,Il mare calmo della sera,1994-01-01,343,#0000ff,10
+Canzoni,445,Ave Maria No Morro,1994-01-01,340,#0000ff,10
+Canzoni,446,Vivere,1994-01-01,242,#0000ff,10
+Canzoni,447,Rapsodia,1994-01-01,322,#0000ff,10
+Canzoni,448,La Luna che non c'è,1994-01-01,275,#0000ff,10
+Canzoni,449,Caruso,1994-01-01,304,#0000ff,10
+Canzoni,450,Miserere,1994-01-01,249,#0000ff,10
+Canzoni,451,Panis Angelicus,1994-01-01,287,#0000ff,10
+Canzoni,452,Ah; la paterna mano,1994-01-01,325,#0000ff,10
+Canzoni,453,E lucevan le stelle,1994-01-01,252,#0000ff,10
+Canzoni,454,La fleur que tu m:avais jetèe,1994-01-01,326,#0000ff,10
+Canzoni,455,L:anima ho stanca,1994-01-01,336,#0000ff,10
+Canzoni,456,Sogno,1994-01-01,295,#0000ff,10
+Canzoni,457,Con te partirò,1995-11-13,249,#4000ff,10
+Canzoni,458,Per amore,1995-11-13,281,#4000ff,10
+Canzoni,459,Macchina da guerra,1995-11-13,248,#4000ff,10
+Canzoni,460,E chiove,1995-11-13,261,#4000ff,10
+Canzoni,461,Romanza,1995-11-13,221,#4000ff,10
+Canzoni,462,The Power Of Love,1995-11-13,321,#4000ff,10
+Canzoni,463,Vivo per lei,1995-11-13,263,#4000ff,10
+Canzoni,464,Le tue parole,1995-11-13,237,#4000ff,10
+Canzoni,465,Sempre sempre,1995-11-13,258,#4000ff,10
+Canzoni,466,Voglio restare così,1995-11-13,231,#4000ff,10
+Canzoni,467,Vivo per lei - Ich lebe fur sie,1995-11-13,334,#4000ff,10
+Canzoni,468,Nessun dorma,1996-01-01,307,#8000ff,10
+Canzoni,469,Il lamento di Federico,1996-01-01,249,#8000ff,10
+Canzoni,470,Ah; la paterna mano,1996-01-01,325,#8000ff,10
+Canzoni,471,La donna è mobile,1996-01-01,260,#8000ff,10
+Canzoni,472,Una furtiva lagrima,1996-01-01,351,#8000ff,10
+Canzoni,473,Panis Angelicus,1996-01-01,287,#8000ff,10
+Canzoni,474,Ave Maria,1996-01-01,254,#8000ff,10
+Canzoni,475,O sole mio,1996-01-01,274,#8000ff,10
+Canzoni,476,Core :ngrato,1996-01-01,331,#8000ff,10
+Canzoni,477,Santa Lucia luntana,1996-01-01,353,#8000ff,10
+Canzoni,478,I te vurria vasà,1996-01-01,263,#8000ff,10
+Canzoni,479,Tu; ca nun chiagne,1996-01-01,355,#8000ff,10
+Canzoni,480,O marenariello,1996-01-01,241,#8000ff,10
+Canzoni,481,Piscatore :e Pusilleco,1996-01-01,265,#8000ff,10
+Canzoni,482,Messaggio Bocelli,1996-01-01,291,#8000ff,10
+Canzoni,483,Adeste fidelis,1996-01-01,267,#8000ff,10
+Canzoni,484,Questa o quella,1998-01-01,249,#bf00ff,10
+Canzoni,485,Che gelida manina,1998-01-01,341,#bf00ff,10
+Canzoni,486,Recondita armonia,1998-01-01,331,#bf00ff,10
+Canzoni,487,E lucevan le stelle,1998-01-01,252,#bf00ff,10
+Canzoni,488,Addio; fiorito asil,1998-01-01,344,#bf00ff,10
+Canzoni,489,Come un bel dì di maggio,1998-01-01,249,#bf00ff,10
+Canzoni,490,A te; o cara,1998-01-01,288,#bf00ff,10
+Canzoni,491,Di rigori armato il seno,1998-01-01,267,#bf00ff,10
+Canzoni,492,Amor ti vieta,1998-01-01,257,#bf00ff,10
+Canzoni,493,Ch:ella mi creda libero,1998-01-01,306,#bf00ff,10
+Canzoni,494,Cielo e mar!,1998-01-01,335,#bf00ff,10
+Canzoni,495,La dolcissima effige,1998-01-01,354,#bf00ff,10
+Canzoni,496,Musetta!... Testa adorata,1998-01-01,300,#bf00ff,10
+Canzoni,497,Tombe degli avi miei,1998-01-01,290,#bf00ff,10
+Canzoni,498,Puourquoi me rèveiller,1998-01-01,304,#bf00ff,10
+Canzoni,499,La fleur que tu m:avais jetèe,1998-01-01,326,#bf00ff,10
+Canzoni,500,Pour mon ame,1998-01-01,329,#bf00ff,10
+Canzoni,501,Canto della Terra,1999-04-06,242,#ff00ff,10
+Canzoni,502,The prayer,1999-04-06,250,#ff00ff,10
+Canzoni,503,Sogno,1999-04-06,243,#ff00ff,10
+Canzoni,504,O mare e tu,1999-04-06,276,#ff00ff,10
+Canzoni,505,A volte il cuore,1999-04-06,284,#ff00ff,10
+Canzoni,506,Cantico,1999-04-06,241,#ff00ff,10
+Canzoni,507,Mai più così lontano,1999-04-06,260,#ff00ff,10
+Canzoni,508,Immenso,1999-04-06,291,#ff00ff,10
+Canzoni,509,Nel cuore lei,1999-04-06,228,#ff00ff,10
+Canzoni,510,Tremo e t:amo,1999-04-06,291,#ff00ff,10
+Canzoni,511,I Love Rossini,1999-04-06,236,#ff00ff,10
+Canzoni,512,Un canto,1999-04-06,275,#ff00ff,10
+Canzoni,513,Come un fiume tu,1999-04-06,287,#ff00ff,10
+Canzoni,514,A mio padre (6 maggio 1992),1999-04-06,240,#ff00ff,10
+Canzoni,515,Fuego contra fuego,1991-11-26,255,#ff00bf,11
+Canzoni,516,Dime que me quires,1991-11-26,196,#ff00bf,11
+Canzoni,517,Vuelo,1991-11-26,231,#ff00bf,11
+Canzoni,518,Conmigo nadie puede,1991-11-26,198,#ff00bf,11
+Canzoni,519,Te voy a conquistar,1991-11-26,255,#ff00bf,11
+Canzoni,520,Juego de Ajedrez,1991-11-26,163,#ff00bf,11
+Canzoni,521,Corazon entre nubes,1991-11-26,219,#ff00bf,11
+Canzoni,522,Ser Feliz,1991-11-26,278,#ff00bf,11
+Canzoni,523,El amor de mi vida,1991-11-26,297,#ff00bf,11
+Canzoni,524,Susana,1991-11-26,294,#ff00bf,11
+Canzoni,525,Popotitos,1991-11-26,198,#ff00bf,11
+Canzoni,526,No me pidas mas,1993-05-25,209,#ff0080,11
+Canzoni,527,Es mejor decirse adiòs,1993-05-25,205,#ff0080,11
+Canzoni,528,Entre el amor y los Halagos,1993-05-25,258,#ff0080,11
+Canzoni,529,Lo que nos pase; pasara,1993-05-25,232,#ff0080,11
+Canzoni,530,Ella es,1993-05-25,282,#ff0080,11
+Canzoni,531,Me amaràs,1993-05-25,269,#ff0080,11
+Canzoni,532,Ayudame,1993-05-25,250,#ff0080,11
+Canzoni,533,Eres come el aire,1993-05-25,246,#ff0080,11
+Canzoni,534,Que dia es hoy,1993-05-25,265,#ff0080,11
+Canzoni,535,Hooray! Hooray! It:s a Holi-Holiday,1993-05-25,190,#ff0080,11
+Canzoni,536,Por arriba; por abajo,1998-02-10,358,#ff0000,11
+Canzoni,537,Lola; lola,1998-02-10,326,#ff0000,11
+Canzoni,538,Casi un bolero,1998-02-10,357,#ff0000,11
+Canzoni,539,Corazonado,1998-02-10,339,#ff0000,11
+Canzoni,540,La bomba,1998-02-10,349,#ff0000,11
+Canzoni,541,Vuelve,1998-02-10,298,#ff0000,11
+Canzoni,542,Hagamos el amor,1998-02-10,354,#ff0000,11
+Canzoni,543,La copa de la vida,1998-02-10,342,#ff0000,11
+Canzoni,544,Perdido sin ti,1998-02-10,266,#ff0000,11
+Canzoni,545,Asi es la vida,1998-02-10,308,#ff0000,11
+Canzoni,546,Marcia baila,1998-02-10,338,#ff0000,11
+Canzoni,547,No importa la distancia,1998-02-10,242,#ff0000,11
+Canzoni,548,Fuego de noche; nieve de dia,1995-09-12,330,#ff0040,11
+Canzoni,549,A medio vivir,1995-09-12,282,#ff0040,11
+Canzoni,550,(Un; dos; tres) Maria,1995-09-12,263,#ff0040,11
+Canzoni,551,Te extrano; te olvido; te amo,1995-09-12,281,#ff0040,11
+Canzoni,552,Donde estaras?,1995-09-12,232,#ff0040,11
+Canzoni,553,Volveras,1995-09-12,292,#ff0040,11
+Canzoni,554,Revolucion,1995-09-12,230,#ff0040,11
+Canzoni,555,Somos la semilla,1995-09-12,236,#ff0040,11
+Canzoni,556,Como decirte adios?,1995-09-12,180,#ff0040,11
+Canzoni,557,Bombon de azucar,1995-09-12,298,#ff0040,11
+Canzoni,558,Corazon,1995-09-12,260,#ff0040,11
+Canzoni,559,Nada es imposible,1995-09-12,262,#ff0040,11
+Canzoni,560,She bangs,2000-12-26,281,#ff4000,11
+Canzoni,561,Saint Tropez,2000-12-26,288,#ff4000,11
+Canzoni,562,Come to me,2000-12-26,273,#ff4000,11
+Canzoni,563,Loaded,2000-12-26,233,#ff4000,11
+Canzoni,564,Nobody wants to be lonely,2000-12-26,305,#ff4000,11
+Canzoni,565,Amor,2000-12-26,207,#ff4000,11
+Canzoni,566,Jezabel,2000-12-26,229,#ff4000,11
+Canzoni,567,The touch,2000-12-26,267,#ff4000,11
+Canzoni,568,One night man,2000-12-26,228,#ff4000,11
+Canzoni,569,She Bangs (Spanish Version),2000-12-26,277,#ff4000,11
+Canzoni,570,Are you in it for love,2000-12-26,246,#ff4000,11
+Canzoni,571,Ven a mi,2000-12-26,274,#ff4000,11
+Canzoni,572,If you ever saw her,2000-12-26,229,#ff4000,11
+Canzoni,573,Dame mas,2000-12-26,233,#ff4000,11
+Canzoni,574,Cambia la pie!,2000-12-26,313,#ff4000,11

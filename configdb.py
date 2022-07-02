@@ -29,3 +29,7 @@ def getPassword():
 def getPort():
     # return "5432"
     return "5432"
+
+
+# inserire funzione che ritorna la connessione per alleggerire il codice in tutte gli file
+# in questo modo posso avere anche la connessione giusta di base e poi itero sul cursone con postgre

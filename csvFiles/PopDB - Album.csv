@@ -1,11 +1,51 @@
 Album,IdAlbum,Titolo,Rilascio,Colore,NCanzoni,IdArtista
-Album,1,Kill :Em All,1983-07-25,#ff0000,10,2
-Album,2,Ride the Lightning,1984-07-27,#ff4000,8,2
+Album,1,Kill :em all,1983-07-25,#ff0000,10,2
+Album,2,Ride the lightning,1984-07-27,#ff4000,8,2
 Album,3,Master of puppets,1986-03-03,#ff8000,8,2
-Album,4,... And Justice for All,1988-08-25,#ffbf00,9,2
+Album,4,... And justice for all,1988-08-25,#ffbf00,9,2
 Album,5,Metallica,1991-08-12,#ffff00,12,2
-Album,6,Made in Heaven,1995-11-06,#bfff00,10,3
-Album,7,The Miracle,1989-05-22,#80ff00,10,3
-Album,8,A Night At The Opera,1975-11-21,#40ff00,12,3
-Album,9,News of the World,1977-10-28,#00ff00,11,3
-Album,10,The Game,1980-06-30,#00ff40,10,3
+Album,6,Made in heaven,1995-11-06,#bfff00,10,3
+Album,7,The miracle,1989-05-22,#80ff00,10,3
+Album,8,A night at the opera,1975-11-21,#40ff00,12,3
+Album,9,News of the world,1977-10-28,#00ff00,11,3
+Album,10,The game,1980-06-30,#00ff40,10,3
+Album,11,Appetite for destruction,1987-07-21,#00ff80,12,4
+Album,12,G N: R Lies,1988-11-29,#00ffbf,8,4
+Album,13,Use your illusion I,1991-09-17,#00ffff,16,4
+Album,14,Use your illusion II,1991-09-17,#00bfff,14,4
+Album,15,The spaghetti incident?,1993-11-23,#0080ff,12,4
+Album,16,Ligabue,1990-05-11,#0040ff,11,5
+Album,17,Mondovisione,2013-11-26,#0000ff,14,5
+Album,18,Buon compleanno Elvis,1995-09-21,#4000ff,14,5
+Album,19,Sopravvissuti e sopravviventi,1993-01-22,#8000ff,13,5
+Album,20,Nome e cognome,2005-09-16,#bf00ff,11,5
+Album,21,...Ma cosa vuoi che sia una canzone...,1978-05-25,#ff00ff,8,6
+Album,22,Non siamo mica gli americani!,1979-04-30,#ff00bf,9,6
+Album,23,Colpa d:Alfredo,1980-04-03,#ff0080,8,6
+Album,24,Siamo solo noi,1981-04-09,#ff0040,8,6
+Album,25,Vado sl massimo,1982-04-13,#ff0000,9,6
+Album,26,Herzeleid,1995-09-25,#ff4000,11,7
+Album,27,Sehnsucht ,1997-08-22,#ff8000,11,7
+Album,28,Mutter ,2001-04-02,#ffbf00,11,7
+Album,29,Reise; reise,2004-09-27,#ffff00,11,7
+Album,30,Rosenrot,2005-08-28,#bfff00,11,7
+Album,31,Hybrid theory,2001-10-24,#80ff00,12,8
+Album,32,Meteora,2003-03-25,#40ff00,13,8
+Album,33,Minutes to midnight,2007-05-15,#00ff00,12,8
+Album,34,A thousand suns,2010-09-14,#00ff40,15,8
+Album,35,Living things,2012-06-26,#00ff80,12,8
+Album,36,Laura Pausini,1993-04-26,#00ffbf,8,9
+Album,37,Laura,1994-02-26,#00ffff,10,9
+Album,38,Le cose che vivi,1996-09-12,#00bfff,12,9
+Album,39,La mia risposta,1998-10-15,#0080ff,13,9
+Album,40,Tra te e il mare,2000-09-15,#0040ff,14,9
+Album,41,Il mare calmo della sera,1994-01-01,#0000ff,13,10
+Album,42,Bocelli,1995-11-13,#4000ff,11,10
+Album,43,Viaggio italiano,1996-01-01,#8000ff,16,10
+Album,44,Aria - The opera album,1998-01-01,#bf00ff,17,10
+Album,45,Sogno,1999-04-06,#ff00ff,14,10
+Album,46,Ricky Martin,1991-11-26,#ff00bf,11,11
+Album,47,Me amaràs,1993-05-25,#ff0080,10,11
+Album,49,A medio vivir,1995-09-12,#ff0040,12,11
+Album,48,Vuelve,1998-02-10,#ff0000,12,11
+Album,50,Sound loaded,2000-12-26,#ff4000,15,11

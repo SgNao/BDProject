@@ -76,10 +76,10 @@ def insertData(data, cursor):
                                         else:
                                                 cursor.execute(ins, tail)
                                 case "Artisti":
-                                        ins = "INSERT INTO artisti VALUES (?,?)"
+                                        ins = "INSERT INTO unive_music.artisti (id_utente, debutto) VALUES (%s,%s)"
                                         cursor.execute(ins, tail)
                                 case "Playlist":
-                                        ins = "INSERT INTO playlist VALUES (?,?,?,?,?)"
+                                        ins = "INSERT INTO unive_music.playlist (id_playlist, id_utente, nome, descrizione, n_canzoni) VALUES (%s,%s,%s,%s,%s)"
                                         # None per avere un Integer con autoincremento. Mettere gli autoincrement per primi per poter estrarre i None
                                         tail[2] = cambiaCaratteri(tail[2])
                                         tail[3] = cambiaCaratteri(tail[3])
@@ -91,7 +91,7 @@ def insertData(data, cursor):
                                         else:
                                                 cursor.execute(ins, tail)
                                 case "Canzoni":
-                                        ins = "INSERT INTO canzoni VALUES (?,?,?,?,?,?)"
+                                        ins = "INSERT INTO unive_music.canzoni (id_canzone, titolo, rilascio, durata, colore, id_artista) VALUES (%s,%s,%s,%s,%s,%s)"
                                         # None per avere un Integer con autoincremento. Mettere gli autoincrement per primi per poter estrarre i None
                                         tail[1] = cambiaCaratteri(tail[1])
                                         head2, *tail2 = tail
@@ -100,7 +100,7 @@ def insertData(data, cursor):
                                         else:
                                                 cursor.execute(ins, tail)
                                 case "Album":
-                                        ins = "INSERT INTO album VALUES (?,?,?,?,?,?)"
+                                        ins = "INSERT INTO unive_music.album (id_album, titolo, rilascio, colore, n_canzoni, id_artista) VALUES (%s,%s,%s,%s,%s,%s)"
                                         # None per avere un Integer con autoincremento. Mettere gli autoincrement per primi per poter estrarre i None
                                         tail[1] = cambiaCaratteri(tail[1])
                                         head2, *tail2 = tail
@@ -109,7 +109,7 @@ def insertData(data, cursor):
                                         else:
                                                 cursor.execute(ins, tail)
                                 case "Statistiche":
-                                        ins = "INSERT INTO statistiche VALUES (?,?,?,?,?,?,?,?,?)"
+                                        ins = "INSERT INTO unive_music.statistiche (id_statistica, _13_19, _20_29, _30_39, _40_49, _50_65, _65piu, n_riproduzioni_totali, n_riproduzioni_settimanali) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
                                         # None per avere un Integer con autoincremento. Mettere gli autoincrement per primi per poter estrarre i None
                                         head2, *tail2 = tail
                                         if head2 == "None":
@@ -117,29 +117,29 @@ def insertData(data, cursor):
                                         else:
                                                 cursor.execute(ins, tail)
                                 case "Tag":
-                                        ins = "INSERT INTO tag VALUES (?)"
+                                        ins = "INSERT INTO unive_music.tag (tag) VALUES (%s)"
                                         tail[0] = cambiaCaratteri(tail[0])
                                         cursor.execute(ins, tail)
                                 case "Raccolte":
-                                        ins = "INSERT INTO raccolte VALUES (?,?)"
+                                        ins = "INSERT INTO unive_music.raccolte (id_playlist, id_canzone) VALUES (%s,%s)"
                                         cursor.execute(ins, tail)
                                 case "Contenuto":
-                                        ins = "INSERT INTO contenuto VALUES (?,?)"
+                                        ins = "INSERT INTO unive_music.contenuto (id_album, id_canzone) VALUES (%s,%s)"
                                         cursor.execute(ins, tail)
                                 case "AttributoCanzone":
-                                        ins = "INSERT INTO attributo_canzone VALUES (?,?)"
+                                        ins = "INSERT INTO unive_music.attributo_canzone (id_tag, id_canzone) VALUES (%s,%s)"
                                         tail[0] = cambiaCaratteri(tail[0])
                                         cursor.execute(ins, tail)
                                 case "AttributoAlbum":
-                                        ins = "INSERT INTO attributo_album VALUES (?,?)"
+                                        ins = "INSERT INTO unive_music.attributo_album (id_tag, id_album) VALUES (%s,%s)"
                                         tail[0] = cambiaCaratteri(tail[0])
                                         cursor.execute(ins, tail)
                                 case "AttributoPlaylist":
-                                        ins = "INSERT INTO attributo_playlist VALUES (?,?)"
+                                        ins = "INSERT INTO unive_music.attributo_playlist (id_tag, id_playlist) VALUES (%s,%s)"
                                         tail[0] = cambiaCaratteri(tail[0])
                                         cursor.execute(ins, tail)
                                 case "StatCanzoni":
-                                        ins = "INSERT INTO statistiche_canzoni VALUES (?,?)"
+                                        ins = "INSERT INTO unive_music.statistiche_canzoni (id_statistica, id_canzone) VALUES (%s,%s)"
                                         cursor.execute(ins, tail)
                                 case _:
                                         print("Something went wrong")
@@ -147,7 +147,7 @@ def insertData(data, cursor):
                 for c in data:
                         head, *tail = c
                         if(head == "Utenti"):
-                                ins = "INSERT INTO utenti VALUES (?,?,?,?,?,?,?,?,?)"
+                                ins = "INSERT INTO unive_music.utenti (id_utente, email, nome, cognome, nickname, bio, data_nascita, password, ruolo) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
                                 # None per avere un Integer con autoincremento. Mettere gli autoincrement per primi per poter estrarre i None
                                 tail[2] = cambiaCaratteri(tail[2])
                                 tail[3] = cambiaCaratteri(tail[3])
@@ -162,10 +162,10 @@ def insertData(data, cursor):
                                 else:
                                         cursor.execute(ins, tail)
                         elif(head == "Artisti"):
-                                ins = "INSERT INTO artisti VALUES (?,?)"
+                                ins = "INSERT INTO unive_music.artisti (id_utente, debutto) VALUES (%s,%s)"
                                 cursor.execute(ins, tail)
                         elif(head == "Playlist"):
-                                ins = "INSERT INTO playlist VALUES (?,?,?,?,?)"
+                                ins = "INSERT INTO unive_music.playlist (id_playlist, id_utente, nome, descrizione, n_canzoni) VALUES (%s,%s,%s,%s,%s)"
                                 # None per avere un Integer con autoincremento. Mettere gli autoincrement per primi per poter estrarre i None
                                 if(tail[3] == "void"):
                                     tail[3] = ""
@@ -175,7 +175,7 @@ def insertData(data, cursor):
                                 else:
                                         cursor.execute(ins, tail)
                         elif(head == "Canzoni"):
-                                ins = "INSERT INTO canzoni VALUES (?,?,?,?,?,?)"
+                                ins = "INSERT INTO unive_music.canzoni (id_canzone, titolo, rilascio, durata, colore, id_artista) VALUES (%s,%s,%s,%s,%s,%s)"
                                 # None per avere un Integer con autoincremento. Mettere gli autoincrement per primi per poter estrarre i None
                                 tail[1] = cambiaCaratteri(tail[1])
                                 head2, *tail2 = tail
@@ -184,7 +184,7 @@ def insertData(data, cursor):
                                 else:
                                         cursor.execute(ins, tail)
                         elif(head == "Album"):
-                                ins = "INSERT INTO album VALUES (?,?,?,?,?,?)"
+                                ins = "INSERT INTO unive_music.album (id_album, titolo, rilascio, colore, n_canzoni, id_artista) VALUES (%s,%s,%s,%s,%s,%s)"
                                 # None per avere un Integer con autoincremento. Mettere gli autoincrement per primi per poter estrarre i None
                                 tail[1] = cambiaCaratteri(tail[1])
                                 head2, *tail2 = tail
@@ -193,7 +193,7 @@ def insertData(data, cursor):
                                 else:
                                         cursor.execute(ins, tail)
                         elif(head == "Statistiche"):
-                                ins = "INSERT INTO statistiche VALUES (?,?,?,?,?,?,?,?,?)"
+                                ins = "INSERT INTO unive_music.statistiche (id_statistica, _13_19, _20_29, _30_39, _40_49, _50_65, _65piu, n_riproduzioni_totali, n_riproduzioni_settimanali) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
                                 # None per avere un Integer con autoincremento. Mettere gli autoincrement per primi per poter estrarre i None
                                 head2, *tail2 = tail
                                 if head2 == "None":
@@ -201,29 +201,29 @@ def insertData(data, cursor):
                                 else:
                                         cursor.execute(ins, tail)
                         elif(head == "Tag"):
-                                ins = "INSERT INTO tag VALUES (?)"
+                                ins = "INSERT INTO unive_music.tag (tag) VALUES (%s)"
                                 tail[0] = cambiaCaratteri(tail[0])
                                 cursor.execute(ins, tail)
                         elif(head == "Raccolte"):
-                                ins = "INSERT INTO raccolte VALUES (?,?)"
+                                ins = "INSERT INTO unive_music.raccolte (id_playlist, id_canzone) VALUES (%s,%s)"
                                 cursor.execute(ins, tail)
                         elif(head == "Contenuto"):
-                                ins = "INSERT INTO contenuto VALUES (?,?)"
+                                ins = "INSERT INTO unive_music.contenuto (id_album, id_canzone) VALUES (%s,%s)"
                                 cursor.execute(ins, tail)
                         elif(head == "AttributoCanzone"):
-                                ins = "INSERT INTO attributo_canzone VALUES (?,?)"
+                                ins = "INSERT INTO unive_music.attributo_canzone (id_tag, id_canzone) VALUES (%s,%s)"
                                 tail[0] = cambiaCaratteri(tail[0])
                                 cursor.execute(ins, tail)
                         elif(head == "AttributoAlbum"):
-                                ins = "INSERT INTO attributo_album VALUES (?,?)"
+                                ins = "INSERT INTO unive_music.attributo_album (id_tag, id_album) VALUES (%s,%s)"
                                 tail[0] = cambiaCaratteri(tail[0])
                                 cursor.execute(ins, tail)
                         elif(head == "AttributoPlaylist"):
-                                ins = "INSERT INTO attributo_playlist VALUES (?,?)"
+                                ins = "INSERT INTO unive_music.attributo_playlist (id_tag, id_playlist) VALUES (%s,%s)"
                                 tail[0] = cambiaCaratteri(tail[0])
                                 cursor.execute(ins, tail)
                         elif(head == "StatCanzoni"):
-                                ins = "INSERT INTO statistiche_canzoni VALUES (?,?)"
+                                ins = "INSERT INTO unive_music.statistiche_canzoni (id_statistica, id_canzone) VALUES (%s,%s)"
                                 cursor.execute(ins, tail)
                         else:
                                 print("Something went wrong else else")

@@ -24,8 +24,8 @@
                                 <td>
                                     <table style="width:100%; table-layout: auto;">
                                         <tr>
-                                            <td style="width: 5%;"><h3 class="text-section-2" style="font-weight: lighter;margin: 0%;">{{album.Rilascio}}</h3></td>
-                                            <td style="width: 20%;"><h3 class="text-section-2" style="font-weight: lighter;margin: 0%;">{{album.Nickname}}</h3></td>
+                                            <td style="width: 5%;"><h3 class="text-section-2" style="font-weight: lighter;margin: 0%;">{{album.rilascio}}</h3></td>
+                                            <td style="width: 20%;"><h3 class="text-section-2" style="font-weight: lighter;margin: 0%;">{{album.nickname}}</h3></td>
                                             <td style="width: 70%;text-align:right;"><h4 class="text-section-2" style="margin: 0%;color: #00323F;">{{tags.Tag_1}} {{tags.Tag_2}}</h4></td>
                                         </tr>
                                     </table>
@@ -48,13 +48,13 @@
                     {% endif %}
                         <table class="tabella4" onmouseover="Select('S_{{j}}ID_A_{{i}}', 'S_{{j}}ID_B_{{i}}')" onmouseout="Deselect('S_{{j}}ID_A_{{i}}', 'S_{{j}}ID_B_{{i}}')">
                             <tr><td class="img-cell" colspan="2"><div class="img"></div></td></tr>
-                            <tr><td class="manual-title-cell" colspan="2"><a href="Song.html"><h3 class="manual-title">{{song.Titolo}}</h3></a></td></tr>
+                            <tr><td class="manual-title-cell" colspan="2"><a href="Song.html"><h3 class="manual-title">{{song.titolo}}</h3></a></td></tr>
                             <tr>
                                 <td class="footprint">
-                                    <h4 class="footprint-text"> {{song.Nickname}} </h4> 
+                                    <h4 class="footprint-text"> {{song.nickname}} </h4>
                                 </td>
                                 <td class="footprint-anno">
-                                    <h5 class="footprint-text-anno"> {{song.Rilascio}} </h5>
+                                    <h5 class="footprint-text-anno"> {{song.rilascio}} </h5>
                                 </td>
                             </tr>
                             <tr>

@@ -6,14 +6,14 @@
         </div>
         <div id="box2">
             <table id="Playlist-table" style="border-collapse: collapse;">
-                <form action="/AddSongToPlaylist/{{song.IdCanzone}}" method="POST">
+                <form action="/AddSongToPlaylist/{{song.id_canzone}}" method="POST">
                     <tr>
                         <td colspan="2" style="text-align: center;background-color: #00323F;"><h2 style="margin-top:3%; margin-bottom: 2%; color:white">AGGIUNGI A</h2></td>
                     </tr>
                     {% if playlists %}
                         {% for i,playlist in enumerate(playlists) %}
                         <tr>
-                            <td style="text-align: right;"><h5 style="margin: 2%;margin-right: 5%;margin-top: 10%;">{{playlist.Nome}}</h5></td>
+                            <td style="text-align: right;"><h5 style="margin: 2%;margin-right: 5%;margin-top: 10%;">{{playlist.nome}}</h5></td>
                             <td style="text-align: left;"><input type="checkbox" name="P_{{i}}" style="margin: 2%;margin-left: 5%;margin-top: 10%;"></td>
                         </tr>
                         {% endfor %}
@@ -29,14 +29,14 @@
             <table class="tabella3">
                 <tr><td colspan="5">
                     <table style="width: 100%;margin-bottom: 1%;margin-top: 1%;border-collapse: collapse;"><tr>
-                        <td style="width: 30%;text-align: left;margin: 0%;border-bottom: 1px solid darkgray;"><h1 id="Playlist">{{song.Titolo}}</h1></td>
+                        <td style="width: 30%;text-align: left;margin: 0%;border-bottom: 1px solid darkgray;"><h1 id="Playlist">{{song.titolo}}</h1></td>
                         {% if playlists %}
                             <td style="width: 8%;vertical-align: bottom;border-bottom: 1px solid darkgray;text-align: left;" onmousedown="AddToPlaylist()">
                                 <h5 id="NuovaRaccolta">Aggiungi a</h5>
                             </td>
                         {% endif %}
                         <td style="width: 8%;vertical-align: bottom;border-bottom: 1px solid darkgray;text-align: left;">
-                           <a href="/SongStat/{{song.IdCanzone}}"><h5 id="NuovaRaccolta">Statistiche</h5></a>
+                           <a href="/SongStat/{{song.id_canzone}}"><h5 id="NuovaRaccolta">Statistiche</h5></a>
                         </td>
                         <td style="width: 74%;border-bottom: 1px solid darkgray;"></td>
                     </tr></table>
@@ -47,14 +47,14 @@
                             <td>
                                 <table style="width:100%; table-layout: auto;">
                                     <tr>
-                                        <td style="width: 5%;"><h3 class="text-section-2" style="font-weight: lighter;margin: 0%;">{{song.Rilascio}}</h3></td>
-                                        <td style="width: 5%;"><h3 class="text-section-2" style="font-weight: lighter;margin: 0%;">{{song.Durata}}</h3></td>
-                                        <td style="width: 20%;"><h3 class="text-section-2" style="font-weight: lighter;margin: 0%;">{{song.Nickname}}</h3></td>
+                                        <td style="width: 5%;"><h3 class="text-section-2" style="font-weight: lighter;margin: 0%;">{{song.rilascio}}</h3></td>
+                                        <td style="width: 5%;"><h3 class="text-section-2" style="font-weight: lighter;margin: 0%;">{{song.durata}}</h3></td>
+                                        <td style="width: 20%;"><h3 class="text-section-2" style="font-weight: lighter;margin: 0%;">{{song.nickname}}</h3></td>
                                         <td style="width: 70%;text-align:right;"><h4 class="text-section-2" style="margin: 0%;color: #00323F;">{{tags.Tag_1}} {{tags.Tag_2}}</h4></td>
                                     </tr>
                                     <tr>
                                         <td colspan="4">
-                                            <a href="/album/{{album.IdAlbum}}"><h3 class="text-section-2" style="color: #006840;margin-top: 1%;">{{album.Titolo}}</h3></a>
+                                            <a href="/album/{{album.id_album}}"><h3 class="text-section-2" style="color: #006840;margin-top: 1%;">{{album.Titolo}}</h3></a>
                                         </td>
                                     </tr>
                                 </table>
@@ -77,22 +77,22 @@
                     {% endif %}
                         <table class="tabella4" onmouseover="Select('S4_ID_A_{{i}}', 'S4_ID_B_{{i}}')" onmouseout="Deselect('S4_ID_A_{{i}}', 'S4_ID_B_{{i}}')">
                             <tr><td class="img-cell" colspan="2"><div class="img"></div></td></tr>
-                            <tr><td class="manual-title-cell" colspan="2"><h3 class="manual-title">{{song.Titolo}}</h3></td></tr>
+                            <tr><td class="manual-title-cell" colspan="2"><h3 class="manual-title">{{song.titolo}}</h3></td></tr>
                             <tr>
                                 <td class="footprint">
-                                    <h4 class="footprint-text"> {{song.Nickname}} </h4> 
+                                    <h4 class="footprint-text"> {{song.nickname}} </h4> 
                                 </td>
                                 <td class="footprint-anno">
-                                        <h5 class="footprint-text-anno"> {{song.Rilascio}} </h5>
+                                        <h5 class="footprint-text-anno"> {{song.rilascio}} </h5>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="2" class="footprint-hastag" colspan="2" id="S4_ID_A_{{i}}">
-                                    <h5 class="footprint-text-hastag"> {{song.Tag}} </h5>
+                                    <h5 class="footprint-text-hastag"> {{song.tag}} </h5>
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="2" class="footprint-hastag-4" colspan="2" id="S4_ID_B_{{i}}" onmouseover="Info_over('S4_ID_B_{{i}}')" onmouseout="Info_out('S4_ID_B_{{i}}')" onmousedown="Song('{{song.IdCanzone}}')">
+                                <td colspan="2" class="footprint-hastag-4" colspan="2" id="S4_ID_B_{{i}}" onmouseover="Info_over('S4_ID_B_{{i}}')" onmouseout="Info_out('S4_ID_B_{{i}}')" onmousedown="Song('{{song.id_canzone}}')">
                                     <h5 class="footprint-text-hastag"> INFO </h5>
                                 </td>
                             </tr>

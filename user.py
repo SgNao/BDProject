@@ -39,7 +39,7 @@ def private():
     for playlist in playlists:
         playlist_s = []
         for song in songs:
-            if song['IdPlaylist'] == playlist.IdPlaylist:
+            if song['IdPlaylist'] == playlist.id_playlist:
                 playlist_s.append(song)
         playlist_songs.append(playlist_s)
 
@@ -86,7 +86,7 @@ def AddSongToPlaylist(IdCanzone):
                                   ' SET n_canzoni = ?' 
                                   ' WHERE id_playlist = ?', NCanzoni[0]+1, playlist.id_playlist)
 
-                age = date.today().year - date.fromisoformat(current_user.DataNascita).year
+                age = date.today().year - date.fromisoformat(current_user.data_nascita).year
                 att = '_13_19'
                 if age>= 13 and age <= 19:
                     att = '_13_19'

@@ -23,7 +23,7 @@ def Accedi():
 def login():
     if request.method == 'POST':
         conn = engine.connect()
-        rs = conn.execute('SELECT Password FROM Utenti WHERE Email = ?', [request.form['user']])
+        rs = conn.execute('SELECT password FROM utenti WHERE email = ?', [request.form['user']])
         real_pwd = rs.fetchone()
         conn.close()
         if real_pwd is not None:
@@ -56,7 +56,7 @@ def SingIn():
         conn = engine.connect()
         pwhash = generate_password_hash(request.form["password"], method='pbkdf2:sha256:260000', salt_length=16)
         data = (request.form["email"], request.form["nome"], request.form["cognome"], request.form["nickname"], request.form["bio"], request.form["DataNascita"], pwhash, "1")
-        rs = conn.execute('INSERT INTO Utenti (Email, Nome, Cognome, Nickname, Bio, DataNascita, Password, Ruolo)'
+        rs = conn.execute('INSERT INTO Utenti (email, nome, cognome, nickname, bio, data_nascita, password, ruolo)'
                           ' VALUES (?,?,?,?,?,?,?,?)', data)
         
         conn.close()

@@ -1,7 +1,7 @@
 from flask import *
 from sqlalchemy import *
 from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user
-from login import LoginBP
+from Login import LoginBP
 from user import UserBP
 from song import SongBP
 from artist import ArtistBP
@@ -77,7 +77,7 @@ def ResultProxy_To_ListOfDict(query_result):
 @login_manager.user_loader
 def load_user(user_id):
     conn = engine.connect()
-    rs = conn.execute('SELECT * FROM Utenti WHERE IdUtenti = ?', user_id)
+    rs = conn.execute('SELECT * FROM utenti WHERE id_utente = ?', user_id)
     user = rs.fetchone()
     conn.close()
     return User(user.IdUtenti, user.Email, user.Nome, user.Cognome, user.Nickname, user.Bio, user.DataNascita, user.Password, user.Ruolo)
@@ -88,38 +88,38 @@ def home():
 
     conn = engine.connect()
     
-    rs = conn.execute(' SELECT Canzoni.IdCanzone, Canzoni.Titolo, Canzoni.Rilascio, Utenti.Nickname'
-                      ' FROM Canzoni JOIN Utenti ON Canzoni.IdArtista = Utenti.IdUtenti')
+    rs = conn.execute(' SELECT canzoni.id_canzone, canzoni.titolo, canzoni.rilascio, utenti.nickname'
+                      ' FROM Canzoni JOIN Utenti ON canzoni.id_artista = utenti.id_utente')
     all_songs = rs.fetchall()
     all_songs =  ResultProxy_To_ListOfDict(all_songs)
     for song in all_songs:
-        rs = conn.execute('SELECT AttributoCanzone.IdTag FROM AttributoCanzone WHERE AttributoCanzone.IdCanzone = ?', song['IdCanzone'])
+        rs = conn.execute('SELECT attributo_canzone.id_tag FROM attributo_canzone WHERE attributo_canzone.id_canzone = ?', song['IdCanzone'])
         tags = rs.fetchall()
         if tags:
            song['Tag_1'] = tags[0][0]
            song['Tag_2'] = tags[1][0]
 
-    rs = conn.execute(' SELECT Canzoni.IdCanzone, Canzoni.Titolo, Canzoni.Rilascio, Utenti.Nickname' 
-                      ' FROM Canzoni JOIN Utenti ON Canzoni.IdArtista = Utenti.IdUtenti'
+    rs = conn.execute(' SELECT canzoni.id_canzone, canzoni.titolo, canzoni.rilascio, utenti.nickname' 
+                      ' FROM canzoni JOIN utenti ON canzoni.id_artista = utenti.id_utente'
                       ' ORDER BY Canzoni.Rilascio DESC LIMIT 5')
     latest_songs = rs.fetchall()
     latest_songs =  ResultProxy_To_ListOfDict(latest_songs)
     for song in latest_songs:
-        rs = conn.execute('SELECT AttributoCanzone.IdTag FROM AttributoCanzone WHERE AttributoCanzone.IdCanzone = ?', song['IdCanzone'])
+        rs = conn.execute('SELECT attributo_canzone.id_tag FROM attributo_canzone WHERE attributo_canzone.id_canzone = ?', song['IdCanzone'])
         tags = rs.fetchall()
         if tags:
            song['Tag_1'] = tags[0][0]
            song['Tag_2'] = tags[1][0]
 
-    rs = conn.execute(' SELECT Canzoni.IdCanzone, Canzoni.Titolo, Canzoni.Rilascio, Utenti.Nickname'
-                      ' FROM Canzoni JOIN Utenti ON Canzoni.IdArtista = Utenti.IdUtenti'
-                      ' NATURAL JOIN StatCanzoni NATURAL JOIN Statistiche'
-                      ' ORDER BY Statistiche.NRiproduzioniTotali DESC LIMIT 5')
+    rs = conn.execute(' SELECT canzoni.id_canzone, canzoni.titolo, canzoni.rilascio, utenti.nickname'
+                      ' FROM canzoni JOIN utenti ON canzoni.id_artista = utenti.id_utente'
+                      ' NATURAL JOIN statistiche_canzoni NATURAL JOIN statistiche'
+                      ' ORDER BY statistiche.n_riproduzioni_totali DESC LIMIT 5')
 
     most_played_songs = rs.fetchall()
     most_played_songs =  ResultProxy_To_ListOfDict(most_played_songs)
     for song in most_played_songs:
-        rs = conn.execute('SELECT AttributoCanzone.IdTag FROM AttributoCanzone WHERE AttributoCanzone.IdCanzone = ?', song['IdCanzone'])
+        rs = conn.execute('SELECT attributo_canzone.id_tag FROM attributo_canzone WHERE attributo_canzone.id_canzone = ?', song['IdCanzone'])
         tags = rs.fetchall()
         if tags:
            song['Tag_1'] = tags[0][0]

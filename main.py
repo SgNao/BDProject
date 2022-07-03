@@ -42,26 +42,26 @@ def inject_enumerate():
 
 
 class User(UserMixin):
-    def __init__(self, id, Email, Nome, Cognome, Nickname, Bio, DataNascita, Password, Ruolo):  # active=True
+    def __init__(self, id, email, nome, cognome, nickname, bio, data_nascita, password, ruolo):  # active=True
         self.id = id
-        self.Email = Email
-        self.Nome = Nome
-        self.Cognome = Cognome
-        self.Nickname = Nickname
-        self.Bio = Bio
-        self.DataNascita = DataNascita
-        self.Password = Password
-        self.Ruolo = Ruolo
+        self.email = email
+        self.nome = nome
+        self.cognome = cognome
+        self.nickname = nickname
+        self.bio = bio
+        self.data_nascita = data_nascita
+        self.password = password
+        self.ruolo = ruolo
 
     def verify_password(self, pwd):
-        return check_password_hash(self.Password, pwd)
+        return check_password_hash(self.password, pwd)
 
 def get_user_by_email(email):
     conn = engine.connect()
-    rs = conn.execute('SELECT * FROM Utenti WHERE Email = ?', email)
+    rs = conn.execute('SELECT * FROM utenti WHERE email = ?', email)
     user = rs.fetchone()
     conn.close()
-    return User(user.IdUtenti, user.Email, user.Nome, user.Cognome, user.Nickname, user.Bio, user.DataNascita, user.Password, user.Ruolo)
+    return User(user.id_utente, user.email, user.nome, user.cognome, user.nickname, user.bio, user.data_nascita, user.password, user.ruolo)
 
 def ResultProxy_To_ListOfDict(query_result):
     d, a = {}, []
@@ -80,7 +80,7 @@ def load_user(user_id):
     rs = conn.execute('SELECT * FROM utenti WHERE id_utente = ?', user_id)
     user = rs.fetchone()
     conn.close()
-    return User(user.IdUtenti, user.Email, user.Nome, user.Cognome, user.Nickname, user.Bio, user.DataNascita, user.Password, user.Ruolo)
+    return User(user.id_utente, user.email, user.nome, user.cognome, user.nickname, user.bio, user.data_nascita, user.password, user.ruolo)
 
 @app.route('/')
 def home():
@@ -89,11 +89,11 @@ def home():
     conn = engine.connect()
     
     rs = conn.execute(' SELECT canzoni.id_canzone, canzoni.titolo, canzoni.rilascio, utenti.nickname'
-                      ' FROM Canzoni JOIN Utenti ON canzoni.id_artista = utenti.id_utente')
+                      ' FROM canzoni JOIN utenti ON canzoni.id_artista = utenti.id_utente')
     all_songs = rs.fetchall()
     all_songs =  ResultProxy_To_ListOfDict(all_songs)
     for song in all_songs:
-        rs = conn.execute('SELECT attributo_canzone.id_tag FROM attributo_canzone WHERE attributo_canzone.id_canzone = ?', song['IdCanzone'])
+        rs = conn.execute('SELECT attributo_canzone.id_tag FROM attributo_canzone WHERE attributo_canzone.id_canzone = ?', song['id_utente'])
         tags = rs.fetchall()
         if tags:
            song['Tag_1'] = tags[0][0]
@@ -105,7 +105,7 @@ def home():
     latest_songs = rs.fetchall()
     latest_songs =  ResultProxy_To_ListOfDict(latest_songs)
     for song in latest_songs:
-        rs = conn.execute('SELECT attributo_canzone.id_tag FROM attributo_canzone WHERE attributo_canzone.id_canzone = ?', song['IdCanzone'])
+        rs = conn.execute('SELECT attributo_canzone.id_tag FROM attributo_canzone WHERE attributo_canzone.id_canzone = ?', song['id_utente'])
         tags = rs.fetchall()
         if tags:
            song['Tag_1'] = tags[0][0]
@@ -119,7 +119,7 @@ def home():
     most_played_songs = rs.fetchall()
     most_played_songs =  ResultProxy_To_ListOfDict(most_played_songs)
     for song in most_played_songs:
-        rs = conn.execute('SELECT attributo_canzone.id_tag FROM attributo_canzone WHERE attributo_canzone.id_canzone = ?', song['IdCanzone'])
+        rs = conn.execute('SELECT attributo_canzone.id_tag FROM attributo_canzone WHERE attributo_canzone.id_canzone = ?', song['id_utente'])
         tags = rs.fetchall()
         if tags:
            song['Tag_1'] = tags[0][0]

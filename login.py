@@ -1,6 +1,6 @@
 from flask import *
 from sqlalchemy import *
-from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user
+from flask_login import login_user, login_required, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
 import main
 from datetime import date
@@ -15,11 +15,13 @@ def inject_enumerate():
     return dict(enumerate=enumerate, str=str, len=len)
 
 
+# pagina di accesso
 @LoginBP.route('/Accedi')
 def Accedi():
     return render_template("Accedi.html")
 
 
+# pagina di login
 @LoginBP.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -40,6 +42,7 @@ def login():
         return redirect(url_for('LoginBP.Accedi'))
 
 
+# logout
 @LoginBP.route('/logout')
 @login_required
 def logout():
@@ -47,11 +50,13 @@ def logout():
     return redirect(url_for('home'))
 
 
+# redirect alla pagina di sign in
 @LoginBP.route('/Registrati')
 def Registrati():
     return render_template("Registrati.html")
 
 
+# pagina di registrazione
 @LoginBP.route('/singin', methods=['GET', 'POST'])
 def SingIn():
     if request.method == 'POST':

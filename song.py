@@ -1,6 +1,6 @@
 from flask import *
 from sqlalchemy import *
-from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user
+from flask_login import current_user
 import main
 
 SongBP = Blueprint('SongBP', __name__)
@@ -13,6 +13,7 @@ def inject_enumerate():
     return dict(enumerate=enumerate, str=str, len=len)
 
 
+# restituisce le statistiche delle canzoni
 @SongBP.route('/SongStat/<IdCanzone>')
 def SongStat(IdCanzone):
     conn = engine.connect()
@@ -40,6 +41,7 @@ def SongStat(IdCanzone):
     return render_template("SongStatistics.html", stat=statistiche, song=song, tags=Tags)
 
 
+# pagina di una canzone
 @SongBP.route('/songs/<IdCanzone>')
 def songs(IdCanzone):
     conn = engine.connect()

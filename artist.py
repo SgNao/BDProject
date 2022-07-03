@@ -1,4 +1,4 @@
-from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user
+from flask_login import current_user
 from flask import *
 from sqlalchemy import *
 from flask_login import login_required
@@ -15,6 +15,7 @@ def inject_enumerate():
     return dict(enumerate=enumerate, str=str, len=len)
 
 
+# crea un nuovo album
 @ArtistBP.route('/new_album', methods=['GET', 'POST'])
 @login_required
 def NewAlbum():
@@ -60,6 +61,7 @@ def NewAlbum():
         return render_template("NuovoAlbum.html")
 
 
+# redirect alla creazione della canzone
 @ArtistBP.route('/Nuova_Canzone/<IdAlbum>')
 @login_required  # richiede autenticazione
 def NewSongData(IdAlbum):
@@ -67,6 +69,7 @@ def NewSongData(IdAlbum):
     return render_template("NuovaCanzone.html", IdAlbum=IdAlbum)
 
 
+# crea una nuova canzone
 @ArtistBP.route('/new_song/<IdAlbum>', methods=['GET', 'POST'])
 @login_required
 def NewSong(IdAlbum):
@@ -124,6 +127,7 @@ def NewSong(IdAlbum):
         return render_template("NuovaCanzone.html")
 
 
+# visualizzazione album
 @ArtistBP.route('/Produzioni')
 @login_required  # richiede autenticazione
 def get_albums():
@@ -167,6 +171,7 @@ def get_albums():
     return resp
 
 
+# raccolta dei dati dell'album
 @ArtistBP.route('/album/<IdAlbum>')
 def get_album_data(IdAlbum):
     conn = engine.connect()
@@ -202,6 +207,7 @@ def get_album_data(IdAlbum):
     return resp
 
 
+# cancella un album
 @ArtistBP.route('/DelAlbum/<IdAlbum>')
 @login_required  # richiede autenticazione
 def DelAlbum(IdAlbum):
@@ -232,6 +238,7 @@ def DelAlbum(IdAlbum):
     return redirect(url_for('ArtistBP.get_albums'))
 
 
+# restituisce le statistiche dell'album
 @ArtistBP.route('/AlbumStat/<IdAlbum>')
 @login_required
 def AlbumStat(IdAlbum):
@@ -278,6 +285,7 @@ def AlbumStat(IdAlbum):
     return render_template("AlbumStatistics.html", stat=statistiche, album=album, tags=Tags)
 
 
+# promuove l'utente base ad artista
 @ArtistBP.route('/BecomeArtist')
 @login_required  # richiede autenticazione
 def BecomeArtist():

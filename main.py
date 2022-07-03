@@ -1,13 +1,11 @@
 from flask import *
 from sqlalchemy import *
-from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user
+from flask_login import LoginManager, UserMixin, login_required
 from login import LoginBP
 from user import UserBP
 from song import SongBP
 from artist import ArtistBP
-from werkzeug.security import check_password_hash, generate_password_hash
-import psycopg2
-import configdb
+from werkzeug.security import check_password_hash
 
 '''
 export FLASK_APP=main.py
@@ -52,10 +50,12 @@ class User(UserMixin):
         self.password = password
         self.ruolo = ruolo
 
+    # controlla che la password passata corrisponda a quella dell'utente applicando una funzione hash
     def verify_password(self, pwd):
         return check_password_hash(self.password, pwd)
 
 
+# restituisce l'utente data l'email
 def get_user_by_email(email):
     conn = engine.connect()
     rs = conn.execute('SELECT * FROM unive_music.utenti WHERE email = %s', email)
@@ -68,7 +68,6 @@ def get_user_by_email(email):
 def ResultProxy_To_ListOfDict(query_result):
     d, a = {}, []
     for rowproxy in query_result:
-        # rowproxy.items() returns an array like [(key0, value0), (key1, value1)]
         for column, value in rowproxy.items():
             # build up the dictionary
             d = {**d, **{column: value}}
@@ -80,13 +79,14 @@ def ResultProxy_To_ListOfDict(query_result):
 @login_manager.user_loader
 def load_user(user_id):
     conn = engine.connect()
-    rs = conn.execute('SELECT * FROM unive_music.utenti WHERE id_utente = ?', user_id)
+    rs = conn.execute('SELECT * FROM unive_music.utenti WHERE id_utente = %s', user_id)
     user = rs.fetchone()
     conn.close()
     return User(user.id_utente, user.email, user.nome, user.cognome, user.nickname, user.bio, user.data_nascita,
                 user.password, user.ruolo)
 
 
+# pagina principale
 @app.route('/')
 def home():
     # current_user identifica l’utente attuale utente anonimo prima dell’autenticazione
@@ -141,6 +141,7 @@ def home():
                            most_played_songs=most_played_songs)
 
 
+# reset delle statistiche settimanali
 @app.route('/Reset')
 @login_required
 def Reset():

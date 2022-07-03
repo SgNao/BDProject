@@ -1,13 +1,13 @@
 from flask import *
 from sqlalchemy import *
-from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user, login_remembered
+from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user
 from login import LoginBP
 from user import UserBP
 from song import SongBP
 from artist import ArtistBP
 from werkzeug.security import check_password_hash, generate_password_hash
-#import psycopg2
-#import configdb
+import psycopg2
+import configdb
 
 #conn = configdb.setupConnection()
 
@@ -42,34 +42,45 @@ def inject_enumerate():
 
 
 class User(UserMixin):
-    def __init__(self, id, email, nome, cognome, nickname, bio, data_nascita, password, ruolo):  # active=True
+    def __init__(self, id, Email, Nome, Cognome, Nickname, Bio, DataNascita, Password, Ruolo):  # active=True
         self.id = id
-        self.email = email
-        self.nome = nome
-        self.cognome = cognome
-        self.nickname = nickname
-        self.bio = bio
-        self.data_nascita = data_nascita
-        self.password = password
-        self.ruolo = ruolo
+        self.Email = Email
+        self.Nome = Nome
+        self.Cognome = Cognome
+        self.Nickname = Nickname
+        self.Bio = Bio
+        self.DataNascita = DataNascita
+        self.Password = Password
+        self.Ruolo = Ruolo
 
-def verify_password(self, pwd):
-    return check_password_hash(self.Password, pwd)
+    def verify_password(self, pwd):
+        return check_password_hash(self.Password, pwd)
 
 def get_user_by_email(email):
     conn = engine.connect()
-    rs = conn.execute('SELECT * FROM utenti WHERE email = ?', email)
+    rs = conn.execute('SELECT * FROM Utenti WHERE Email = ?', email)
     user = rs.fetchone()
     conn.close()
-    return User(user.id_utenti, user.email, user.nome, user.cognome, user.nickname, user.bio, user.data_nascita, user.password, user.ruolo)
+    return User(user.IdUtenti, user.Email, user.Nome, user.Cognome, user.Nickname, user.Bio, user.DataNascita, user.Password, user.Ruolo)
+
+def ResultProxy_To_ListOfDict(query_result):
+    d, a = {}, []
+    for rowproxy in query_result:
+        # rowproxy.items() returns an array like [(key0, value0), (key1, value1)]
+        for column, value in rowproxy.items():
+            # build up the dictionary
+            d = {**d, **{column: value}}
+        a.append(d)
+
+    return a
 
 @login_manager.user_loader
 def load_user(user_id):
     conn = engine.connect()
-    rs = conn.execute('SELECT * FROM utenti WHERE id_utenti = ?', user_id)
+    rs = conn.execute('SELECT * FROM Utenti WHERE IdUtenti = ?', user_id)
     user = rs.fetchone()
     conn.close()
-    return User(user.id_utenti, user.email, user.nome, user.cognome, user.nickname, user.bio, user.data_nascita, user.password, user.ruolo)
+    return User(user.IdUtenti, user.Email, user.Nome, user.Cognome, user.Nickname, user.Bio, user.DataNascita, user.Password, user.Ruolo)
 
 @app.route('/')
 def home():
@@ -77,27 +88,42 @@ def home():
 
     conn = engine.connect()
     
-    rs = conn.execute('SELECT id_canzone, titolo, rilascio FROM canzoni')
+    rs = conn.execute(' SELECT Canzoni.IdCanzone, Canzoni.Titolo, Canzoni.Rilascio, Utenti.Nickname'
+                      ' FROM Canzoni JOIN Utenti ON Canzoni.IdArtista = Utenti.IdUtenti')
     all_songs = rs.fetchall()
+    all_songs =  ResultProxy_To_ListOfDict(all_songs)
+    for song in all_songs:
+        rs = conn.execute('SELECT AttributoCanzone.IdTag FROM AttributoCanzone WHERE AttributoCanzone.IdCanzone = ?', song['IdCanzone'])
+        tags = rs.fetchall()
+        if tags:
+           song['Tag_1'] = tags[0][0]
+           song['Tag_2'] = tags[1][0]
 
-    rs = conn.execute('SELECT id_canzone, titolo, rilascio FROM canzoni ORDER BY rilascio DESC LIMIT 5')
+    rs = conn.execute(' SELECT Canzoni.IdCanzone, Canzoni.Titolo, Canzoni.Rilascio, Utenti.Nickname' 
+                      ' FROM Canzoni JOIN Utenti ON Canzoni.IdArtista = Utenti.IdUtenti'
+                      ' ORDER BY Canzoni.Rilascio DESC LIMIT 5')
     latest_songs = rs.fetchall()
+    latest_songs =  ResultProxy_To_ListOfDict(latest_songs)
+    for song in latest_songs:
+        rs = conn.execute('SELECT AttributoCanzone.IdTag FROM AttributoCanzone WHERE AttributoCanzone.IdCanzone = ?', song['IdCanzone'])
+        tags = rs.fetchall()
+        if tags:
+           song['Tag_1'] = tags[0][0]
+           song['Tag_2'] = tags[1][0]
 
-    most_played_songs = [{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                         {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                         {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                         {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                         {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"}] #Implementare query che ritorna le 5 canzoni più riprodotte
+    rs = conn.execute(' SELECT Canzoni.IdCanzone, Canzoni.Titolo, Canzoni.Rilascio, Utenti.Nickname'
+                      ' FROM Canzoni JOIN Utenti ON Canzoni.IdArtista = Utenti.IdUtenti'
+                      ' NATURAL JOIN StatCanzoni NATURAL JOIN Statistiche'
+                      ' ORDER BY Statistiche.NRiproduzioniTotali DESC LIMIT 5')
 
-    if current_user.is_authenticated:
-        recommended_songs = [{'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                             {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                             {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                             {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"},
-                             {'Titolo': "Sweet Child O' Mine", 'Anno': 1987, 'Tag': "#Rock and Roll"}] #Implementare query che ritorna le canzoni consigliate per l'utente
+    most_played_songs = rs.fetchall()
+    most_played_songs =  ResultProxy_To_ListOfDict(most_played_songs)
+    for song in most_played_songs:
+        rs = conn.execute('SELECT AttributoCanzone.IdTag FROM AttributoCanzone WHERE AttributoCanzone.IdCanzone = ?', song['IdCanzone'])
+        tags = rs.fetchall()
+        if tags:
+           song['Tag_1'] = tags[0][0]
+           song['Tag_2'] = tags[1][0]
 
-        conn.close()
-        return render_template("Index.html", user=current_user, all_songs=all_songs, latest_songs=latest_songs, most_played_songs=most_played_songs, recommended_songs=recommended_songs)
-    
     conn.close()
     return render_template("Index.html", all_songs=all_songs, latest_songs=latest_songs, most_played_songs=most_played_songs)

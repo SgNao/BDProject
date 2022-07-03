@@ -4,17 +4,17 @@
         <div id="container2">
             <h2 id="subtitle">{{user.Nickname}}</h2>
         </div>
-        <div id="NewPlaylist2">
+        <div id="box3">
             <table id="Playlist-table" style="border-collapse: collapse;">
                 <tr>
                     <td colspan="2" style="text-align: center;background-color: #00323F;"><h2 style="margin-top:4%; margin-bottom: 3%; color:white">ELIMINA ALBUM</h2></td>
                 </tr>
                 <tr>
-                    <td colspan="2" style="text-align: center;"><h5>Sei sicuro di voler cancellare l'album Appetite for Destruction ?</h5></td>
+                    <td id="Message-box" colspan="2" style="text-align: center;"></td> 
                 </tr>
                 <tr>
-                    <td style="text-align: right;width: 50%;"><input id="button-4-bis" style="margin-bottom: 10%;" type="submit" value="Annulla" onclick="ConfermaCancellaRaccolta()"></td>
-                    <td style="text-align: left;width: 50%;"><input id="button-4-bis"  style="margin-bottom: 10%;" type="submit" value="Elimina" onclick="ConfermaCancellaRaccolta()"></td>
+                    <td style="text-align: right;width: 50%;"><input id="button-4-bis" style="margin-bottom: 10%;" type="submit" value="Annulla" onclick="AnnullaCancellaAlbum()"></td>
+                    <td style="text-align: left;width: 50%;"><input id="button-4-bis"  style="margin-bottom: 10%;" type="submit" value="Elimina" onclick="ConfermaCancellaAlbum()"></td>
                 </tr>
             </table>
         </div>
@@ -51,7 +51,7 @@
                                             <td id="Mod" style="width: 12%;text-align: right;">
                                                 <a id="Mod_link" href="/Nuova_Canzone/{{album.IdAlbum}}"><h5 style="margin: 0%;">Aggiungi Canzone</h5></a>
                                             </td>
-                                            <td id="Elimina_tutto_A" style="width: 9%;" onmousedown="CancellaRaccolta()"><h5 style="margin: 0%;">Elimina Album</h5></td>
+                                            <td id="Elimina_tutto_A" style="width: 9%;" onmousedown='CancellaAlbum("{{album.Titolo}}","{{album.IdAlbum}}")'><h5 style="margin: 0%;">Elimina Album</h5></td>
                                         </tr>
                                     </table>
                                 </td>
@@ -87,7 +87,7 @@
                             <tr><td class="manual-title-cell" colspan="2"><a href="Song.html"><h3 class="manual-title">{{song.Titolo}}</h3></a></td></tr>
                             <tr>
                                 <td class="footprint">
-                                    <h4 class="footprint-text"> Guns N' Roses </h4> 
+                                    <h4 class="footprint-text"> {{song.Nickname}} </h4> 
                                 </td>
                                 <td class="footprint-anno">
                                     <h5 class="footprint-text-anno"> {{song.Rilascio}} </h5>
@@ -95,7 +95,7 @@
                             </tr>
                             <tr>
                                 <td colspan="2" class="footprint-hastag" colspan="2" id="S_{{j}}ID_A_{{i}}">
-                                    <h5 class="footprint-text-hastag"> {{song.Tag}} </h5>
+                                    <h5 class="footprint-text-hastag"> {{song.Tag_1}} {{song.Tag_2}} </h5>
                                 </td>
                             </tr>
                             <tr>

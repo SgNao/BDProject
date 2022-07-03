@@ -104,12 +104,6 @@ attAlbum = Table('attributo_album', metadata,
         PrimaryKeyConstraint('id_tag', 'id_album', name='pk_attributo_album')
         )
 
-AttPlaylist = Table('attributo_playlist', metadata,
-        Column('id_tag', String, ForeignKey('tag.tag', onupdate='CASCADE', ondelete='CASCADE', name='fk_tag'), nullable=False),
-        Column('id_playlist', Integer, ForeignKey('playlist.id_playlist', onupdate='CASCADE', ondelete='CASCADE', name='fk_playlist'), nullable=False),
-        PrimaryKeyConstraint('id_tag', 'id_playlist', name='pk_attributo_playlist')
-        )
-
 StatCanzoni = Table('statistiche_canzoni', metadata,
         Column('id_statistica', Integer, ForeignKey('statistiche.id_statistica', onupdate='CASCADE', ondelete='CASCADE', name='fk_statistica'), nullable=False),
         Column('id_canzone', Integer, ForeignKey('canzoni.id_canzone', onupdate='CASCADE', ondelete='CASCADE', name='fk_canzone'), nullable=False),
@@ -235,10 +229,6 @@ def insertData(data, connection):
                                         ins = "INSERT INTO attributo_album VALUES (?,?)"
                                         tail[0] = cambiaCaratteri(tail[0])
                                         connection.execute(ins, tail)
-                                case "AttributoPlaylist":
-                                        ins = "INSERT INTO attributo_playlist VALUES (?,?)"
-                                        tail[0] = cambiaCaratteri(tail[0])
-                                        connection.execute(ins, tail)
                                 case "StatCanzoni":
                                         ins = "INSERT INTO statistiche_canzoni VALUES (?,?)"
                                         connection.execute(ins, tail)
@@ -319,10 +309,6 @@ def insertData(data, connection):
                                 ins = "INSERT INTO attributo_album VALUES (?,?)"
                                 tail[0] = cambiaCaratteri(tail[0])
                                 connection.execute(ins, tail)
-                        elif(head == "AttributoPlaylist"):
-                                ins = "INSERT INTO attributo_playlist VALUES (?,?)"
-                                tail[0] = cambiaCaratteri(tail[0])
-                                connection.execute(ins, tail)
                         elif(head == "StatCanzoni"):
                                 ins = "INSERT INTO statistiche_canzoni VALUES (?,?)"
                                 connection.execute(ins, tail)
@@ -333,8 +319,7 @@ def insertData(data, connection):
 conn = engine.connect()
 
 csvList = ["PopDB - Utenti.csv", "PopDB - Artisti.csv", "PopDB - Playlist.csv", "PopDB - Canzoni.csv", "PopDB - Album.csv", "PopDB - Statistiche.csv", "PopDB - Tag.csv",
-                "PopDB - Raccolte.csv", "PopDB - Contenuto.csv", "PopDB - AttributoCanzone.csv","PopDB - AttributoAlbum.csv","PopDB - AttributoPlaylist.csv",
-                "PopDB - StatCanzoni.csv"]
+                "PopDB - Raccolte.csv", "PopDB - Contenuto.csv", "PopDB - AttributoCanzone.csv","PopDB - AttributoAlbum.csv", "PopDB - StatCanzoni.csv"]
 
 
 for csvFile in csvList:

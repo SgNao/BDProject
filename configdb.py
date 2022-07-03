@@ -1,9 +1,11 @@
 from flask import *
 from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user, login_remembered
 from sqlalchemy import *
-#import psycopg2
+import psycopg2
 
 def selectDB():
+    # return true se si vuole utilizzare postgre
+    # return false se si vuole utilizzare sqlite 
     return true
 
 # In questo file Python si possono settare le varie informazioni per far funzionare un database di PostGre sulla propria macchina.
@@ -30,6 +32,28 @@ def getPort():
     # return "5432"
     return "5432"
 
+def setupConnection():
+    conn = psycopg2.connect(
+        database=getDatabase(),
+        host=getHost(), 
+        user=getUser(),
+        password=getPassword(),
+        port=getPort())
+    return conn
 
 # inserire funzione che ritorna la connessione per alleggerire il codice in tutte gli file
 # in questo modo posso avere anche la connessione giusta di base e poi itero sul cursone con postgre
+
+def getConnection():
+    if selectDB():
+        conn = psycopg2.connect(
+            database=getDatabase(),
+            host=getHost(), 
+            user=getUser(),
+            password=getPassword(),
+            port=getPort())
+        return conn
+    else:
+        engine = create_engine('sqlite:///database.db', echo = True)
+        connection = engine.connect()
+        return connection

@@ -1,12 +1,12 @@
 from flask import *
 from sqlalchemy import *
-from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user, login_remembered
+from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
 import main
 
+
 LoginBP = Blueprint('LoginBP', __name__)
 engine = create_engine('sqlite:///database.db', echo=True)
-
 
 # IMPORTANTE NON TOGLIERE
 @LoginBP.context_processor
@@ -23,8 +23,7 @@ def Accedi():
 def login():
     if request.method == 'POST':
         conn = engine.connect()
-        rs = conn.execute('SELECT password FROM utenti WHERE email = ?', [request.form['user']])
-        #sanitificare
+        rs = conn.execute('SELECT Password FROM Utenti WHERE Email = ?', [request.form['user']])
         real_pwd = rs.fetchone()
         conn.close()
         if real_pwd is not None:
@@ -57,8 +56,7 @@ def SingIn():
         conn = engine.connect()
         pwhash = generate_password_hash(request.form["password"], method='pbkdf2:sha256:260000', salt_length=16)
         data = (request.form["email"], request.form["nome"], request.form["cognome"], request.form["nickname"], request.form["bio"], request.form["DataNascita"], pwhash, "1")
-        #sanitizzare input
-        rs = conn.execute('INSERT INTO utenti (email, nome, cognome, nickname, bio, data_nascita, password, ruolo)'
+        rs = conn.execute('INSERT INTO Utenti (Email, Nome, Cognome, Nickname, Bio, DataNascita, Password, Ruolo)'
                           ' VALUES (?,?,?,?,?,?,?,?)', data)
         
         conn.close()

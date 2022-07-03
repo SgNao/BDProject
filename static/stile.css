@@ -156,6 +156,24 @@ body{
     border: 1px solid darkgray;
     display: none;
 }
+#box2{
+    width: 30%;
+    margin-left: 35%;
+    margin-top: 2%;
+    position: fixed;
+    background-color: white;
+    border: 1px solid darkgray;
+    display: none;
+}
+#box3{
+    width: 30%;
+    margin-left: 35%;
+    margin-top: 2%;
+    position: fixed;
+    background-color: white;
+    border: 1px solid darkgray;
+    display: none;
+}
 #NewPlaylist3{
     width: 30%;
     height: 400px;

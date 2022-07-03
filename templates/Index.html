@@ -6,37 +6,6 @@
         </div>
         <div id="container3">
             <table class="tabella3">
-                {% if user %}
-                <tr><td colspan="5"><h2 class="text-section">Consigliate</h2></td></tr>
-                <tr>
-                    {% for i,song in enumerate(recommended_songs) %}
-                    <td>
-                        <table class="tabella4" onmouseover="Select('S1_ID_A_{{i}}', 'S1_ID_B_{{i}}')" onmouseout="Deselect('S1_ID_A_{{i}}', 'S1_ID_B_{{i}}')">
-                            <tr><td class="img-cell" colspan="2"><div class="img"></div></td></tr>
-                            <tr><td class="manual-title-cell" colspan="2"><h3 class="manual-title">{{song.Titolo}}</h3></td></tr>
-                            <tr>
-                                <td class="footprint">
-                                    <h4 class="footprint-text"> Guns N' Roses </h4> 
-                                </td>
-                                <td class="footprint-anno">
-                                    <h5 class="footprint-text-anno"> {{song.Anno}} </h5>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="footprint-hastag" colspan="2" id="S1_ID_A_{{i}}">
-                                    <h5 class="footprint-text-hastag"> {{song.Tag}} </h5>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="footprint-hastag-4" colspan="2" id="S1_ID_B_{{i}}" onmouseover="Info_over('S1_ID_B_{{i}}')" onmouseout="Info_out('S1_ID_B_{{i}}')" onmousedown="Song('null')">
-                                    <h5 class="footprint-text-hastag"> INFO </h5>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                    {% endfor %}
-                </tr>
-                {% endif %}
                 <tr><td colspan="5"><h2 class="text-section">Novità</h2></td></tr>
                 <tr>
                     {% for i,song in enumerate(latest_songs) %}
@@ -46,7 +15,7 @@
                             <tr><td class="manual-title-cell" colspan="2"><h3 class="manual-title">{{song.Titolo}}</h3></td></tr>
                             <tr>
                                 <td class="footprint">
-                                    <h4 class="footprint-text"> Guns N' Roses </h4> 
+                                    <h4 class="footprint-text"> {{song.Nickname}} </h4> 
                                 </td>
                                 <td class="footprint-anno">
                                     <h5 class="footprint-text-anno"> {{song.Rilascio}} </h5>
@@ -54,7 +23,7 @@
                             </tr>
                             <tr>
                                 <td colspan="2" class="footprint-hastag" colspan="2" id="S2_ID_A_{{i}}">
-                                    <h5 class="footprint-text-hastag"> {{song.Tag}} </h5>
+                                    <h5 class="footprint-text-hastag"> {{song.Tag_1}} {{song.Tag_2}} </h5>
                                 </td>
                             </tr>
                             <tr>
@@ -75,19 +44,19 @@
                             <tr><td class="manual-title-cell" colspan="2"><h3 class="manual-title">{{song.Titolo}}</h3></td></tr>
                             <tr>
                                 <td class="footprint">
-                                    <h4 class="footprint-text"> Guns N' Roses </h4> 
+                                    <h4 class="footprint-text"> {{song.Nickname}} </h4> 
                                 </td>
                                 <td class="footprint-anno">
-                                    <h5 class="footprint-text-anno"> {{song.Anno}} </h5>
+                                    <h5 class="footprint-text-anno"> {{song.Rilascio}} </h5>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="2" class="footprint-hastag" colspan="2" id="S3_ID_A_{{i}}">
-                                    <h5 class="footprint-text-hastag"> {{song.Tag}} </h5>
+                                    <h5 class="footprint-text-hastag"> {{song.Tag_1}} {{song.Tag_2}} </h5>
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="2" class="footprint-hastag-4" colspan="2" id="S3_ID_B_{{i}}" onmouseover="Info_over('S3_ID_B_{{i}}')" onmouseout="Info_out('S3_ID_B_{{i}}')" onmousedown="Song('null')">
+                                <td colspan="2" class="footprint-hastag-4" colspan="2" id="S3_ID_B_{{i}}" onmouseover="Info_over('S3_ID_B_{{i}}')" onmouseout="Info_out('S3_ID_B_{{i}}')" onmousedown="Song('{{song.IdCanzone}}')">
                                     <h5 class="footprint-text-hastag"> INFO </h5>
                                 </td>
                             </tr>
@@ -113,7 +82,7 @@
                             <tr><td class="manual-title-cell" colspan="2"><h3 class="manual-title">{{song.Titolo}}</h3></td></tr>
                             <tr>
                                 <td class="footprint">
-                                    <h4 class="footprint-text"> Guns N' Roses </h4> 
+                                    <h4 class="footprint-text"> {{song.Nickname}} </h4> 
                                 </td>
                                 <td class="footprint-anno">
                                         <h5 class="footprint-text-anno"> {{song.Rilascio}} </h5>
@@ -121,7 +90,7 @@
                             </tr>
                             <tr>
                                 <td colspan="2" class="footprint-hastag" colspan="2" id="S4_ID_A_{{i}}">
-                                    <h5 class="footprint-text-hastag"> {{song.Tag}} </h5>
+                                    <h5 class="footprint-text-hastag"> {{song.Tag_1}} {{song.Tag_2}} </h5>
                                 </td>
                             </tr>
                             <tr>

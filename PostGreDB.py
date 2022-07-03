@@ -7,14 +7,6 @@ import sys
 from werkzeug.security import generate_password_hash
 
 # da riempire con dati corretti per far partire con Postgres
-def setupConnection():
-    conn = psycopg2.connect(
-        database=configdb.getDatabase(),
-        host=configdb.getHost(), 
-        user=configdb.getUser(),
-        password=configdb.getPassword(),
-        port=configdb.getPort())
-    return conn
 
 # Manca per ora la parte di creazione del database: lasciamo il file sql presente su drive per comodità o provo a scrivere qui quel file?
 
@@ -134,10 +126,6 @@ def insertData(data, cursor):
                                         ins = "INSERT INTO unive_music.attributo_album (id_tag, id_album) VALUES (%s,%s)"
                                         tail[0] = cambiaCaratteri(tail[0])
                                         cursor.execute(ins, tail)
-                                case "AttributoPlaylist":
-                                        ins = "INSERT INTO unive_music.attributo_playlist (id_tag, id_playlist) VALUES (%s,%s)"
-                                        tail[0] = cambiaCaratteri(tail[0])
-                                        cursor.execute(ins, tail)
                                 case "StatCanzoni":
                                         ins = "INSERT INTO unive_music.statistiche_canzoni (id_statistica, id_canzone) VALUES (%s,%s)"
                                         cursor.execute(ins, tail)
@@ -167,6 +155,8 @@ def insertData(data, cursor):
                         elif(head == "Playlist"):
                                 ins = "INSERT INTO unive_music.playlist (id_playlist, id_utente, nome, descrizione, n_canzoni) VALUES (%s,%s,%s,%s,%s)"
                                 # None per avere un Integer con autoincremento. Mettere gli autoincrement per primi per poter estrarre i None
+                                tail[2] = cambiaCaratteri(tail[2])
+                                tail[3] = cambiaCaratteri(tail[3])
                                 if(tail[3] == "void"):
                                     tail[3] = ""
                                 head2, *tail2 = tail
@@ -218,10 +208,6 @@ def insertData(data, cursor):
                                 ins = "INSERT INTO unive_music.attributo_album (id_tag, id_album) VALUES (%s,%s)"
                                 tail[0] = cambiaCaratteri(tail[0])
                                 cursor.execute(ins, tail)
-                        elif(head == "AttributoPlaylist"):
-                                ins = "INSERT INTO unive_music.attributo_playlist (id_tag, id_playlist) VALUES (%s,%s)"
-                                tail[0] = cambiaCaratteri(tail[0])
-                                cursor.execute(ins, tail)
                         elif(head == "StatCanzoni"):
                                 ins = "INSERT INTO unive_music.statistiche_canzoni (id_statistica, id_canzone) VALUES (%s,%s)"
                                 cursor.execute(ins, tail)
@@ -229,11 +215,10 @@ def insertData(data, cursor):
                                 print("Something went wrong else else")
 
 #popolo db
-conn = setupConnection() #usiamo una sola connessione per tutto?
+conn = configdb.getConnection() 
 
 csvList = ["PopDB - Utenti.csv", "PopDB - Artisti.csv", "PopDB - Playlist.csv", "PopDB - Canzoni.csv", "PopDB - Album.csv", "PopDB - Statistiche.csv", "PopDB - Tag.csv",
-                "PopDB - Raccolte.csv", "PopDB - Contenuto.csv", "PopDB - AttributoCanzone.csv","PopDB - AttributoAlbum.csv","PopDB - AttributoPlaylist.csv",
-                "PopDB - StatCanzoni.csv"]
+                "PopDB - Raccolte.csv", "PopDB - Contenuto.csv", "PopDB - AttributoCanzone.csv","PopDB - AttributoAlbum.csv", "PopDB - StatCanzoni.csv"]
 
 for csvFile in csvList:
         data = load_data("csvFiles/" + csvFile)

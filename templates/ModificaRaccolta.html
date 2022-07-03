@@ -4,12 +4,12 @@
         <div id="container2"><h2 id="subtitle">MODIFICA RACCOLTA</h2></div>
         <div id="container3">
             <table id="log-table"> 
-                <form>
+                <form action="/ModPlaylist/{{IdPlaylist}}" method="POST">
                     <tr>
-                        <td class="input-cell-3" colspan="2"><input type="text" placeholder="Nome" class="input-3" style="margin-top: 4%;"></td>
+                        <td class="input-cell-3" colspan="2"><input type="text" name="nome" placeholder="Nome" class="input-3" style="margin-top: 4%;"></td>
                     </tr>
                     <tr>
-                        <td class="input-cell-3" colspan="2"><input type="text" placeholder="Descrizione" class="input-3"></td>
+                        <td class="input-cell-3" colspan="2"><input type="text" name="descrizione" placeholder="Descrizione" class="input-3"></td>
                     </tr>
                     <tr>
                         <td style="font-family: Helvetica;color:#2F2F2F"><h4 style="margin-left: 7%; margin-bottom: 0%;">Per eliminare canzoni dalla playlist:</h4></td>

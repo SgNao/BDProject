@@ -48,28 +48,57 @@
         <script type="text/javascript">
             
             var Active = true;  
+            var DeletedSongs = [];
+            var DeletedPlaylist = ''
+            var DeletedAlbum = ''
 
             function AddToPlaylist(){
                 document.getElementById("box2").style.display = "block";
             }
 
-            function CancellaRaccolta(PlaylistName){
+            function ConfirmAddToPlaylist(){document.getElementById("box2").style.display = "none";}
+            function AbortAddToPlaylist(){document.getElementById("box2").style.display = "none";}
+
+            function CancellaRaccolta(PlaylistName, IdPlaylist){
                 var messaggio = document.createElement('h4')
                 var testo = document.createTextNode('Sei sicuro di voler cancellare la Playlist '+PlaylistName+' ?')
                 messaggio.appendChild(testo)
                 document.getElementById("Message-box").appendChild(messaggio);
                 document.getElementById("NewPlaylist2").style.display = "block";
+                globalThis.DeletedPlaylist = IdPlaylist
             }
             function ConfermaCancellaRaccolta(){
                 var messaggio = document.getElementById("Message-box").firstChild
                 document.getElementById("NewPlaylist2").style.display = "none";
                 document.getElementById("Message-box").removeChild(messaggio);
+                window.location.href='/Delplaylist/'+globalThis.DeletedPlaylist
             }
             function AnnullaCancellaRaccolta(){
                 var messaggio = document.getElementById("Message-box").firstChild
                 document.getElementById("NewPlaylist2").style.display = "none";
                 document.getElementById("Message-box").removeChild(messaggio);
             }
+
+            function CancellaAlbum(AlbumTitolo, IdAlbum){
+                var messaggio = document.createElement('h4')
+                var testo = document.createTextNode("Sei sicuro di voler cancellare l'Album "+AlbumTitolo+' ?')
+                messaggio.appendChild(testo)
+                document.getElementById("Message-box").appendChild(messaggio);
+                document.getElementById("box3").style.display = "block";
+                globalThis.DeletedAlbum = IdAlbum
+            }
+            function ConfermaCancellaAlbum(){
+                var messaggio = document.getElementById("Message-box").firstChild
+                document.getElementById("box3").style.display = "none";
+                document.getElementById("Message-box").removeChild(messaggio);
+                window.location.href='/DelAlbum/'+globalThis.DeletedAlbum
+            }
+            function AnnullaCancellaAlbum(){
+                var messaggio = document.getElementById("Message-box").firstChild
+                document.getElementById("box3").style.display = "none";
+                document.getElementById("Message-box").removeChild(messaggio);
+            }
+
             function Elimina(){
                 var elements = document.getElementsByClassName("footprint-hastag-2");
                 for(var i = 0, length = elements.length; i < length; i++){
@@ -86,7 +115,7 @@
                 globalThis.Active = false;
             }
 
-            function SalvaModifiche(){
+            function SalvaModifiche(IdPlaylist){
                 var elements = document.getElementsByClassName("footprint-hastag-2");
                 for(var i = 0, length = elements.length; i < length; i++){
                     elements[i].style.display ="none";
@@ -108,6 +137,10 @@
                 document.getElementById("Fatto").style.display="none"
                 document.getElementById("Elimina_tutto").style.display="none"
                 globalThis.Active = true;
+
+                globalThis.DeletedSongs += [IdPlaylist]
+                window.location.href='/RemoveSongFromPlaylist/' + globalThis.DeletedSongs
+                globalThis.DeletedSongs = []
             }
 
             function Select(id_A, id_B){
@@ -153,7 +186,8 @@
                 document.getElementById("cell-edit-img-2").style.display="table-cell"
             }
 
-            function Cancella(id_E, id_C){
+            function Cancella(id_E, id_C, IdCanzone){
+                globalThis.DeletedSongs += [IdCanzone+' ']
                 document.getElementById(id_E).style.display="none"
                 document.getElementById(id_C).style.display="table-cell"
             }
@@ -196,8 +230,8 @@
             <table id="tabella1">
                 <tr>
                     <td class="button"><a href={{url_for('home')}} class="text-button">Musica</a></td>
-                    {% if user %}
-                    <td class="button"><a href={{url_for('UserBP.private')}} class="text-button">{{user.Nickname}}</a></td>
+                    {% if current_user.is_authenticated %}
+                    <td class="button"><a href={{url_for('UserBP.private')}} class="text-button">{{current_user.Nickname}}</a></td>
                     {% endif %}
                     <td id="serch-container">
                         <table id="search-table">

@@ -4,20 +4,20 @@
         <div id="container2"><h2 id="subtitle">MODIFICA DATI</h2></div>
         <div id="container3">
             <table id="log-table"> 
-                <form>
+                <form action="/ModData" method="POST">
                     <tr>
                         <td id="log-img-cell" colspan="2"><img  src="{{ url_for('static', filename='Img/man.png') }}" id="log-img-3"></td>
                     </tr>
                     <tr>
-                        <td class="input-cell-3-bis"><input type="text" placeholder="Nickname" class="input-3"></td>
-                        <td class="input-cell-3"><input type="text" placeholder="Email" class="input-3"></td>
+                        <td class="input-cell-3-bis"><input type="text" name='Nickname' placeholder="Nickname" class="input-3"></td>
+                        <td class="input-cell-3"><input type="text" name="Email" placeholder="Email" class="input-3"></td>
                     </tr>
                     <tr>
-                        <td class="input-cell-3-bis"><input type="password" placeholder="VecchiaPassword" class="input-3"></td>
-                        <td class="input-cell-3-bis"><input type="password" placeholder="NuovaPassword" class="input-3"></td>
+                        <td class="input-cell-3-bis"><input type="password" name="OldPwd" placeholder="VecchiaPassword" class="input-3"></td>
+                        <td class="input-cell-3-bis"><input type="password" name="NewPwd" placeholder="NuovaPassword" class="input-3"></td>
                     </tr>
                     <tr>
-                        <td class="input-cell-3" colspan="2"><input type="text" placeholder="Biografia" class="input-3"></td>
+                        <td class="input-cell-3" colspan="2"><input type="text" name='Bio' placeholder="Biografia" class="input-3"></td>
                     </tr>
                     <tr>
                         <td id="submit-cell-3" colspan="2">

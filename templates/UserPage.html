@@ -2,7 +2,7 @@
 
 {% block pagebody %}
         <div id="container2">
-            <h2 id="subtitle">{{user.Nickname}}</h2>
+            <h2 id="subtitle">{{user.nickname}}</h2>
         </div>
         <div id="NewPlaylist2">
             <table id="Playlist-table" style="border-collapse: collapse;">
@@ -50,14 +50,14 @@
                                 <td>
                                     <table style="width:100%">
                                         <tr>
-                                            <td style="width: 15%;"><h3 class="text-section-2">{{playlist.Nome}}</h3></td>
+                                            <td style="width: 15%;"><h3 class="text-section-2">{{playlist.nome}}</h3></td>
                                             <td style="width: 58%;"></td>
                                             <td id="Mod">
-                                                <a id="Mod_link" href="/ModPlaylist/{{playlist.IdPlaylist}}"><h5 style="margin: 0%;">Modifica</h5></a>
+                                                <a id="Mod_link" href="/ModPlaylist/{{playlist.id_playlist}}"><h5 style="margin: 0%;">Modifica</h5></a>
                                             </td>
                                             <td id="Del" onmousedown="Elimina()"><h5 style="margin: 0%;">Elimina</h5></td>
-                                            <td id="Elimina_tutto" onmousedown='CancellaRaccolta("{{playlist.Nome}}", "{{playlist.IdPlaylist}}")'><h5 style="margin: 0%;">Elimina Raccolta</h5></td>
-                                            <td id="Fatto" onmousedown="SalvaModifiche('{{playlist.IdPlaylist}}')"><h5 style="margin: 0%;">Fatto</h5></td>
+                                            <td id="Elimina_tutto" onmousedown='CancellaRaccolta("{{playlist.nome}}", "{{playlist.id_playlist}}")'><h5 style="margin: 0%;">Elimina Raccolta</h5></td>
+                                            <td id="Fatto" onmousedown="SalvaModifiche('{{playlist.id_playlist}}')"><h5 style="margin: 0%;">Fatto</h5></td>
                                         </tr>
                                     </table>
                                 </td>
@@ -66,7 +66,7 @@
                                 <td>
                                     <table style="width: 100%;">
                                         <tr>
-                                            <td style="width: 92%;text-align: left;"><p style="color: #2F2F2F;margin-bottom:1%;margin-top: 0%;">{{playlist.Descrizione}}</p></td>
+                                            <td style="width: 92%;text-align: left;"><p style="color: #2F2F2F;margin-bottom:1%;margin-top: 0%;">{{playlist.descrizione}}</p></td>
                                         </tr>
                                     </table>
                                 </td>
@@ -103,12 +103,12 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="2" class="footprint-hastag-4" colspan="2" id="S_{{j}}ID_B_{{i}}" onmouseover="Info_over('S_{{j}}ID_B_{{i}}')" onmouseout="Info_out('S_{{j}}ID_B_{{i}}')" onmousedown="Song('{{song.IdCanzone}}')">
+                                <td colspan="2" class="footprint-hastag-4" colspan="2" id="S_{{j}}ID_B_{{i}}" onmouseover="Info_over('S_{{j}}ID_B_{{i}}')" onmouseout="Info_out('S_{{j}}ID_B_{{i}}')" onmousedown="Song('{{song.id_canzone}}')">
                                     <h5 class="footprint-text-hastag"> INFO </h5>
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="2" onmousedown="Cancella('S_{{j}}E_{{i}}', 'S_{{j}}C_{{i}}', '{{song.IdCanzone}}')" onmouseover="EliminaOver('S_{{j}}E_{{i}}')" onmouseout="EliminaOut('S_{{j}}E_{{i}}')" class="footprint-hastag-2" id="S_{{j}}E_{{i}}">
+                                <td colspan="2" onmousedown="Cancella('S_{{j}}E_{{i}}', 'S_{{j}}C_{{i}}', '{{song.id_canzone}}')" onmouseover="EliminaOver('S_{{j}}E_{{i}}')" onmouseout="EliminaOut('S_{{j}}E_{{i}}')" class="footprint-hastag-2" id="S_{{j}}E_{{i}}">
                                     <h5 class="footprint-text-hastag">Elimina</h5>
                                 </td>
                             </tr>

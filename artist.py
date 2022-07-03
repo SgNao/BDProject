@@ -19,7 +19,6 @@ def NewAlbum():
     if request.method == 'POST':
         conn = engine.connect()
         data = (request.form["Titolo"], request.form["Rilascio"], request.form["Colore"], "0", current_user.id)
-        # prendere casa discografica e fare insert del tag
         rs = conn.execute('INSERT INTO album (titolo, rilascio, colore, n_canzoni, id_artista) VALUES (?,?,?,?,?)', data)
         
         rs = conn.execute('SELECT * FROM album WHERE album.id_artista = ? AND album.titolo = ? AND album.rilascio = ?', [current_user.id], request.form["Titolo"], request.form["Rilascio"])
@@ -39,6 +38,13 @@ def NewAlbum():
 
         rs = conn.execute('INSERT INTO attributo_album (id_tag, id_album) VALUES (?,?)', [request.form['Tag_2'], IdAlbum[0]])
         
+        rs = conn.execute('SELECT tag.tag FROM tag WHERE tag.tag = ?', request.form['CasaDiscografica'])
+        tag = rs.fetchone()
+        if not tag:
+            rs = conn.execute('INSERT INTO tag (tag) VALUES (?)', request.form['CasaDiscografica'])
+
+        rs = conn.execute('INSERT INTO attributo_album (id_tag, id_album) VALUES (?,?)', [request.form['CasaDiscografica'], IdAlbum[0]])
+
         conn.close()
         return redirect(url_for('ArtistBP.get_albums'))
     else:
@@ -57,9 +63,8 @@ def NewSong(IdAlbum):
     if request.method == 'POST':
         conn = engine.connect()
         data = (request.form["Titolo"], request.form["Rilascio"], request.form["Durata"], request.form["Colore"], current_user.id)
-        # inserire lingua dentro tag
         rs = conn.execute('INSERT INTO canzoni (titolo, rilascio, durata, colore, id_artista) VALUES (?,?,?,?,?,?)', data)
-        rs = conn.execute('SELECT * FROM canzoni WHERE canzoni.id_artista = ? AND canzoni.titolo = ? AND canzoni.rilascio = ?', [current_user.id], request.form["Titolo"], request.form["Rilascio"])
+        rs = conn.execute('SELECT canzoni.id_canzone FROM canzoni WHERE canzoni.id_artista = ? AND canzoni.titolo = ? AND canzoni.rilascio = ?', [current_user.id], request.form["Titolo"], request.form["Rilascio"])
         IdCanzone = rs.fetchone()
         data = [IdAlbum, IdCanzone[0]]
         rs = conn.execute(' INSERT INTO contenuto (id_album, id_canzone) VALUES (?,?)', data)
@@ -82,6 +87,14 @@ def NewSong(IdAlbum):
             rs = conn.execute('INSERT INTO tag (tag) VALUES (?)', request.form['Tag_2'])
 
         rs = conn.execute('INSERT INTO attributo_canzone (id_tag, id_canzone) VALUES (?,?)', [request.form['Tag_2'], IdCanzone[0]])
+    
+        rs = conn.execute('SELECT tag.tag FROM tag WHERE tag.tag = ?', request.form['Lingua'])
+        tag = rs.fetchone()
+        if not tag:
+            rs = conn.execute('INSERT INTO tag (tag) VALUES (?)',  request.form['Lingua'])
+
+        rs = conn.execute('INSERT INTO attributo_canzone (id_tag, id_canzone) VALUES (?,?)', [request.form['Lingua'], IdCanzone[0]])
+
         conn.close()
         return redirect(url_for('ArtistBP.get_albums'))
     else:

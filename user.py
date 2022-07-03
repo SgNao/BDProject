@@ -39,7 +39,7 @@ def private():
     for playlist in playlists:
         playlist_s = []
         for song in songs:
-            if song['IdPlaylist'] == playlist.id_playlist:
+            if song['id_playlist'] == playlist.id_playlist:
                 playlist_s.append(song)
         playlist_songs.append(playlist_s)
 
@@ -148,13 +148,18 @@ def DelPlaylist(IdPlaylist):
 @login_required  # richiede autenticazione
 def ModData():
     if request.method == 'POST':
-        if check_password_hash(current_user.Password, request.form['OldPwd']):
+        if check_password_hash(current_user.password, request.form['OldPwd']):
             conn = engine.connect()
+            print(1)
             rs = conn.execute('SELECT * FROM utenti WHERE utenti.email = ?', request.form['Email'])
+            print(2)
             user = rs.fetchone()
-            rs = conn.execute('SELECT * FROM utenti WHERE utenti.nickname = ?', request.form['nickname'])
+            print(3)
+            rs = conn.execute('SELECT * FROM utenti WHERE utenti.nickname = ?', request.form['Nickname'])
             nickname = rs.fetchone()
-            if not user and not nickname:
+            print(4)
+            if not user: #and not nickname:
+                print(5)
                 pwhash = generate_password_hash(request.form["NewPwd"], method='pbkdf2:sha256:260000', salt_length=16)
                 rs = conn.execute(' UPDATE utenti SET nickname = ?, email = ?, bio = ?, password = ? WHERE id_utente = ?',
                                   request.form['Nickname'], request.form['Email'], request.form['Bio'], pwhash, current_user.id)

@@ -29,7 +29,7 @@ def SongStat(IdCanzone):
     Tags = {'Tag_1': tags[0][0], 'Tag_2': tags[1][0]}
 
     conn.close()
-    return render_template("SongStatistics.html", stat=statistiche, song=song)
+    return render_template("SongStatistics.html", stat=statistiche, song=song, tags=Tags)
 
 @SongBP.route('/songs/<IdCanzone>')
 def songs(IdCanzone):

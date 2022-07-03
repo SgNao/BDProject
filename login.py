@@ -54,9 +54,10 @@ def Registrati():
 @LoginBP.route('/singin', methods=['GET', 'POST'])
 def SingIn():
     if request.method == 'POST':
+        print(3)
         conn = engine.connect()
         age = date.today().year - date.fromisoformat(request.form["DataNascita"]).year
-        rs = conn.execute('SELECT * FROM utenti WHERE utenti.email = ?', request.form['Email'])
+        rs = conn.execute('SELECT * FROM utenti WHERE utenti.email = ?', request.form['email'])
         user = rs.fetchone()
         rs = conn.execute('SELECT * FROM utenti WHERE utenti.nickname = ?', request.form['nickname'])
         nickname = rs.fetchone()
@@ -70,6 +71,8 @@ def SingIn():
             return redirect(url_for('LoginBP.Accedi'))
         else:
             conn.close()
+            print(1)
             return redirect(url_for('LoginBP.Registrati'))
     else:
+        print(2)
         return redirect(url_for('LoginBP.Registrati'))

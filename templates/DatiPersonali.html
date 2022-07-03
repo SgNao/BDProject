@@ -12,9 +12,11 @@
                         <td style="width: 6%;vertical-align: bottom;border-bottom: 1px solid darkgray;text-align: left;">
                             <a href="{{url_for('UserBP.private')}}"><h5 id="NuovaRaccolta">Raccolte</h5></a>
                         </td>
+                        {% if current_user.ruolo == 2 %}
                         <td style="width: 6%;vertical-align: bottom;border-bottom: 1px solid darkgray;text-align: left;">
                             <a href="{{url_for('ArtistBP.get_albums')}}"><h5 id="NuovaRaccolta">Produzioni</h5></a>
                         </td>
+                        {% endif %}
                         <td style="width: 73%;border-bottom: 1px solid darkgray;"></td>
                     </tr></table>
                 </td></tr>

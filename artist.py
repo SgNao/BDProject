@@ -21,7 +21,7 @@ def NewAlbum():
         data = (request.form["Titolo"], request.form["Rilascio"], request.form["Colore"], "0", current_user.id)
         rs = conn.execute('INSERT INTO album (titolo, rilascio, colore, n_canzoni, id_artista) VALUES (?,?,?,?,?)', data)
         
-        rs = conn.execute('SELECT * FROM album WHERE album.id_artista = ? AND album.titolo = ? AND album.rilascio = ?', [current_user.id], request.form["Titolo"], request.form["Rilascio"])
+        rs = conn.execute('SELECT * FROM album WHERE album.id_artista = ? AND album.titolo = ? AND album.rilascio = ?', [current_user.id, request.form["Titolo"], request.form["Rilascio"]])
         IdAlbum = rs.fetchone()
 
         rs = conn.execute('SELECT tag.tag FROM tag WHERE tag.tag = ?', request.form['Tag_1'])
@@ -63,8 +63,8 @@ def NewSong(IdAlbum):
     if request.method == 'POST':
         conn = engine.connect()
         data = (request.form["Titolo"], request.form["Rilascio"], request.form["Durata"], request.form["Colore"], current_user.id)
-        rs = conn.execute('INSERT INTO canzoni (titolo, rilascio, durata, colore, id_artista) VALUES (?,?,?,?,?,?)', data)
-        rs = conn.execute('SELECT canzoni.id_canzone FROM canzoni WHERE canzoni.id_artista = ? AND canzoni.titolo = ? AND canzoni.rilascio = ?', [current_user.id], request.form["Titolo"], request.form["Rilascio"])
+        rs = conn.execute('INSERT INTO canzoni (titolo, rilascio, durata, colore, id_artista) VALUES (?,?,?,?,?)', data)
+        rs = conn.execute('SELECT canzoni.id_canzone FROM canzoni WHERE canzoni.id_artista = ? AND canzoni.titolo = ? AND canzoni.rilascio = ?', [current_user.id, request.form["Titolo"], request.form["Rilascio"]])
         IdCanzone = rs.fetchone()
         data = [IdAlbum, IdCanzone[0]]
         rs = conn.execute(' INSERT INTO contenuto (id_album, id_canzone) VALUES (?,?)', data)
@@ -127,7 +127,7 @@ def get_albums():
     for album in albums:
         album_s = []
         for song in songs:
-            if song['IdAlbum'] == album.IdAlbum:
+            if song['id_album'] == album.id_album:
                 album_s.append(song)
         albums_songs.append(album_s)
     print(albums_songs)
@@ -174,7 +174,7 @@ def DelAlbum(IdAlbum):
         for column, value in IdCanzone.items():
             rs = conn.execute('DELETE FROM attributo_canzone WHERE id_canzone = ?', IdCanzone)
             rs = conn.execute('SELECT statistiche.id_statistica FROM statistiche NATURAL JOIN statistiche_canzoni'
-                              'WHERE statistiche_canzoni.id_canzone = ?', IdCanzone)
+                              ' WHERE statistiche_canzoni.id_canzone = ?', IdCanzone)
             IdStatistica = rs.fetchone()
             rs = conn.execute('DELETE FROM statistiche WHERE id_statistica = ?', IdStatistica[0])
             rs = conn.execute('DELETE FROM statistiche_canzoni WHERE id_statistica = ?', IdStatistica[0])

@@ -106,7 +106,7 @@ def AddSongToPlaylist(IdCanzone):
                                   ' SET n_canzoni = %s'
                                   ' WHERE id_playlist = %s', NCanzoni[0] + 1, playlist.id_playlist)
 
-                age = date.today().year - date.fromisoformat(current_user.data_nascita).year
+                age = date.today().year - (current_user.data_nascita).year
                 att = '_13_19'
                 if age >= 13 and age <= 19:
                     att = '_13_19'

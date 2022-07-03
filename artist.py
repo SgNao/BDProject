@@ -140,7 +140,7 @@ def get_albums():
     conn = engine.connect()
     rs = conn.execute(' SELECT album.id_album, album.titolo, album.rilascio'
                       ' FROM unive_music.album'
-                      ' WHERE album.id_artista = ?', current_user.id)
+                      ' WHERE album.id_artista = %s', current_user.id)
     albums = rs.fetchall()
     rs = conn.execute(
         ' SELECT contenuto.id_album, canzoni.titolo, canzoni.rilascio, canzoni.durata, canzoni.colore, '

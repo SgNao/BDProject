@@ -26,11 +26,11 @@ def private():
         ' SELECT raccolte.id_playlist, canzoni.titolo, canzoni.rilascio, canzoni.durata, canzoni.colore, '
         'canzoni.id_canzone, utenti.nickname'
         ' FROM unive_music.canzoni NATURAL JOIN unive_music.raccolte '
-        'JOIN unive_music.utenti ON canzoni.id_artista = utenti.id_utente'
-        ' WHERE raccolte.id_playlist IN (SELECT playlist.id_playlist FROM playlist'
+        ' JOIN unive_music.utenti ON canzoni.id_artista = utenti.id_utente'
+        ' WHERE raccolte.id_playlist IN (SELECT playlist.id_playlist FROM unive_music.playlist'
         ' WHERE playlist.id_utente = %s)'
         ' GROUP BY raccolte.id_playlist, canzoni.titolo, canzoni.rilascio, canzoni.durata, canzoni.colore, '
-        'canzoni.id_canzone',
+        ' canzoni.id_canzone',
         current_user.id)
     songs = rs.fetchall()
     songs = main.ResultProxy_To_ListOfDict(songs)

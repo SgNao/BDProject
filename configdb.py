@@ -6,7 +6,7 @@ import psycopg2
 def selectDB():
     # return true se si vuole utilizzare postgre
     # return false se si vuole utilizzare sqlite 
-    return false
+    return true
 
 # In questo file Python si possono settare le varie informazioni per far funzionare un database di PostGre sulla propria macchina.
 # Settare le seguenti 5 funzioni in modo che ritornino stringhe coerenti con i campi richiesti.

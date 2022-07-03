@@ -54,7 +54,7 @@ class User(UserMixin):
 def get_user_by_email(email):
     conn = configdb.getConnection()
     rs = None
-    if(configdb.selectDB()):
+    if(configdb.selectDB() == true):
         cur = conn.cursor()
         rs = cur.execute('SELECT * FROM unive_music.utenti WHERE email = %s', email)
         conn.commit()
@@ -78,7 +78,7 @@ def ResultProxy_To_ListOfDict(query_result):
 
 @login_manager.user_loader
 def load_user(user_id):
-    conn = engine.connect()
+    conn = configdb.getConnection()
     rs = conn.execute('SELECT * FROM utenti WHERE id_utente = ?', user_id)
     user = rs.fetchone()
     conn.close()
@@ -88,7 +88,7 @@ def load_user(user_id):
 def home():
     # current_user identifica l’utente attuale utente anonimo prima dell’autenticazione
 
-    conn = engine.connect()
+    conn = configdb.getConnection()
     
     rs = conn.execute(' SELECT canzoni.id_canzone, canzoni.titolo, canzoni.rilascio, utenti.nickname'
                       ' FROM canzoni JOIN utenti ON canzoni.id_artista = utenti.id_utente')
@@ -133,7 +133,7 @@ def home():
 @app.route('/Reset')
 @login_required
 def Reset():
-    conn = engine.connect()
+    conn = configdb.getConnection()
 
     rs = conn.execute('UPDATE statistiche SET n_riproduzioni_settimanali = ?', 0)
 

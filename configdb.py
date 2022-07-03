@@ -36,7 +36,7 @@ def getPort():
 # in questo modo posso avere anche la connessione giusta di base e poi itero sul cursone con postgre
 
 def getConnection():
-    if selectDB():
+    if selectDB() == true:
         conn = psycopg2.connect(
             database=getDatabase(),
             host=getHost(), 

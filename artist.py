@@ -21,9 +21,12 @@ def inject_enumerate():
 def NewAlbum():
     if request.method == 'POST':
         conn = engine.connect()
-        data = (request.form["Titolo"], request.form["Rilascio"], request.form["Colore"], "0", current_user.id)
+        # Query necessaria per bug di serial
+        rs = conn.execute('SELECT MAX(album.id_album) FROM unive_music.album')
+        max = rs.fetchone()
+        data = (max[0] + 1, request.form["Titolo"], request.form["Rilascio"], request.form["Colore"], "0", current_user.id)
         rs = conn.execute(
-            'INSERT INTO unive_music.album (titolo, rilascio, colore, n_canzoni, id_artista) VALUES (%s,%s,%s,%s,%s)',
+            'INSERT INTO unive_music.album (id_album, titolo, rilascio, colore, n_canzoni, id_artista) VALUES (%s, %s,%s,%s,%s,%s)',
             data)
 
         rs = conn.execute(
@@ -76,10 +79,13 @@ def NewSong(IdAlbum):
     print(IdAlbum)
     if request.method == 'POST':
         conn = engine.connect()
-        data = (request.form["Titolo"], request.form["Rilascio"], request.form["Durata"], request.form["Colore"],
+        # Query necessaria per bug di serial
+        rs = conn.execute('SELECT MAX(canzoni.id_canzone) FROM unive_music.canzoni')
+        max = rs.fetchone()
+        data = (max[0] + 1, request.form["Titolo"], request.form["Rilascio"], request.form["Durata"], request.form["Colore"],
                 current_user.id)
         rs = conn.execute(
-            'INSERT INTO unive_music.canzoni (titolo, rilascio, durata, colore, id_artista) VALUES (%s,%s,%s,%s,%s)',
+            'INSERT INTO unive_music.canzoni (id_canzone, titolo, rilascio, durata, colore, id_artista) VALUES (%s,%s,%s,%s,%s,%s)',
             data)
         rs = conn.execute(
             'SELECT canzoni.id_canzone FROM unive_music.canzoni '

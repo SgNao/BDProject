@@ -30,7 +30,7 @@ def private():
         ' WHERE raccolte.id_playlist IN (SELECT playlist.id_playlist FROM unive_music.playlist'
         ' WHERE playlist.id_utente = %s)'
         ' GROUP BY raccolte.id_playlist, canzoni.titolo, canzoni.rilascio, canzoni.durata, canzoni.colore, '
-        ' canzoni.id_canzone',
+        ' canzoni.id_canzone, utenti.nickname',
         current_user.id)
     songs = rs.fetchall()
     songs = main.ResultProxy_To_ListOfDict(songs)
@@ -62,9 +62,12 @@ def private():
 def NewPlaylist():
     if request.method == 'POST':
         conn = engine.connect()
-        data = (current_user.id, request.form["Nome"], request.form["Descrizione"], "0")
+        # Query necessaria per bug di serial
+        rs = conn.execute('SELECT MAX(playlist.id_playlist) FROM unive_music.playlist')
+        max = rs.fetchone()
+        data = (max[0] + 1, current_user.id, request.form["Nome"], request.form["Descrizione"], "0")
         rs = conn.execute(
-            'INSERT INTO unive_music.playlist (id_utente, nome, descrizione, n_canzoni) VALUES (%s,%s,%s,%s)', data)
+            'INSERT INTO unive_music.playlist (id_playlist, id_utente, nome, descrizione, n_canzoni) VALUES (%s, %s,%s,%s,%s)', data)
         conn.close()
         return redirect(url_for('UserBP.private'))
     else:

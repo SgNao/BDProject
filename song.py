@@ -90,7 +90,7 @@ def songs(IdCanzone):
     if current_user.is_authenticated:
         rs = conn.execute(' SELECT * '
                           ' FROM unive_music.playlist '
-                          ' WHERE playlist.id_utente = %s  AND playlist.id_playlist NOT IN (SELECT raccolte.id_playlist'
+                          ' WHERE playlist.id_utente = %s AND playlist.id_playlist NOT IN (SELECT raccolte.id_playlist'
                           ' FROM unive_music.raccolte NATURAL JOIN unive_music.canzoni WHERE canzoni.id_canzone = %s)'
                           ' ORDER BY playlist.nome', current_user.id, IdCanzone)
         playlists = rs.fetchall()

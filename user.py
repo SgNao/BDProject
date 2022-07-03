@@ -29,7 +29,7 @@ def private():
     songs = rs.fetchall()
     songs =  main.ResultProxy_To_ListOfDict(songs)
     for song in songs:
-        rs = conn.execute('SELECT attributo_canzone.id_tag FROM attributo_canzone WHERE attributo_canzone.id_canzone = ?', song['IdCanzone'])
+        rs = conn.execute('SELECT attributo_canzone.id_tag FROM attributo_canzone WHERE attributo_canzone.id_canzone = ?', song['id_canzone'])
         tags = rs.fetchall()
         if tags:
            song['Tag_1'] = tags[0][0]
@@ -79,12 +79,12 @@ def AddSongToPlaylist(IdCanzone):
         playlists = rs.fetchall()
         for i,playlist in enumerate(playlists):
             if request.form.get("P_"+str(i)):
-                rs = conn.execute('INSERT INTO raccolte (id_playlist, id_canzone) VALUES (?,?)', playlist.IdPlaylist, IdCanzone)
-                rs = conn.execute('SELECT playlist.n_canzoni FROM playlist WHERE playlist.id_playlist = ?', playlist.IdPlaylist)
+                rs = conn.execute('INSERT INTO raccolte (id_playlist, id_canzone) VALUES (?,?)', playlist.id_playlist, IdCanzone)
+                rs = conn.execute('SELECT playlist.n_canzoni FROM playlist WHERE playlist.id_playlist = ?', playlist.id_playlist)
                 NCanzoni = rs.fetchone()
                 rs = conn.execute(' UPDATE playlist' 
                                   ' SET n_canzoni = ?' 
-                                  ' WHERE id_playlist = ?', NCanzoni[0]+1, playlist.IdPlaylist)
+                                  ' WHERE id_playlist = ?', NCanzoni[0]+1, playlist.id_playlist)
 
                 age = date.today().year - date.fromisoformat(current_user.DataNascita).year
                 att = '_13_19'
@@ -103,7 +103,7 @@ def AddSongToPlaylist(IdCanzone):
 
                 #controllare che funzioni questa query perchè ho tolto gli apici che c'erano prima
                 query_1 = 'SELECT statistiche.'+att+' FROM statistiche NATURAL JOIN statistiche_canzoni WHERE statistiche_canzoni.id_canzone = ?'
-                query_2 = 'UPDATE statistiche SET "'+att+'" = ? WHERE id_statistica = ( SELECT statistiche_canzoni.id_statistica FROM statistiche_canzoni WHERE statistiche_canzoni.id_canzone = ?)'
+                query_2 = 'UPDATE statistiche SET '+att+' = ? WHERE id_statistica = ( SELECT statistiche_canzoni.id_statistica FROM statistiche_canzoni WHERE statistiche_canzoni.id_canzone = ?)'
                 
                 rs = conn.execute(query_1, IdCanzone)
                 stat = rs.fetchone()
@@ -137,9 +137,8 @@ def DelPlaylist(IdPlaylist):
     
     conn = engine.connect()
 
-    rs = conn.execute(' DELETE FROM playlist WHERE playlist.id_playlist = ?', IdPlaylist)
-    # query perchè non funziona la foreign key?
     rs = conn.execute(' DELETE FROM raccolte WHERE raccolte.id_playlist = ?', IdPlaylist)
+    rs = conn.execute(' DELETE FROM playlist WHERE playlist.id_playlist = ?', IdPlaylist)
 
     conn.close()
     

@@ -9,8 +9,6 @@ from werkzeug.security import check_password_hash, generate_password_hash
 import psycopg2
 import configdb
 
-#conn = configdb.setupConnection()
-
 '''
 export FLASK_APP=main.py
 export FLASK_ENV=development
@@ -58,7 +56,7 @@ class User(UserMixin):
 
 def get_user_by_email(email):
     conn = engine.connect()
-    rs = conn.execute('SELECT * FROM Utenti WHERE Email = ?', email)
+    rs = conn.execute('SELECT * FROM utenti WHERE email = ?', email)
     user = rs.fetchone()
     conn.close()
     return User(user.IdUtenti, user.Email, user.Nome, user.Cognome, user.Nickname, user.Bio, user.DataNascita, user.Password, user.Ruolo)
@@ -89,11 +87,11 @@ def home():
     conn = engine.connect()
     
     rs = conn.execute(' SELECT canzoni.id_canzone, canzoni.titolo, canzoni.rilascio, utenti.nickname'
-                      ' FROM Canzoni JOIN Utenti ON canzoni.id_artista = utenti.id_utente')
+                      ' FROM canzoni JOIN utenti ON canzoni.id_artista = utenti.id_utente')
     all_songs = rs.fetchall()
     all_songs =  ResultProxy_To_ListOfDict(all_songs)
     for song in all_songs:
-        rs = conn.execute('SELECT attributo_canzone.id_tag FROM attributo_canzone WHERE attributo_canzone.id_canzone = ?', song['IdCanzone'])
+        rs = conn.execute('SELECT attributo_canzone.id_tag FROM attributo_canzone WHERE attributo_canzone.id_canzone = ?', song['id_canzone'])
         tags = rs.fetchall()
         if tags:
            song['Tag_1'] = tags[0][0]
@@ -101,11 +99,11 @@ def home():
 
     rs = conn.execute(' SELECT canzoni.id_canzone, canzoni.titolo, canzoni.rilascio, utenti.nickname' 
                       ' FROM canzoni JOIN utenti ON canzoni.id_artista = utenti.id_utente'
-                      ' ORDER BY Canzoni.Rilascio DESC LIMIT 5')
+                      ' ORDER BY canzoni.rilascio DESC LIMIT 5')
     latest_songs = rs.fetchall()
     latest_songs =  ResultProxy_To_ListOfDict(latest_songs)
     for song in latest_songs:
-        rs = conn.execute('SELECT attributo_canzone.id_tag FROM attributo_canzone WHERE attributo_canzone.id_canzone = ?', song['IdCanzone'])
+        rs = conn.execute('SELECT attributo_canzone.id_tag FROM attributo_canzone WHERE attributo_canzone.id_canzone = ?', song['id_canzone'])
         tags = rs.fetchall()
         if tags:
            song['Tag_1'] = tags[0][0]
@@ -119,7 +117,7 @@ def home():
     most_played_songs = rs.fetchall()
     most_played_songs =  ResultProxy_To_ListOfDict(most_played_songs)
     for song in most_played_songs:
-        rs = conn.execute('SELECT attributo_canzone.id_tag FROM attributo_canzone WHERE attributo_canzone.id_canzone = ?', song['IdCanzone'])
+        rs = conn.execute('SELECT attributo_canzone.id_tag FROM attributo_canzone WHERE attributo_canzone.id_canzone = ?', song['id_canzone'])
         tags = rs.fetchall()
         if tags:
            song['Tag_1'] = tags[0][0]

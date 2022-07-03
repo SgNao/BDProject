@@ -150,9 +150,11 @@ def ModData():
     if request.method == 'POST':
         if check_password_hash(current_user.Password, request.form['OldPwd']):
             conn = engine.connect()
-            rs = conn.execute('SELECT * FROM utenti WHERE utenti.email = ?', request.form['NewPwd'])
+            rs = conn.execute('SELECT * FROM utenti WHERE utenti.email = ?', request.form['Email'])
             user = rs.fetchone()
-            if not user:
+            rs = conn.execute('SELECT * FROM utenti WHERE utenti.nickname = ?', request.form['nickname'])
+            nickname = rs.fetchone()
+            if not user and not nickname:
                 pwhash = generate_password_hash(request.form["NewPwd"], method='pbkdf2:sha256:260000', salt_length=16)
                 rs = conn.execute(' UPDATE utenti SET nickname = ?, email = ?, bio = ?, password = ? WHERE id_utente = ?',
                                   request.form['Nickname'], request.form['Email'], request.form['Bio'], pwhash, current_user.id)

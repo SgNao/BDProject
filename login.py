@@ -3,6 +3,7 @@ from sqlalchemy import *
 from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
 import main
+from datetime import date 
 
 
 LoginBP = Blueprint('LoginBP', __name__)
@@ -54,12 +55,21 @@ def Registrati():
 def SingIn():
     if request.method == 'POST':
         conn = engine.connect()
-        pwhash = generate_password_hash(request.form["password"], method='pbkdf2:sha256:260000', salt_length=16)
-        data = (request.form["email"], request.form["nome"], request.form["cognome"], request.form["nickname"], request.form["bio"], request.form["DataNascita"], pwhash, "1")
-        rs = conn.execute('INSERT INTO Utenti (email, nome, cognome, nickname, bio, data_nascita, password, ruolo)'
-                          ' VALUES (?,?,?,?,?,?,?,?)', data)
-        
-        conn.close()
-        return redirect(url_for('LoginBP.Accedi'))
+        age = date.today().year - date.fromisoformat(request.form["DataNascita"]).year
+        rs = conn.execute('SELECT * FROM utenti WHERE utenti.email = ?', request.form['Email'])
+        user = rs.fetchone()
+        rs = conn.execute('SELECT * FROM utenti WHERE utenti.nickname = ?', request.form['nickname'])
+        nickname = rs.fetchone()
+        if age >= 13 and not user and not nickname:
+            pwhash = generate_password_hash(request.form["password"], method='pbkdf2:sha256:260000', salt_length=16)
+            data = (request.form["email"], request.form["nome"], request.form["cognome"], request.form["nickname"], request.form["bio"], request.form["DataNascita"], pwhash, "1")
+            rs = conn.execute('INSERT INTO utenti (email, nome, cognome, nickname, bio, data_nascita, password, ruolo)'
+                            ' VALUES (?,?,?,?,?,?,?,?)', data)
+            
+            conn.close()
+            return redirect(url_for('LoginBP.Accedi'))
+        else:
+            conn.close()
+            return redirect(url_for('LoginBP.Registrati'))
     else:
         return redirect(url_for('LoginBP.Registrati'))

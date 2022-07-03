@@ -42,7 +42,7 @@ def inject_enumerate():
 
 
 class User(UserMixin):
-    def __init__(self, id, email, nome, cognome, nickname, bio, data_nascita, password, ruolo):  # active=True
+    def __init__(self, id, email, nome, cognome, nickname, bio, data_nascita, password, ruolo):
         self.id = id
         self.email = email
         self.nome = nome
@@ -93,7 +93,7 @@ def home():
     all_songs = rs.fetchall()
     all_songs =  ResultProxy_To_ListOfDict(all_songs)
     for song in all_songs:
-        rs = conn.execute('SELECT attributo_canzone.id_tag FROM attributo_canzone WHERE attributo_canzone.id_canzone = ?', song['id_utente'])
+        rs = conn.execute('SELECT attributo_canzone.id_tag FROM attributo_canzone WHERE attributo_canzone.id_canzone = ?', song['id_canzone'])
         tags = rs.fetchall()
         if tags:
            song['Tag_1'] = tags[0][0]
@@ -105,7 +105,7 @@ def home():
     latest_songs = rs.fetchall()
     latest_songs =  ResultProxy_To_ListOfDict(latest_songs)
     for song in latest_songs:
-        rs = conn.execute('SELECT attributo_canzone.id_tag FROM attributo_canzone WHERE attributo_canzone.id_canzone = ?', song['id_utente'])
+        rs = conn.execute('SELECT attributo_canzone.id_tag FROM attributo_canzone WHERE attributo_canzone.id_canzone = ?', song['id_canzone'])
         tags = rs.fetchall()
         if tags:
            song['Tag_1'] = tags[0][0]
@@ -119,7 +119,7 @@ def home():
     most_played_songs = rs.fetchall()
     most_played_songs =  ResultProxy_To_ListOfDict(most_played_songs)
     for song in most_played_songs:
-        rs = conn.execute('SELECT attributo_canzone.id_tag FROM attributo_canzone WHERE attributo_canzone.id_canzone = ?', song['id_utente'])
+        rs = conn.execute('SELECT attributo_canzone.id_tag FROM attributo_canzone WHERE attributo_canzone.id_canzone = ?', song['id_canzone'])
         tags = rs.fetchall()
         if tags:
            song['Tag_1'] = tags[0][0]
@@ -127,3 +127,13 @@ def home():
 
     conn.close()
     return render_template("Index.html", all_songs=all_songs, latest_songs=latest_songs, most_played_songs=most_played_songs)
+
+@app.route('/Reset')
+@login_required
+def Reset():
+    conn = engine.connect()
+
+    rs = conn.execute('UPDATE statistiche SET n_riproduzioni_settimanali = ?', 0)
+
+    conn.close()
+    return redirect(url_for('home'))

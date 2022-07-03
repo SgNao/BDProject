@@ -29,10 +29,17 @@
                         <td style="width: 9%;vertical-align: bottom;border-bottom: 1px solid darkgray;text-align: left;">
                             <a href="{{url_for('UserBP.get_data')}}"><h5 id="NuovaRaccolta">Dati Personali</h5></a>
                         </td>
-                        <td style="width: 6%;vertical-align: bottom;border-bottom: 1px solid darkgray;text-align: left;">
+                        {% if user.Ruolo == 2 %}
+                        <td style="width: 15%;vertical-align: bottom;border-bottom: 1px solid darkgray;text-align: left;">
                             <a href="{{url_for('ArtistBP.get_albums')}}"><h5 id="NuovaRaccolta">Produzioni</h5></a>
                         </td>
-                        <td style="width: 48%;border-bottom: 1px solid darkgray;"></td>
+                        {% endif %}
+                        <td style="width: 44%;border-bottom: 1px solid darkgray;"></td>
+                        {% if user.Ruolo == 1 %}
+                        <td style="width: 15%;vertical-align: bottom;border-bottom: 1px solid darkgray;text-align: right;">
+                            <a href="{{url_for('ArtistBP.BecomeArtist')}}"><h5 id="NuovaRaccolta">Diventa Artista</h5></a>
+                        </td>
+                        {% endif %}
                     </tr></table>
                 </td></tr>
                 {% for i,playlist in enumerate(playlists) %}
@@ -43,14 +50,14 @@
                                 <td>
                                     <table style="width:100%">
                                         <tr>
-                                            <td style="width: 15%;"><h3 class="text-section-2">{{playlist.nome}}</h3></td>
+                                            <td style="width: 15%;"><h3 class="text-section-2">{{playlist.Nome}}</h3></td>
                                             <td style="width: 58%;"></td>
                                             <td id="Mod">
-                                                <a id="Mod_link" href="/ModPlaylist/{{playlist.id_playlist}}"><h5 style="margin: 0%;">Modifica</h5></a>
+                                                <a id="Mod_link" href="/ModPlaylist/{{playlist.IdPlaylist}}"><h5 style="margin: 0%;">Modifica</h5></a>
                                             </td>
                                             <td id="Del" onmousedown="Elimina()"><h5 style="margin: 0%;">Elimina</h5></td>
-                                            <td id="Elimina_tutto" onmousedown='CancellaRaccolta("{{playlist.Nome}}", "{{playlist.id_playlist}}")'><h5 style="margin: 0%;">Elimina Raccolta</h5></td>
-                                            <td id="Fatto" onmousedown="SalvaModifiche('{{playlist.id_playlist}}')"><h5 style="margin: 0%;">Fatto</h5></td>
+                                            <td id="Elimina_tutto" onmousedown='CancellaRaccolta("{{playlist.Nome}}", "{{playlist.IdPlaylist}}")'><h5 style="margin: 0%;">Elimina Raccolta</h5></td>
+                                            <td id="Fatto" onmousedown="SalvaModifiche('{{playlist.IdPlaylist}}')"><h5 style="margin: 0%;">Fatto</h5></td>
                                         </tr>
                                     </table>
                                 </td>
@@ -59,7 +66,7 @@
                                 <td>
                                     <table style="width: 100%;">
                                         <tr>
-                                            <td style="width: 92%;text-align: left;"><p style="color: #2F2F2F;margin-bottom:1%;margin-top: 0%;">{{playlist.descrizione}}</p></td>
+                                            <td style="width: 92%;text-align: left;"><p style="color: #2F2F2F;margin-bottom:1%;margin-top: 0%;">{{playlist.Descrizione}}</p></td>
                                         </tr>
                                     </table>
                                 </td>
@@ -81,13 +88,13 @@
                     {% endif %}
                         <table class="tabella4" onmouseover="Select('S_{{j}}ID_A_{{i}}', 'S_{{j}}ID_B_{{i}}')" onmouseout="Deselect('S_{{j}}ID_A_{{i}}', 'S_{{j}}ID_B_{{i}}')">
                             <tr><td class="img-cell" colspan="2"><div class="img"></div></td></tr>
-                            <tr><td class="manual-title-cell" colspan="2"><a href="Song.html"><h3 class="manual-title">{{song.titolo}}</h3></a></td></tr>
+                            <tr><td class="manual-title-cell" colspan="2"><a href="Song.html"><h3 class="manual-title">{{song.Titolo}}</h3></a></td></tr>
                             <tr>
                                 <td class="footprint">
-                                    <h4 class="footprint-text">{{song.nickname}} </h4> 
+                                    <h4 class="footprint-text">{{song.Nickname}} </h4> 
                                 </td>
                                 <td class="footprint-anno">
-                                    <h5 class="footprint-text-anno"> {{song.rilascio}} </h5>
+                                    <h5 class="footprint-text-anno"> {{song.Rilascio}} </h5>
                                 </td>
                             </tr>
                             <tr>
@@ -96,12 +103,12 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="2" class="footprint-hastag-4" colspan="2" id="S_{{j}}ID_B_{{i}}" onmouseover="Info_over('S_{{j}}ID_B_{{i}}')" onmouseout="Info_out('S_{{j}}ID_B_{{i}}')" onmousedown="Song('{{song.id_canzone}}')">
+                                <td colspan="2" class="footprint-hastag-4" colspan="2" id="S_{{j}}ID_B_{{i}}" onmouseover="Info_over('S_{{j}}ID_B_{{i}}')" onmouseout="Info_out('S_{{j}}ID_B_{{i}}')" onmousedown="Song('{{song.IdCanzone}}')">
                                     <h5 class="footprint-text-hastag"> INFO </h5>
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="2" onmousedown="Cancella('S_{{j}}E_{{i}}', 'S_{{j}}C_{{i}}', '{{song.id_canzone}}')" onmouseover="EliminaOver('S_{{j}}E_{{i}}')" onmouseout="EliminaOut('S_{{j}}E_{{i}}')" class="footprint-hastag-2" id="S_{{j}}E_{{i}}">
+                                <td colspan="2" onmousedown="Cancella('S_{{j}}E_{{i}}', 'S_{{j}}C_{{i}}', '{{song.IdCanzone}}')" onmouseover="EliminaOver('S_{{j}}E_{{i}}')" onmouseout="EliminaOut('S_{{j}}E_{{i}}')" class="footprint-hastag-2" id="S_{{j}}E_{{i}}">
                                     <h5 class="footprint-text-hastag">Elimina</h5>
                                 </td>
                             </tr>
@@ -144,6 +151,9 @@
                     </td>
                     {% endif %}
                     {% if j == len(playlist_songs[i])-1 %}
+                    {% if (j+1)%5 == 0 %}
+                    </tr><tr>
+                    {% endif %}
                     <td style="display: none;" class="altri">
                         <table class="tabella4">
                             <tr><td class="manual-title-cell" colspan="2"><h3 class="manual-title" style="color: white;">-</h3></td></tr>

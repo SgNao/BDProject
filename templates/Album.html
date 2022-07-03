@@ -8,10 +8,12 @@
             <table class="tabella3">
                 <tr><td colspan="5">
                     <table style="width: 100%;margin-bottom: 1%;margin-top: 1%;border-collapse: collapse;"><tr>
-                        <td style="width: 35%;text-align: left;margin: 0%;border-bottom: 1px solid darkgray;"><h1 id="Playlist">{{album.Titolo}}</h1></td>
+                        <td style="width: 35%;text-align: left;margin: 0%;border-bottom: 1px solid darkgray;"><h1 id="Playlist">{{album.titolo}}</h1></td>
+                        {% if current_user.is_authenticated and album.id_artista == current_user.id %}
                         <td style="width: 8%;vertical-align: bottom;border-bottom: 1px solid darkgray;text-align: left;">
-                           <a href="{{url_for('ArtistBP.Albumstat')}}"><h5 id="NuovaRaccolta">Statistiche</h5></a>
+                           <a href="/AlbumStat/{{album.id_album}}"><h5 id="NuovaRaccolta">Statistiche</h5></a>
                         </td>
+                        {% endif %}
                         <td style="width: 57%;border-bottom: 1px solid darkgray;"></td>
                     </tr></table>
                 </td></tr>
@@ -22,9 +24,9 @@
                                 <td>
                                     <table style="width:100%; table-layout: auto;">
                                         <tr>
-                                            <td style="width: 5%;"><h3 class="text-section-2" style="font-weight: lighter;margin: 0%;">{{album.rilascio}}</h3></td>
-                                            <td style="width: 20%;"><h3 class="text-section-2" style="font-weight: lighter;margin: 0%;">{{album.nickname}}</h3></td>
-                                            <td style="width: 70%;text-align:right;"><h4 class="text-section-2" style="margin: 0%;color: #00323F;">{{album.CasaDiscografica}}</h4></td>
+                                            <td style="width: 5%;"><h3 class="text-section-2" style="font-weight: lighter;margin: 0%;">{{album.Rilascio}}</h3></td>
+                                            <td style="width: 20%;"><h3 class="text-section-2" style="font-weight: lighter;margin: 0%;">{{album.Nickname}}</h3></td>
+                                            <td style="width: 70%;text-align:right;"><h4 class="text-section-2" style="margin: 0%;color: #00323F;">{{tags.Tag_1}} {{tags.Tag_2}}</h4></td>
                                         </tr>
                                     </table>
                                 </td>

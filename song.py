@@ -1,6 +1,7 @@
 from flask import *
 from sqlalchemy import *
 from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user
+import main
 
 SongBP = Blueprint('SongBP', __name__)
 engine = create_engine('sqlite:///database.db', echo=True)
@@ -19,9 +20,14 @@ def SongStat(IdCanzone):
     stat = rs.fetchone()
     Tot = stat[1]+stat[2]+stat[3]+stat[4]+stat[5]+stat[6]
     statistiche = {'Fascia1': stat[1],'Fascia2': stat[2],'Fascia3': stat[3],'Fascia4': stat[4],'Fascia5': stat[5],'Fascia6': stat[6],'Tot': Tot,
-                    'NRiproduzioniTotali': stat[7], 'NRiproduzioniSettimanali': stat[8]}
+                    'n_riproduzioni_totali': stat[7], 'n_riproduzioni_settimanali': stat[8]}
     rs = conn.execute(' SELECT * FROM canzoni JOIN utenti ON canzoni.id_artista = utenti.id_utente WHERE canzoni.id_canzone = ?', IdCanzone)
     song = rs.fetchone()
+
+    rs = conn.execute('SELECT attributo_canzone.id_tag FROM attributo_canzone WHERE attributo_canzone.id_canzone = ?', IdCanzone)
+    tags = rs.fetchall()
+    Tags = {'Tag_1': tags[0][0], 'Tag_2': tags[1][0]}
+
     conn.close()
     return render_template("SongStatistics.html", stat=statistiche, song=song)
 
@@ -43,8 +49,21 @@ def songs(IdCanzone):
     rs = conn.execute(' SELECT * FROM canzoni NATURAL JOIN contenuto JOIN utenti ON canzoni.id_artista = utenti.id_utente'
                       ' WHERE contenuto.id_album = ?', IdAlbum)
     songAlbum = rs.fetchall()
+    songAlbum =  main.ResultProxy_To_ListOfDict(songAlbum)
+    for song in songAlbum:
+        rs = conn.execute('SELECT attributo_canzone.id_tag FROM attributo_canzone WHERE attributo_canzone.id_canzone = ?', song['id_canzone'])
+        tags = rs.fetchall()
+        if tags:
+           song['Tag_1'] = tags[0][0]
+           song['Tag_2'] = tags[1][0]
+
     rs = conn.execute(' SELECT * FROM album WHERE id_album = ?', IdAlbum)
     album = rs.fetchone()
+
+    rs = conn.execute('SELECT attributo_canzone.id_tag FROM attributo_canzone WHERE attributo_canzone.id_canzone = ?', IdCanzone)
+    tags = rs.fetchall()
+    Tags = {'Tag_1': tags[0][0], 'Tag_2': tags[1][0]}
+
     if current_user.is_authenticated:
         rs = conn.execute(' SELECT * ' 
                       ' FROM playlist ' 
@@ -52,10 +71,6 @@ def songs(IdCanzone):
                       ' FROM raccolte NATURAL JOIN canzoni WHERE canzoni.id_canzone = ?)'
                       ' ORDER BY playlist.nome', current_user.id, IdCanzone)
         playlists = rs.fetchall()
-    rs = conn.execute('SELECT attributo_canzone.id_tag FROM attributo_canzone WHERE attributo_canzone.id_canzone = ?', IdCanzone)
-    tags = rs.fetchall()
-    Tags = {'Tag_1': tags[0][0], 'Tag_2': tags[1][0]}
-    if current_user.is_authenticated:
         resp = make_response(render_template("Song.html", playlists=playlists, song=songdata, songAlbum=songAlbum, album=album, tags=Tags))
     else:
         resp = make_response(render_template("Song.html", song=songdata, songAlbum=songAlbum, album=album, tags=Tags))

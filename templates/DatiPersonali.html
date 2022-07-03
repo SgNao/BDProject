@@ -8,7 +8,7 @@
             <table class="tabella3">
                 <tr><td colspan="5">
                     <table style="width: 100%;margin-bottom: 1%;margin-top: 1%;border-collapse: collapse;"><tr>
-                        <td style="width: 15%;text-align: left;margin: 0%;border-bottom: 1px solid darkgray;"><h1 id="Playlist">{{user.nickname}}</h1></td>
+                        <td style="width: 15%;text-align: left;margin: 0%;border-bottom: 1px solid darkgray;"><h1 id="Playlist">{{user.Nickname}}</h1></td>
                         <td style="width: 6%;vertical-align: bottom;border-bottom: 1px solid darkgray;text-align: left;">
                             <a href="{{url_for('UserBP.private')}}"><h5 id="NuovaRaccolta">Raccolte</h5></a>
                         </td>
@@ -24,8 +24,8 @@
                             <td>
                                 <table style="width:100%">
                                     <tr>
-                                        <td style="width: 15%;" id="Nome_Mod_1"><h3 class="text-section-2">{{user.nome}} {{user.cognome}}</h3></td>
-                                        <td style="width: 15%;" id="Nome_Mod_1"><h4 class="text-section-2">{{user.data_nascita}}</h4></td>
+                                        <td style="width: 15%;" id="Nome_Mod_1"><h3 class="text-section-2">{{user.Nome}} {{user.Cognome}}</h3></td>
+                                        <td style="width: 15%;" id="Nome_Mod_1"><h4 class="text-section-2">{{user.DataNascita}}</h4></td>
                                         <td style="width: 64%;"></td>
                                         <td id="Mod">
                                             <a id="Mod_link" href="{{url_for('UserBP.ModData')}}"><h5 style="margin: 0%;">Modifica</h5></a>
@@ -38,7 +38,7 @@
                             <td>
                                 <table style="width: 100%;">
                                     <tr>
-                                        <td id="Desc_Mod_1" style="width: 92%;text-align: left;"><p style="color: #2F2F2F;margin-bottom:1%;margin-top: 0%;">{{user.bio}}</p></td>
+                                        <td id="Desc_Mod_1" style="width: 92%;text-align: left;"><p style="color: #2F2F2F;margin-bottom:1%;margin-top: 0%;">{{user.Bio}}</p></td>
                                         <td id="Desc_Mod_2" style="width: 92%;text-align: left;display: none;"><input type="text" placeholder="Descrizione" style="width: 80%;padding: 1%;" maxlength="50"></td>
                                     </tr>
                                 </table>

@@ -2,7 +2,7 @@
 
 {% block pagebody %}
         <div id="container2">
-            <h2 id="subtitle">{{user.nickname}}</h2>
+            <h2 id="subtitle">{{user.Nickname}}</h2>
         </div>
         <div id="box3">
             <table id="Playlist-table" style="border-collapse: collapse;">
@@ -45,13 +45,13 @@
                                 <td>
                                     <table style="width:100%">
                                         <tr>
-                                            <td style="width: 20%;" id="Nome_Mod_1"><h3 class="text-section-2">{{album.titolo}}</h3></td>
+                                            <td style="width: 20%;" id="Nome_Mod_1"><h3 class="text-section-2">{{album.Titolo}}</h3></td>
                                             <td style="width: 15%;display: none;" id="Nome_Mod_2"><input type="text" placeholder="Nome raccolta" style="width: 100%;padding: 2%;"></td>
                                             <td style="width: 49%;"></td>
                                             <td id="Mod" style="width: 12%;text-align: right;">
-                                                <a id="Mod_link" href="/Nuova_Canzone/{{album.id_album}}"><h5 style="margin: 0%;">Aggiungi Canzone</h5></a>
+                                                <a id="Mod_link" href="/Nuova_Canzone/{{album.IdAlbum}}"><h5 style="margin: 0%;">Aggiungi Canzone</h5></a>
                                             </td>
-                                            <td id="Elimina_tutto_A" style="width: 9%;" onmousedown='CancellaAlbum("{{album.titolo}}","{{album.id_album}}")'><h5 style="margin: 0%;">Elimina Album</h5></td>
+                                            <td id="Elimina_tutto_A" style="width: 9%;" onmousedown='CancellaAlbum("{{album.Titolo}}","{{album.IdAlbum}}")'><h5 style="margin: 0%;">Elimina Album</h5></td>
                                         </tr>
                                     </table>
                                 </td>
@@ -60,7 +60,8 @@
                                 <td>
                                     <table style="width: 100%;">
                                         <tr>
-                                            <td id="Desc_Mod_1" style="width: 5%;text-align: left;"><p style="color: #2F2F2F;margin-bottom:0%;margin-top: 0%;">{{album.rilascio}}</p></td>
+                                            <td id="Desc_Mod_1" style="width: 5%;text-align: left;"><p style="color: #2F2F2F;margin-bottom:0%;margin-top: 0%;">{{album.Rilascio}}</p></td>
+                                            <td id="Desc_Mod_1" style="width: 95%;text-align: left;"><p style="color: #006840;margin-bottom:0%;margin-top: 0%;">{{album.CasaDiscografica}}</p></td>
                                             <td id="Desc_Mod_2" style="width: 92%;text-align: left;display: none;"><input type="text" placeholder="Descrizione" style="width: 80%;padding: 1%;" maxlength="50"></td>
                                         </tr>
                                     </table>
@@ -83,13 +84,13 @@
                     {% endif %}
                         <table class="tabella4" onmouseover="Select('S_{{j}}ID_A_{{i}}', 'S_{{j}}ID_B_{{i}}')" onmouseout="Deselect('S_{{j}}ID_A_{{i}}', 'S_{{j}}ID_B_{{i}}')">
                             <tr><td class="img-cell" colspan="2"><div class="img"></div></td></tr>
-                            <tr><td class="manual-title-cell" colspan="2"><a href="Song.html"><h3 class="manual-title">{{song.titolo}}</h3></a></td></tr>
+                            <tr><td class="manual-title-cell" colspan="2"><a href="Song.html"><h3 class="manual-title">{{song.Titolo}}</h3></a></td></tr>
                             <tr>
                                 <td class="footprint">
-                                    <h4 class="footprint-text"> {{song.nickname}} </h4> 
+                                    <h4 class="footprint-text"> {{song.Nickname}} </h4> 
                                 </td>
                                 <td class="footprint-anno">
-                                    <h5 class="footprint-text-anno"> {{song.rilascio}} </h5>
+                                    <h5 class="footprint-text-anno"> {{song.Rilascio}} </h5>
                                 </td>
                             </tr>
                             <tr>
@@ -98,7 +99,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="2" class="footprint-hastag-4" colspan="2" id="S_{{j}}ID_B_{{i}}" onmouseover="Info_over('S_{{j}}ID_B_{{i}}')" onmouseout="Info_out('S_{{j}}ID_B_{{i}}')" onmousedown="Song('{{song.id_canzone}}')">
+                                <td colspan="2" class="footprint-hastag-4" colspan="2" id="S_{{j}}ID_B_{{i}}" onmouseover="Info_over('S_{{j}}ID_B_{{i}}')" onmouseout="Info_out('S_{{j}}ID_B_{{i}}')" onmousedown="Song('{{song.IdCanzone}}')">
                                     <h5 class="footprint-text-hastag"> INFO </h5>
                                 </td>
                             </tr>
@@ -146,6 +147,9 @@
                     </td>
                     {% endif %}
                     {% if j == len(albums_songs[i])-1 %}
+                    {% if (j+1)%5 == 0 %}
+                    </tr><tr>
+                    {% endif %}
                     <td style="display: none;" class="altri">
                         <table class="tabella4">
                             <tr><td class="manual-title-cell" colspan="2"><h3 class="manual-title" style="color: white;">-</h3></td></tr>

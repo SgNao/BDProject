@@ -3,6 +3,7 @@ from flask import *
 from sqlalchemy import *
 from flask_login import login_required
 import main 
+from datetime import date 
 
 ArtistBP = Blueprint('ArtistBP', __name__)
 engine = create_engine('sqlite:///database.db', echo=True)
@@ -50,6 +51,7 @@ def NewSongData(IdAlbum):
     return render_template("NuovaCanzone.html", IdAlbum=IdAlbum)
 
 @ArtistBP.route('/new_song/<IdAlbum>', methods=['GET', 'POST'])
+@login_required
 def NewSong(IdAlbum):
     print(IdAlbum)
     if request.method == 'POST':
@@ -85,10 +87,6 @@ def NewSong(IdAlbum):
     else:
          return render_template("NuovaCanzone.html")
 
-@ArtistBP.route('/album_stat')
-def Albumstat():
-    return render_template("AlbumStatistics.html")
-
 @ArtistBP.route('/Produzioni')
 @login_required  # richiede autenticazione
 def get_albums():
@@ -106,7 +104,7 @@ def get_albums():
 
     songs = main.ResultProxy_To_ListOfDict(songs)
     for song in songs:
-        rs = conn.execute('SELECT attributo_canzone.id_tag FROM attributo_canzone WHERE attributo_canzone.id_canzone = ?', song['IdCanzone'])
+        rs = conn.execute('SELECT attributo_canzone.id_tag FROM attributo_canzone WHERE attributo_canzone.id_canzone = ?', song['id_canzone'])
         tags = rs.fetchall()
         if tags:
            song['Tag_1'] = tags[0][0]
@@ -136,13 +134,17 @@ def get_album_data(IdAlbum):
 
     songAlbum = main.ResultProxy_To_ListOfDict(songAlbum)
     for song in songAlbum:
-        rs = conn.execute('SELECT attributo_canzone.id_tag FROM attributo_canzone WHERE attributo_canzone.id_canzone = ?', song['IdCanzone'])
+        rs = conn.execute('SELECT attributo_canzone.id_tag FROM attributo_canzone WHERE attributo_canzone.id_canzone = ?', song['id_canzone'])
         tags = rs.fetchall()
         if tags:
            song['Tag_1'] = tags[0][0]
            song['Tag_2'] = tags[1][0]
 
-    resp = make_response(render_template("Album.html", album=Albumdata, songAlbum=songAlbum))
+    rs = conn.execute('SELECT attributo_album.id_tag FROM attributo_album WHERE attributo_album.id_album = ?', IdAlbum)
+    tags = rs.fetchall()
+    Tags = {'Tag_1': tags[0][0], 'Tag_2': tags[1][0]}
+
+    resp = make_response(render_template("Album.html", album=Albumdata, songAlbum=songAlbum, tags=Tags))
     conn.close()
     return resp
 
@@ -150,12 +152,75 @@ def get_album_data(IdAlbum):
 @login_required  # richiede autenticazione
 def DelAlbum(IdAlbum):
     conn = engine.connect()
-    
-    #Una canzone è contenuta in un solo album vero?
+
+    rs = conn.execute('DELETE FROM attributo_album WHERE attributo_album.id_album = ?', IdAlbum)
+    rs = conn.execute('SELECT contenuto.id_canzone FROM contenuto WHERE contenuto.id_album = ?', IdAlbum)
+    IdCanzoni = rs.fetchall()
+    for IdCanzone in IdCanzoni:
+        # rowproxy.items() returns an array like [(key0, value0), (key1, value1)]
+        for column, value in IdCanzone.items():
+            rs = conn.execute('DELETE FROM attributo_canzone WHERE id_canzone = ?', IdCanzone)
+            rs = conn.execute('SELECT statistiche.id_statistica FROM statistiche NATURAL JOIN statistiche_canzoni'
+                              'WHERE statistiche_canzoni.id_canzone = ?', IdCanzone)
+            IdStatistica = rs.fetchone()
+            rs = conn.execute('DELETE FROM statistiche WHERE id_statistica = ?', IdStatistica[0])
+            rs = conn.execute('DELETE FROM statistiche_canzoni WHERE id_statistica = ?', IdStatistica[0])
+
     rs = conn.execute(' DELETE FROM canzoni WHERE id_canzone IN'
                       ' (SELECT contenuto.id_canzone FROM contenuto WHERE contenuto.id_album = ?)', IdAlbum)
     rs = conn.execute(' DELETE FROM contenuto WHERE id_album = ?', IdAlbum)
     rs = conn.execute(' DELETE FROM album WHERE id_album = ?', IdAlbum)     
+
+    conn.close()
+    return redirect(url_for('ArtistBP.get_albums'))
+
+@ArtistBP.route('/AlbumStat/<IdAlbum>')
+@login_required
+def AlbumStat(IdAlbum):
+    conn = engine.connect()
+    rs = conn.execute(' SELECT canzoni.id_canzone FROM canzoni NATURAL JOIN contenuto'
+                      ' WHERE contenuto.id_album = ?', IdAlbum)
+    IdCanzoni = rs.fetchall()
+
+    statistiche = {'Fascia1':0, 'Fascia2': 0, 'Fascia3': 0, 'Fascia4': 0, 'Fascia5': 0, 'Fascia6': 0, 'Tot': 0, 'n_riproduzioni_totali': 0, 'n_riproduzioni_settimanali': 0}
+
+    for IdCanzone in IdCanzoni:
+        # rowproxy.items() returns an array like [(key0, value0), (key1, value1)]
+        for column, value in IdCanzone.items():
+            # build up the dictionary
+            rs = conn.execute(' SELECT * FROM statistiche WHERE statistiche.id_statistica = ('
+                              ' SELECT statistiche.id_statistica FROM statistiche_canzoni NATURAL JOIN statistiche' 
+                              ' WHERE statistiche_canzoni.id_canzone = ?)', value)
+            stat = rs.fetchone()
+            Tot = stat[1]+stat[2]+stat[3]+stat[4]+stat[5]+stat[6]
+            statistiche = {'Fascia1': statistiche['Fascia1']+stat[1],
+                           'Fascia2': statistiche['Fascia2']+stat[2],
+                           'Fascia3': statistiche['Fascia3']+stat[3],
+                           'Fascia4': statistiche['Fascia4']+stat[4],
+                           'Fascia5': statistiche['Fascia5']+stat[5],
+                           'Fascia6': statistiche['Fascia6']+stat[6],
+                           'Tot': statistiche['Tot']+Tot,
+                           'n_riproduzioni_totali': statistiche['n_riproduzioni_totali']+stat[7], 
+                           'n_riproduzioni_settimanali': statistiche['n_riproduzioni_settimanali']+stat[8]}
+       
+    
+    rs = conn.execute(' SELECT * FROM album JOIN utenti ON album.id_artista = utenti.id_utente WHERE album.id_album = ?', IdAlbum)
+    album = rs.fetchone()
+    
+    rs = conn.execute('SELECT attributo_album.id_tag FROM attributo_album WHERE attributo_album.id_album = ?', IdAlbum)
+    tags = rs.fetchall()
+    Tags = {'Tag_1': tags[0][0], 'Tag_2': tags[1][0]}
+
+    conn.close()
+    return render_template("AlbumStatistics.html", stat=statistiche, album=album, tags=Tags)
+
+@ArtistBP.route('/BecomeArtist')
+@login_required  # richiede autenticazione
+def BecomeArtist():
+    conn = engine.connect() 
+
+    rs = conn.execute('UPDATE utenti SET ruolo = ? WHERE id_utente = ?', 2, current_user.id)
+    rs = conn.execute('INSERT INTO artisti (id_utente, debutto) VALUES (?,?)', current_user.id, date.today())
 
     conn.close()
     return redirect(url_for('ArtistBP.get_albums'))

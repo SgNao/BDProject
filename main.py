@@ -9,8 +9,6 @@ from werkzeug.security import check_password_hash, generate_password_hash
 import psycopg2
 import configdb
 
-#conn = configdb.setupConnection()
-
 '''
 export FLASK_APP=main.py
 export FLASK_ENV=development
@@ -29,17 +27,14 @@ app.register_blueprint(UserBP)
 app.register_blueprint(SongBP)
 app.register_blueprint(ArtistBP)
 
-engine = create_engine('sqlite:///database.db', echo=True)
 app.config['SECRET_KEY'] = 'ubersecret'
 login_manager = LoginManager()
 login_manager.init_app(app)
-
 
 # IMPORTANTE NON TOGLIERE
 @app.context_processor
 def inject_enumerate():
     return dict(enumerate=enumerate, str=str, len=len)
-
 
 class User(UserMixin):
     def __init__(self, id, email, nome, cognome, nickname, bio, data_nascita, password, ruolo):
@@ -57,8 +52,15 @@ class User(UserMixin):
         return check_password_hash(self.password, pwd)
 
 def get_user_by_email(email):
-    conn = engine.connect()
-    rs = conn.execute('SELECT * FROM utenti WHERE email = ?', email)
+    conn = configdb.getConnection()
+    rs = None
+    if(configdb.selectDB()):
+        cur = conn.cursor()
+        rs = cur.execute('SELECT * FROM unive_music.utenti WHERE email = %s', email)
+        conn.commit()
+        cur.close()
+    else:
+        rs = conn.execute('SELECT * FROM utenti WHERE email = ?', email)
     user = rs.fetchone()
     conn.close()
     return User(user.id_utente, user.email, user.nome, user.cognome, user.nickname, user.bio, user.data_nascita, user.password, user.ruolo)

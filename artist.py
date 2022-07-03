@@ -94,10 +94,13 @@ def NewSong(IdAlbum):
         IdCanzone = rs.fetchone()
         data = [IdAlbum, IdCanzone[0]]
         rs = conn.execute(' INSERT INTO unive_music.contenuto (id_album, id_canzone) VALUES (%s,%s)', data)
+        # Query necessaria per bug di serial
+        rs = conn.execute('SELECT MAX(statistiche.id_statistica) FROM unive_music.statistiche')
+        max = rs.fetchone()
         rs = conn.execute(
             ' INSERT INTO unive_music.statistiche '
-            '(_13_19, _20_29, _30_39, _40_49, _50_65, _65piu , n_riproduzioni_totali, n_riproduzioni_settimanali)'
-            ' VALUES (%s,%s,%s,%s,%s,%s,%s,%s)', [0, 0, 0, 0, 0, 0, 0, 0])
+            '(id_statistica, _13_19, _20_29, _30_39, _40_49, _50_65, _65piu , n_riproduzioni_totali, n_riproduzioni_settimanali)'
+            ' VALUES (%s, %s,%s,%s,%s,%s,%s,%s,%s)', [max[0]+1, 0, 0, 0, 0, 0, 0, 0, 0])
         rs = conn.execute('SELECT MAX(statistiche.id_statistica) FROM unive_music.statistiche')
         IdStatistica = rs.fetchone()
         rs = conn.execute('INSERT INTO unive_music.statistiche_canzoni (id_statistica, id_canzone) VALUES (%s,%s)',
@@ -149,7 +152,7 @@ def get_albums():
         'JOIN unive_music.utenti ON canzoni.id_artista = utenti.id_utente'
         ' WHERE contenuto.id_album IN (SELECT album.id_album FROM unive_music.album'
         ' WHERE album.id_artista = %s)'
-        ' GROUP BY contenuto.id_album, canzoni.titolo, canzoni.rilascio, canzoni.durata, canzoni.colore',
+        ' GROUP BY contenuto.id_album, canzoni.titolo, canzoni.rilascio, canzoni.durata, canzoni.colore, canzoni.id_canzone, utenti.nickname',
         current_user.id)
     songs = rs.fetchall()
 

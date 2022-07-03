@@ -154,7 +154,7 @@ def ModData():
             user = rs.fetchone()
             if not user:
                 pwhash = generate_password_hash(request.form["NewPwd"], method='pbkdf2:sha256:260000', salt_length=16)
-                rs = conn.execute(' UPDATE utenti SET Nickname = ?, email = ?, bio = ?, password = ? WHERE id_utente = ?', 
+                rs = conn.execute(' UPDATE utenti SET nickname = ?, email = ?, bio = ?, password = ? WHERE id_utente = ?',
                                   request.form['Nickname'], request.form['Email'], request.form['Bio'], pwhash, current_user.id)
                 conn.close()
                 return redirect(url_for('UserBP.private'))

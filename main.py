@@ -1,7 +1,7 @@
 from flask import *
 from sqlalchemy import *
 from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user
-from Login import LoginBP
+from login import LoginBP
 from user import UserBP
 from song import SongBP
 from artist import ArtistBP

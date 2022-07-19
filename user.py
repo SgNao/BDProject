@@ -63,11 +63,9 @@ def NewPlaylist():
     if request.method == 'POST':
         conn = engine.connect()
         # Query necessaria per bug di serial
-        rs = conn.execute('SELECT MAX(playlist.id_playlist) FROM unive_music.playlist')
-        max = rs.fetchone()
-        data = (max[0] + 1, current_user.id, request.form["Nome"], request.form["Descrizione"], "0")
+        data = (current_user.id, request.form["Nome"], request.form["Descrizione"], "0")
         rs = conn.execute(
-            'INSERT INTO unive_music.playlist (id_playlist, id_utente, nome, descrizione, n_canzoni) VALUES (%s, %s,%s,%s,%s)', data)
+            'INSERT INTO unive_music.playlist (id_utente, nome, descrizione, n_canzoni) VALUES (%s,%s,%s,%s)', data)
         conn.close()
         return redirect(url_for('UserBP.private'))
     else:

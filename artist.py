@@ -22,11 +22,9 @@ def NewAlbum():
     if request.method == 'POST':
         conn = engine.connect()
         # Query necessaria per bug di serial
-        rs = conn.execute('SELECT MAX(album.id_album) FROM unive_music.album')
-        max = rs.fetchone()
-        data = (max[0] + 1, request.form["Titolo"], request.form["Rilascio"], request.form["Colore"], "0", current_user.id)
+        data = (request.form["Titolo"], request.form["Rilascio"], request.form["Colore"], "0", current_user.id)
         rs = conn.execute(
-            'INSERT INTO unive_music.album (id_album, titolo, rilascio, colore, n_canzoni, id_artista) VALUES (%s, %s,%s,%s,%s,%s)',
+            'INSERT INTO unive_music.album (titolo, rilascio, colore, n_canzoni, id_artista) VALUES (%s,%s,%s,%s,%s)',
             data)
 
         rs = conn.execute(
@@ -80,12 +78,10 @@ def NewSong(IdAlbum):
     if request.method == 'POST':
         conn = engine.connect()
         # Query necessaria per bug di serial
-        rs = conn.execute('SELECT MAX(canzoni.id_canzone) FROM unive_music.canzoni')
-        max = rs.fetchone()
-        data = (max[0] + 1, request.form["Titolo"], request.form["Rilascio"], request.form["Durata"], request.form["Colore"],
+        data = (request.form["Titolo"], request.form["Rilascio"], request.form["Durata"], request.form["Colore"],
                 current_user.id)
         rs = conn.execute(
-            'INSERT INTO unive_music.canzoni (id_canzone, titolo, rilascio, durata, colore, id_artista) VALUES (%s,%s,%s,%s,%s,%s)',
+            'INSERT INTO unive_music.canzoni (titolo, rilascio, durata, colore, id_artista) VALUES (%s,%s,%s,%s,%s)',
             data)
         rs = conn.execute(
             'SELECT canzoni.id_canzone FROM unive_music.canzoni '
@@ -95,12 +91,10 @@ def NewSong(IdAlbum):
         data = [IdAlbum, IdCanzone[0]]
         rs = conn.execute(' INSERT INTO unive_music.contenuto (id_album, id_canzone) VALUES (%s,%s)', data)
         # Query necessaria per bug di serial
-        rs = conn.execute('SELECT MAX(statistiche.id_statistica) FROM unive_music.statistiche')
-        max = rs.fetchone()
         rs = conn.execute(
             ' INSERT INTO unive_music.statistiche '
-            '(id_statistica, _13_19, _20_29, _30_39, _40_49, _50_65, _65piu , n_riproduzioni_totali, n_riproduzioni_settimanali)'
-            ' VALUES (%s, %s,%s,%s,%s,%s,%s,%s,%s)', [max[0]+1, 0, 0, 0, 0, 0, 0, 0, 0])
+            '(_13_19, _20_29, _30_39, _40_49, _50_65, _65piu , n_riproduzioni_totali, n_riproduzioni_settimanali)'
+            ' VALUES (%s,%s,%s,%s,%s,%s,%s,%s)', [0, 0, 0, 0, 0, 0, 0, 0])
         rs = conn.execute('SELECT MAX(statistiche.id_statistica) FROM unive_music.statistiche')
         IdStatistica = rs.fetchone()
         rs = conn.execute('INSERT INTO unive_music.statistiche_canzoni (id_statistica, id_canzone) VALUES (%s,%s)',

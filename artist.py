@@ -24,16 +24,10 @@ def NewAlbum():
         conn = engine.connect()
         # Query necessaria per bug di serial
         rs = conn.execute('SELECT MAX(album.id_album) FROM unive_music.album')
-        m = rs.fetchone()
-
-        # input check
-        titolo = request.form["Titolo"]
-        if len(titolo) > lentitolo:
-            return render_template("NuovoAlbum.html")
-
-        data = (m[0] + 1, titolo, request.form["Rilascio"], request.form["Colore"], "0", current_user.id)
+        max = rs.fetchone()
+        data = (max[0] + 1, request.form["Titolo"], request.form["Rilascio"], request.form["Colore"], "0", current_user.id)
         rs = conn.execute(
-            'INSERT INTO unive_music.album (id_album, titolo, rilascio, colore, n_canzoni, id_artista) VALUES (%s, %s,%s,%s,%s,%s)',
+            'INSERT INTO unive_music.album (titolo, rilascio, colore, n_canzoni, id_artista) VALUES (%s,%s,%s,%s,%s)',
             data)
 
         rs = conn.execute(
@@ -87,22 +81,11 @@ def NewSong(IdAlbum):
     if request.method == 'POST':
         conn = engine.connect()
         # Query necessaria per bug di serial
-        rs = conn.execute('SELECT MAX(canzoni.id_canzone) FROM unive_music.canzoni')
-        m = rs.fetchone()
-
-        # input check
-        titolo = request.form["Titolo"]
-        durata = request.form["Durata"]
-        if len(titolo) > lentitolo:
-            return render_template("NuovaCanzone.html")
-        if int(durata) < 1:
-            return render_template("NuovaCanzone.html")
-
-        data = (m[0] + 1, titolo, request.form["Rilascio"], durata, request.form["Colore"],
+        data = (request.form["Titolo"], request.form["Rilascio"], request.form["Durata"], request.form["Colore"],
                 current_user.id)
         rs = conn.execute(
-            'INSERT INTO unive_music.canzoni (id_canzone, titolo, rilascio, durata, colore, id_artista) '
-            'VALUES (%s,%s,%s,%s,%s,%s)', data)
+            'INSERT INTO unive_music.canzoni (titolo, rilascio, durata, colore, id_artista) VALUES (%s,%s,%s,%s,%s)',
+            data)
         rs = conn.execute(
             'SELECT canzoni.id_canzone FROM unive_music.canzoni '
             'WHERE canzoni.id_artista = %s AND canzoni.titolo = %s AND canzoni.rilascio = %s',
@@ -111,12 +94,10 @@ def NewSong(IdAlbum):
         data = [IdAlbum, IdCanzone[0]]
         rs = conn.execute(' INSERT INTO unive_music.contenuto (id_album, id_canzone) VALUES (%s,%s)', data)
         # Query necessaria per bug di serial
-        rs = conn.execute('SELECT MAX(statistiche.id_statistica) FROM unive_music.statistiche')
-        m = rs.fetchone()
         rs = conn.execute(
             ' INSERT INTO unive_music.statistiche '
-            '(id_statistica, _13_19, _20_29, _30_39, _40_49, _50_65, _65piu , n_riproduzioni_totali, n_riproduzioni_settimanali)'
-            ' VALUES (%s, %s,%s,%s,%s,%s,%s,%s,%s)', [m[0] + 1, 0, 0, 0, 0, 0, 0, 0, 0])
+            '(_13_19, _20_29, _30_39, _40_49, _50_65, _65piu , n_riproduzioni_totali, n_riproduzioni_settimanali)'
+            ' VALUES (%s,%s,%s,%s,%s,%s,%s,%s)', [0, 0, 0, 0, 0, 0, 0, 0])
         rs = conn.execute('SELECT MAX(statistiche.id_statistica) FROM unive_music.statistiche')
         IdStatistica = rs.fetchone()
         rs = conn.execute('INSERT INTO unive_music.statistiche_canzoni (id_statistica, id_canzone) VALUES (%s,%s)',

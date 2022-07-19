@@ -10,6 +10,7 @@ engine = create_engine('postgresql://postgres:BDProject2022@localhost:5432/BDPro
 
 lentitolo = 15
 
+
 # IMPORTANTE NON TOGLIERE
 @ArtistBP.context_processor
 def inject_enumerate():
@@ -22,10 +23,17 @@ def inject_enumerate():
 def NewAlbum():
     if request.method == 'POST':
         conn = engine.connect()
+
+        # check input
+        titolo = request.form["Titolo"]
+        if len(titolo) > lentitolo:
+            return render_template("NuovoAlbum.html")
+
         # Query necessaria per bug di serial
         rs = conn.execute('SELECT MAX(album.id_album) FROM unive_music.album')
         max = rs.fetchone()
-        data = (max[0] + 1, request.form["Titolo"], request.form["Rilascio"], request.form["Colore"], "0", current_user.id)
+        data = (max[0] + 1, titolo, request.form["Rilascio"], request.form["Colore"], "0",
+                current_user.id)
         rs = conn.execute(
             'INSERT INTO unive_music.album (titolo, rilascio, colore, n_canzoni, id_artista) VALUES (%s,%s,%s,%s,%s)',
             data)
@@ -149,7 +157,8 @@ def get_albums():
         'JOIN unive_music.utenti ON canzoni.id_artista = utenti.id_utente'
         ' WHERE contenuto.id_album IN (SELECT album.id_album FROM unive_music.album'
         ' WHERE album.id_artista = %s)'
-        ' GROUP BY contenuto.id_album, canzoni.titolo, canzoni.rilascio, canzoni.durata, canzoni.colore, canzoni.id_canzone, utenti.nickname',
+        ' GROUP BY contenuto.id_album, canzoni.titolo, canzoni.rilascio, canzoni.durata, canzoni.colore, '
+        'canzoni.id_canzone, utenti.nickname',
         current_user.id)
     songs = rs.fetchall()
 

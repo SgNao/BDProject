@@ -94,8 +94,8 @@ def SingIn():
 
             pwhash = generate_password_hash(pwd, method='pbkdf2:sha256:260000', salt_length=16)
             # Query necessaria per bug di serial
-            data = (request.form["email"], request.form["nome"], request.form["cognome"], request.form["nickname"],
-                    request.form["bio"], request.form["DataNascita"], pwhash, "1")
+            data = (request.form["email"], nome, cognome, nick,
+                    bio, request.form["DataNascita"], pwhash, "1")
             rs = conn.execute(
                 'INSERT INTO unive_music.utenti (email, nome, cognome, nickname, bio, data_nascita, password, ruolo)'
                 ' VALUES (%s,%s,%s,%s,%s,%s,%s,%s)', data)

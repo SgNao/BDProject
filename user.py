@@ -76,9 +76,7 @@ def NewPlaylist():
         # check input
         nome = request.form["Nome"]
         descrizione = request.form["Descrizione"]
-        if len(nome) > lentitolo:
-            return render_template("NuovaRaccolta.html")
-        if len(descrizione) > lendesc:
+        if len(nome) > lentitolo or len(descrizione) > lendesc:
             return render_template("NuovaRaccolta.html")
 
         data = (m[0] + 1, current_user.id, nome, descrizione, "0")
@@ -219,12 +217,12 @@ def ModData():
             conn = engine.connect()
             rs = conn.execute('SELECT * FROM unive_music.utenti WHERE utenti.email = %s', request.form['Email'])
             user = rs.fetchone()
-            rs = conn.execute('SELECT * FROM unive_music.utenti WHERE utenti.nickname = %s', request.form['Nickname'])
+            rs = conn.execute('SELECT * FROM unive_music.utenti WHERE utenti.nickname = %s', nick)
             nickname = rs.fetchone()
             if request.form['Email'] != current_user.email:
                 if not nickname:
                     rs = conn.execute(' UPDATE unive_music.utenti SET nickname = %s, email = %s WHERE id_utente = %s',
-                                      request.form['Nickname'], request.form['Email'], current_user.id)
+                                      nick, request.form['Email'], current_user.id)
                 else:
 
                     rs = conn.execute(' UPDATE unive_music.utenti SET email = %s WHERE id_utente = %s',
@@ -233,7 +231,7 @@ def ModData():
             if request.form['Nickname'] != current_user.nickname:
                 if user:
                     rs = conn.execute(' UPDATE unive_music.utenti SET nickname = %s WHERE id_utente = %s',
-                                      request.form['Nickname'], current_user.id)
+                                      nick, current_user.id)
             pwhash = generate_password_hash(request.form["NewPwd"], method='pbkdf2:sha256:260000', salt_length=16)
             rs = conn.execute('UPDATE unive_music.utenti SET bio = %s, password = %s WHERE id_utente = %s ',
                               request.form['Bio'], pwhash, current_user.id)

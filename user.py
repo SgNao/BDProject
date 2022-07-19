@@ -4,11 +4,17 @@ from sqlalchemy import *
 from flask_login import login_required
 from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import date
+
+import login
 import main
 
 UserBP = Blueprint('UserBP', __name__)
 engine = create_engine('postgresql://postgres:BDProject2022@localhost:5432/BDProject')
 
+lentitolo = 15
+lendesc = 160
+lennome = 16
+lenbio = 160
 
 # IMPORTANTE NON TOGLIERE
 @UserBP.context_processor
@@ -64,10 +70,20 @@ def NewPlaylist():
         conn = engine.connect()
         # Query necessaria per bug di serial
         rs = conn.execute('SELECT MAX(playlist.id_playlist) FROM unive_music.playlist')
-        max = rs.fetchone()
-        data = (max[0] + 1, current_user.id, request.form["Nome"], request.form["Descrizione"], "0")
+        m = rs.fetchone()
+
+        # check input
+        nome = request.form["Nome"]
+        descrizione = request.form["Descrizione"]
+        if len(nome) > lentitolo:
+            return render_template("NuovaRaccolta.html")
+        if len(descrizione) > lendesc:
+            return render_template("NuovaRaccolta.html")
+
+        data = (m[0] + 1, current_user.id, nome, descrizione, "0")
         rs = conn.execute(
-            'INSERT INTO unive_music.playlist (id_playlist, id_utente, nome, descrizione, n_canzoni) VALUES (%s, %s,%s,%s,%s)', data)
+            'INSERT INTO unive_music.playlist (id_playlist, id_utente, nome, descrizione, n_canzoni) '
+            'VALUES (%s, %s,%s,%s,%s)', data)
         conn.close()
         return redirect(url_for('UserBP.private'))
     else:
@@ -78,9 +94,18 @@ def NewPlaylist():
 @login_required
 def ModPlaylist(IdPlaylist):
     if request.method == 'POST':
+
+        # check input
+        nome = request.form["nome"]
+        descrizione = request.form["descrizione"]
+        if len(nome) > lentitolo:
+            return render_template("NuovaRaccolta.html")
+        if len(descrizione) > lendesc:
+            return render_template("NuovaRaccolta.html")
+
         conn = engine.connect()
         rs = conn.execute(' UPDATE unive_music.playlist SET nome = %s, descrizione = %s WHERE id_playlist = %s',
-                          request.form['nome'], request.form['descrizione'], IdPlaylist)
+                          nome, descrizione, IdPlaylist)
         conn.close()
         return redirect(url_for('UserBP.private'))
     else:
@@ -121,7 +146,7 @@ def AddSongToPlaylist(IdCanzone):
                 if age > 65:
                     att = '_65piu'
 
-                # controllare che funzioni questa query perchè ho tolto gli apici che c'erano prima
+                # controllare che funzioni questa query perché ho tolto gli apici che c'erano prima
                 query_1 = 'SELECT statistiche.' + att + ' FROM unive_music.statistiche ' \
                                                         'NATURAL JOIN unive_music.statistiche_canzoni ' \
                                                         'WHERE statistiche_canzoni.id_canzone = %s'
@@ -179,6 +204,18 @@ def DelPlaylist(IdPlaylist):
 def ModData():
     if request.method == 'POST':
         if check_password_hash(current_user.password, request.form['OldPwd']):
+
+            # check input
+            nome = request.form["nome"]
+            cognome = request.form["cognome"]
+            nick = request.form["nickname"]
+            bio = request.form["bio"]
+            pwd = request.form["password"]
+            if len(nome) > lennome or len(cognome) > lennome or len(nick) > lennome or len(bio) > lenbio:
+                return render_template("ModificaDatiPersonali.html")
+            if not login.checkPw(pwd):
+                return render_template("ModificaDatiPersonali.html")
+
             conn = engine.connect()
             rs = conn.execute('SELECT * FROM unive_music.utenti WHERE utenti.email = %s', request.form['Email'])
             user = rs.fetchone()
@@ -189,6 +226,7 @@ def ModData():
                     rs = conn.execute(' UPDATE unive_music.utenti SET nickname = %s, email = %s WHERE id_utente = %s',
                                       request.form['Nickname'], request.form['Email'], current_user.id)
                 else:
+
                     rs = conn.execute(' UPDATE unive_music.utenti SET email = %s WHERE id_utente = %s',
                                       request.form['Email'], current_user.id)
 

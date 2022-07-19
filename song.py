@@ -59,7 +59,7 @@ def songs(IdCanzone):
         ' WHERE canzoni.id_canzone = %s', IdCanzone)
     songdata = rs.fetchone()
     rs = conn.execute(
-        ' SELECT contenuto.id_album FROM unive_music.canzoni NATURAL JOIN unive_music.contenuto '
+        'SELECT contenuto.id_album FROM unive_music.canzoni NATURAL JOIN unive_music.contenuto '
         'WHERE canzoni.id_canzone = %s', IdCanzone)
     IdAlbum = rs.fetchone()
     rs = conn.execute(

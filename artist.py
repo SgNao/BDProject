@@ -8,6 +8,7 @@ from datetime import date
 ArtistBP = Blueprint('ArtistBP', __name__)
 engine = create_engine('postgresql://postgres:BDProject2022@localhost:5432/BDProject')
 
+lentitolo = 15
 
 # IMPORTANTE NON TOGLIERE
 @ArtistBP.context_processor
@@ -23,15 +24,21 @@ def NewAlbum():
         conn = engine.connect()
         # Query necessaria per bug di serial
         rs = conn.execute('SELECT MAX(album.id_album) FROM unive_music.album')
-        max = rs.fetchone()
-        data = (max[0] + 1, request.form["Titolo"], request.form["Rilascio"], request.form["Colore"], "0", current_user.id)
+        m = rs.fetchone()
+
+        # input check
+        titolo = request.form["Titolo"]
+        if len(titolo) > lentitolo:
+            return render_template("NuovoAlbum.html")
+
+        data = (m[0] + 1, titolo, request.form["Rilascio"], request.form["Colore"], "0", current_user.id)
         rs = conn.execute(
             'INSERT INTO unive_music.album (id_album, titolo, rilascio, colore, n_canzoni, id_artista) VALUES (%s, %s,%s,%s,%s,%s)',
             data)
 
         rs = conn.execute(
             'SELECT * FROM unive_music.album WHERE album.id_artista = %s AND album.titolo = %s AND album.rilascio = %s',
-            [current_user.id, request.form["Titolo"], request.form["Rilascio"]])
+            [current_user.id, titolo, request.form["Rilascio"]])
         IdAlbum = rs.fetchone()
 
         rs = conn.execute('SELECT tag.tag FROM unive_music.tag WHERE tag.tag = %s', request.form['Tag_1'])
@@ -81,12 +88,21 @@ def NewSong(IdAlbum):
         conn = engine.connect()
         # Query necessaria per bug di serial
         rs = conn.execute('SELECT MAX(canzoni.id_canzone) FROM unive_music.canzoni')
-        max = rs.fetchone()
-        data = (max[0] + 1, request.form["Titolo"], request.form["Rilascio"], request.form["Durata"], request.form["Colore"],
+        m = rs.fetchone()
+
+        # input check
+        titolo = request.form["Titolo"]
+        durata = request.form["Durata"]
+        if len(titolo) > lentitolo:
+            return render_template("NuovaCanzone.html")
+        if int(durata) < 1:
+            return render_template("NuovaCanzone.html")
+
+        data = (m[0] + 1, titolo, request.form["Rilascio"], durata, request.form["Colore"],
                 current_user.id)
         rs = conn.execute(
-            'INSERT INTO unive_music.canzoni (id_canzone, titolo, rilascio, durata, colore, id_artista) VALUES (%s,%s,%s,%s,%s,%s)',
-            data)
+            'INSERT INTO unive_music.canzoni (id_canzone, titolo, rilascio, durata, colore, id_artista) '
+            'VALUES (%s,%s,%s,%s,%s,%s)', data)
         rs = conn.execute(
             'SELECT canzoni.id_canzone FROM unive_music.canzoni '
             'WHERE canzoni.id_artista = %s AND canzoni.titolo = %s AND canzoni.rilascio = %s',
@@ -96,11 +112,11 @@ def NewSong(IdAlbum):
         rs = conn.execute(' INSERT INTO unive_music.contenuto (id_album, id_canzone) VALUES (%s,%s)', data)
         # Query necessaria per bug di serial
         rs = conn.execute('SELECT MAX(statistiche.id_statistica) FROM unive_music.statistiche')
-        max = rs.fetchone()
+        m = rs.fetchone()
         rs = conn.execute(
             ' INSERT INTO unive_music.statistiche '
             '(id_statistica, _13_19, _20_29, _30_39, _40_49, _50_65, _65piu , n_riproduzioni_totali, n_riproduzioni_settimanali)'
-            ' VALUES (%s, %s,%s,%s,%s,%s,%s,%s,%s)', [max[0]+1, 0, 0, 0, 0, 0, 0, 0, 0])
+            ' VALUES (%s, %s,%s,%s,%s,%s,%s,%s,%s)', [m[0] + 1, 0, 0, 0, 0, 0, 0, 0, 0])
         rs = conn.execute('SELECT MAX(statistiche.id_statistica) FROM unive_music.statistiche')
         IdStatistica = rs.fetchone()
         rs = conn.execute('INSERT INTO unive_music.statistiche_canzoni (id_statistica, id_canzone) VALUES (%s,%s)',

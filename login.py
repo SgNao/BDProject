@@ -8,6 +8,9 @@ from datetime import date
 LoginBP = Blueprint('LoginBP', __name__)
 engine = create_engine('postgresql://postgres:BDProject2022@localhost:5432/BDProject')
 
+lennome = 16
+lenbio = 160
+
 
 # IMPORTANTE NON TOGLIERE
 @LoginBP.context_processor
@@ -56,11 +59,20 @@ def Registrati():
     return render_template("Registrati.html")
 
 
+def checkPw(pwd):
+    if len(pwd) < 8:
+        return False
+    if not any(char.isdigit() for char in pwd):
+        return False
+    if not any(not char.isalnum() for char in pwd):
+        print("pw")
+        return False
+    return True
+
 # pagina di registrazione
 @LoginBP.route('/singin', methods=['GET', 'POST'])
 def SingIn():
     if request.method == 'POST':
-        print(3)
         conn = engine.connect()
         age = date.today().year - date.fromisoformat(request.form["DataNascita"]).year
         rs = conn.execute('SELECT * FROM unive_music.utenti WHERE utenti.email = %s', request.form['email'])
@@ -68,22 +80,32 @@ def SingIn():
         rs = conn.execute('SELECT * FROM unive_music.utenti WHERE utenti.nickname = %s', request.form['nickname'])
         nickname = rs.fetchone()
         if age >= 13 and not user and not nickname:
-            pwhash = generate_password_hash(request.form["password"], method='pbkdf2:sha256:260000', salt_length=16)
+
+            # check input
+            nome = request.form["nome"]
+            cognome = request.form["cognome"]
+            nick = request.form["nickname"]
+            bio = request.form["bio"]
+            pwd = request.form["password"]
+            if len(nome) > lennome or len(cognome) > lennome or len(nick) > lennome or len(bio) > lenbio:
+                return redirect(url_for('LoginBP.Registrati'))
+            if not checkPw(pwd):
+                return redirect(url_for('LoginBP.Registrati'))
+
+            pwhash = generate_password_hash(pwd, method='pbkdf2:sha256:260000', salt_length=16)
             # Query necessaria per bug di serial
             rs = conn.execute('SELECT MAX(utenti.id_utente) FROM unive_music.utenti')
-            max = rs.fetchone()
-            data = (max[0] + 1, request.form["email"], request.form["nome"], request.form["cognome"], request.form["nickname"],
-                    request.form["bio"], request.form["DataNascita"], pwhash, "1")
+            m = rs.fetchone()
+            data = (m[0] + 1, request.form["email"], nome, cognome,
+                    nick, bio, request.form["DataNascita"], pwhash, "1")
             rs = conn.execute(
-                'INSERT INTO unive_music.utenti (id_utente, email, nome, cognome, nickname, bio, data_nascita, password, ruolo)'
-                ' VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)', data)
+                'INSERT INTO unive_music.utenti (id_utente, email, nome, cognome, nickname, bio, data_nascita, '
+                'password, ruolo) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)', data)
 
             conn.close()
             return redirect(url_for('LoginBP.Accedi'))
         else:
             conn.close()
-            print(1)
             return redirect(url_for('LoginBP.Registrati'))
     else:
-        print(2)
         return redirect(url_for('LoginBP.Registrati'))

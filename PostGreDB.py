@@ -50,7 +50,7 @@ def insert_data(data, connection):
             match head:
                 case "Utenti":
                     ins = "INSERT INTO unive_music.utenti (email, nome, cognome, nickname, bio, " \
-                          "data_nascita, password, ruolo) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
+                          "data_nascita, password, ruolo, premium) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
                     tail[1] = cambia_caratteri(tail[1])
                     tail[2] = cambia_caratteri(tail[2])
                     tail[3] = cambia_caratteri(tail[3])
@@ -114,7 +114,7 @@ def insert_data(data, connection):
             head, *tail = c
             if head == "Utenti":
                 ins = "INSERT INTO unive_music.utenti (email, nome, cognome, nickname, bio, data_nascita, password, " \
-                      "ruolo) VALUES (%s,%s,%s,%s,%s,%s,%s,%s) "
+                      "ruolo, premium) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,5s) "
                 tail[1] = cambia_caratteri(tail[1])
                 tail[2] = cambia_caratteri(tail[2])
                 tail[3] = cambia_caratteri(tail[3])

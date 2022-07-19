@@ -66,26 +66,32 @@ def private():
 @UserBP.route('/new_playlist', methods=['GET', 'POST'])
 @login_required
 def NewPlaylist():
-    if request.method == 'POST':
-        conn = engine.connect()
-        # Query necessaria per bug di serial
-        data = (current_user.id, request.form["Nome"], request.form["Descrizione"], "0")
-        rs = conn.execute('SELECT MAX(playlist.id_playlist) FROM unive_music.playlist')
-        m = rs.fetchone()
-
-        # check input
-        nome = request.form["Nome"]
-        descrizione = request.form["Descrizione"]
-        if len(nome) > lentitolo or len(descrizione) > lendesc:
+    conn = engine.connect()
+    rs = conn.execute('SELECT COUNT(*) FROM unive_music.playlist WHERE playlist.id_utente = %s', current_user.id)
+    conn.close()
+    num = rs.fetchall()
+    playlist_limit = 5
+    if current_user.premium:
+        playlist_limit = 20
+    if len(num) < playlist_limit:
+        if request.method == 'POST':
+            # check input
+            nome = request.form["Nome"]
+            descrizione = request.form["Descrizione"]
+            if len(nome) > lentitolo or len(descrizione) > lendesc:
+                return render_template("NuovaRaccolta.html")
+            conn = engine.connect()
+            # Query necessaria per bug di serial
+            data = (current_user.id, request.form["Nome"], request.form["Descrizione"], "0")
+            rs = conn.execute(
+                'INSERT INTO unive_music.playlist (id_utente, nome, descrizione, n_canzoni) VALUES (%s,%s,%s,%s)', data)
+            conn.close()
+            return redirect(url_for('UserBP.private'))
+        else:
             return render_template("NuovaRaccolta.html")
-
-        data = (m[0] + 1, current_user.id, nome, descrizione, "0")
-        rs = conn.execute(
-            'INSERT INTO unive_music.playlist (id_utente, nome, descrizione, n_canzoni) VALUES (%s,%s,%s,%s)', data)
-        conn.close()
-        return redirect(url_for('UserBP.private'))
     else:
-        return render_template("NuovaRaccolta.html")
+        # Decidere cosa fare e messaggio di errore
+        return redirect(url_for('UserBP.private'))
 
 
 @UserBP.route('/ModPlaylist/<IdPlaylist>', methods=['GET', 'POST'])

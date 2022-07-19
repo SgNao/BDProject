@@ -29,11 +29,7 @@ def NewAlbum():
         if len(titolo) > lentitolo:
             return render_template("NuovoAlbum.html")
 
-        # Query necessaria per bug di serial
-        rs = conn.execute('SELECT MAX(album.id_album) FROM unive_music.album')
-        max = rs.fetchone()
-        data = (max[0] + 1, titolo, request.form["Rilascio"], request.form["Colore"], "0",
-                current_user.id)
+        data = (titolo, request.form["Rilascio"], request.form["Colore"], "0", current_user.id)
         rs = conn.execute(
             'INSERT INTO unive_music.album (titolo, rilascio, colore, n_canzoni, id_artista) VALUES (%s,%s,%s,%s,%s)',
             data)
@@ -88,7 +84,6 @@ def NewSong(IdAlbum):
     print(IdAlbum)
     if request.method == 'POST':
         conn = engine.connect()
-        # Query necessaria per bug di serial
         data = (request.form["Titolo"], request.form["Rilascio"], request.form["Durata"], request.form["Colore"],
                 current_user.id)
         rs = conn.execute(

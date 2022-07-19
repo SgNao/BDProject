@@ -39,7 +39,7 @@ def inject_enumerate():
 
 
 class User(UserMixin):
-    def __init__(self, id, email, nome, cognome, nickname, bio, data_nascita, password, ruolo):
+    def __init__(self, id, email, nome, cognome, nickname, bio, data_nascita, password, ruolo, premium):
         self.id = id
         self.email = email
         self.nome = nome
@@ -49,6 +49,7 @@ class User(UserMixin):
         self.data_nascita = data_nascita
         self.password = password
         self.ruolo = ruolo
+        self.premium = premium
 
     # controlla che la password passata corrisponda a quella dell'utente applicando una funzione hash
     def verify_password(self, pwd):
@@ -62,7 +63,7 @@ def get_user_by_email(email):
     user = rs.fetchone()
     conn.close()
     return User(user.id_utente, user.email, user.nome, user.cognome, user.nickname, user.bio, user.data_nascita,
-                user.password, user.ruolo)
+                user.password, user.ruolo, user.premium)
 
 
 def ResultProxy_To_ListOfDict(query_result):
@@ -83,7 +84,7 @@ def load_user(user_id):
     user = rs.fetchone()
     conn.close()
     return User(user.id_utente, user.email, user.nome, user.cognome, user.nickname, user.bio, user.data_nascita,
-                user.password, user.ruolo)
+                user.password, user.ruolo, user.premium)
 
 
 # pagina principale

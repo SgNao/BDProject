@@ -49,7 +49,6 @@ def songs(IdCanzone):
                       ' FROM unive_music.statistiche NATURAL JOIN unive_music.statistiche_canzoni'
                       ' WHERE statistiche_canzoni.id_canzone = %s', IdCanzone)
     Stat = rs.fetchone()
-    print(Stat)
     rs = conn.execute(' UPDATE unive_music.statistiche SET n_riproduzioni_totali = %s, n_riproduzioni_settimanali = %s '
                       ' WHERE id_statistica = (SELECT statistiche_canzoni.id_statistica '
                       ' FROM unive_music.statistiche_canzoni '

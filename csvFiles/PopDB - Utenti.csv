@@ -1,15 +1,15 @@
-Utenti,Email,Nome,Cognome,Nickname,Bio,DataNascita,Password,Ruolo
-Utenti,admin@admin,admin,admin,admin,void,2000-01-01,admin,3
-Utenti,metallica@gmail.com,James,Hetfield,Metallica,I Metallica sono un gruppo musicale heavy metal statunitense; formatosi a Los Angeles nel 1981.,1963-08-03,Metallica,2
-Utenti,queen@gmail.com,Freddie,Mercury,Queen,I Queen sono un gruppo musicale rock britannico; formatosi a Londra nel 1970 dall:incontro del cantante e pianista Freddie Mercury con il chitarrista Brian May e con il batterista Roger Taylor.,1946-09-05,Queen,2
-Utenti,gunsnroses@gmail.com,Guns N: Roses,Guns N: Roses,Guns N: Roses,I Guns N: Roses sono un gruppo musicale hard rock statunitense; formatosi a Los Angeles nel 1985.,1962-02-06,Guns,2
-Utenti,ligabue@gmail.com,Luciano Riccardo,Ligabue,Ligabue,Luciano Riccardo Ligabue; noto con il solo cognome Ligabue; e: un cantautore; chitarrista; regista; scrittore; sceneggiatore e produttore discografico italiano.,1960-03-13,Ligabue,2
-Utenti,vasco@gmail.com,Vasco,Rossi,Vasco,Vasco Rossi; noto anche semplicemente come Vasco o con l:appellativo Blasco; e: un cantautore italiano.,1952-02-07,Vasco,2
-Utenti,rammstein@gmail.com,Rammstein,Rammstein,Rammstein,I Rammstein sono un gruppo musicale industrial metal tedesco formatosi a Berlino nel 1993 appartenente alla corrente della Neue Deutsche Harte.,1963-01-04,Rammstein,2
-Utenti,linkinpark@gmail.com,Linkin Park,Linkin Park,Linkin Park,I Linkin Park sono un gruppo musicale statunitense formatosi a Los Angeles nel 1996.,1977-02-11,LinkinPark,2
-Utenti,pausini@gmail.com,Laura,Pausini,Laura Pausini,Laura Pausini e: una cantautrice italiana.,1974-05-16,LauraPausini,2
-Utenti,bocelli@gmail.com,Andrea,Bocelli,Andrea Bocelli,Andrea Bocelli e: un tenore e cantante pop italiano.,1958-09-22,AndreaBocelli,2
-Utenti,rickymartin@gmail.com,Enrique Martin,Morales,Ricky Martin,Ricky Martin; all:anagrafe Enrique Martin Morales; e: un cantante; attore e personaggio televisivo portoricano.,1971-12-24,RickyMartin,2
-Utenti,massimiliano@gmail.com,Massimiliano,Zuin,Massimiliano Zuin,void,1996-07-23,Massimiliano,1
-Utenti,marco@gmail.com,Marco,Quarta,Marco Quarta,void,1997-12-17,Marco,1
-Utenti,michele@gmail.com,Michele,Lattanzi,Michele Lattanzi,void,1998-05-04,Michele,1
+Utenti,Email,Nome,Cognome,Nickname,Bio,DataNascita,Password,Ruolo,Premium
+Utenti,admin@admin,admin,admin,admin,void,2000-01-01,admin,3,TRUE
+Utenti,metallica@gmail.com,James,Hetfield,Metallica,I Metallica sono un gruppo musicale heavy metal statunitense; formatosi a Los Angeles nel 1981.,1963-08-03,Metallica,2,FALSE
+Utenti,queen@gmail.com,Freddie,Mercury,Queen,I Queen sono un gruppo musicale rock britannico; formatosi a Londra nel 1970 dall:incontro del cantante e pianista Freddie Mercury con il chitarrista Brian May e con il batterista Roger Taylor.,1946-09-05,Queen,2,FALSE
+Utenti,gunsnroses@gmail.com,Guns N: Roses,Guns N: Roses,Guns N: Roses,I Guns N: Roses sono un gruppo musicale hard rock statunitense; formatosi a Los Angeles nel 1985.,1962-02-06,Guns,2,FALSE
+Utenti,ligabue@gmail.com,Luciano Riccardo,Ligabue,Ligabue,Luciano Riccardo Ligabue; noto con il solo cognome Ligabue; e: un cantautore; chitarrista; regista; scrittore; sceneggiatore e produttore discografico italiano.,1960-03-13,Ligabue,2,TRUE
+Utenti,vasco@gmail.com,Vasco,Rossi,Vasco,Vasco Rossi; noto anche semplicemente come Vasco o con l:appellativo Blasco; e: un cantautore italiano.,1952-02-07,Vasco,2,TRUE
+Utenti,rammstein@gmail.com,Rammstein,Rammstein,Rammstein,I Rammstein sono un gruppo musicale industrial metal tedesco formatosi a Berlino nel 1993 appartenente alla corrente della Neue Deutsche Harte.,1963-01-04,Rammstein,2,FALSE
+Utenti,linkinpark@gmail.com,Linkin Park,Linkin Park,Linkin Park,I Linkin Park sono un gruppo musicale statunitense formatosi a Los Angeles nel 1996.,1977-02-11,LinkinPark,2,TRUE
+Utenti,pausini@gmail.com,Laura,Pausini,Laura Pausini,Laura Pausini e: una cantautrice italiana.,1974-05-16,LauraPausini,2,FALSE
+Utenti,bocelli@gmail.com,Andrea,Bocelli,Andrea Bocelli,Andrea Bocelli e: un tenore e cantante pop italiano.,1958-09-22,AndreaBocelli,2,FALSE
+Utenti,rickymartin@gmail.com,Enrique Martin,Morales,Ricky Martin,Ricky Martin; all:anagrafe Enrique Martin Morales; e: un cantante; attore e personaggio televisivo portoricano.,1971-12-24,RickyMartin,2,TRUE
+Utenti,massimiliano@gmail.com,Massimiliano,Zuin,Massimiliano Zuin,void,1996-07-23,Massimiliano,1,TRUE
+Utenti,marco@gmail.com,Marco,Quarta,Marco Quarta,void,1997-12-17,Marco,1,TRUE
+Utenti,michele@gmail.com,Michele,Lattanzi,Michele Lattanzi,void,1998-05-04,Michele,1,TRUE

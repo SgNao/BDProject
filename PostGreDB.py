@@ -1,6 +1,5 @@
 import random
 from sqlalchemy import *
-import configdb
 import sys
 from werkzeug.security import generate_password_hash
 
@@ -22,25 +21,11 @@ def load_data(data_file):
     return raw_data
 
 
-def cambia_caratteri(word):
+def change_characters(word):
     word = [w.replace(';', ',') for w in word]
     word = [w.replace(':', "'") for w in word]
     s = "".join(word)
     return s
-
-
-def cambia_virgola(word):
-    for letter in word:
-        if letter == ';':
-            word = word.replace(letter, ',')
-    return word
-
-
-def cambia_apostrofo(word):
-    for letter in word:
-        if letter == ':':
-            word = word.replace(letter, "'")
-    return word
 
 
 def insert_data(data, connection):
@@ -49,12 +34,12 @@ def insert_data(data, connection):
             head, *tail = c
             match head:
                 case "Utenti":
-                    ins = "INSERT INTO unive_music.utenti (email, nome, cognome, nickname, bio, " \
-                          "data_nascita, password, ruolo, premium) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-                    tail[1] = cambia_caratteri(tail[1])
-                    tail[2] = cambia_caratteri(tail[2])
-                    tail[3] = cambia_caratteri(tail[3])
-                    tail[4] = cambia_caratteri(tail[4])
+                    ins = "INSERT INTO unive_music.utenti (email, nome, cognome, nickname, bio, data_nascita, " \
+                          "password, ruolo, premium) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s) "
+                    tail[1] = change_characters(tail[1])
+                    tail[2] = change_characters(tail[2])
+                    tail[3] = change_characters(tail[3])
+                    tail[4] = change_characters(tail[4])
                     tail[6] = generate_password_hash(tail[6])
                     if tail[4] == "void":
                         tail[4] = ""
@@ -65,30 +50,30 @@ def insert_data(data, connection):
                 case "Playlist":
                     ins = "INSERT INTO unive_music.playlist (id_utente, nome, descrizione, n_canzoni) VALUES (%s,%s," \
                           "%s,%s) "
-                    tail[1] = cambia_caratteri(tail[1])
-                    tail[2] = cambia_caratteri(tail[2])
+                    tail[1] = change_characters(tail[1])
+                    tail[2] = change_characters(tail[2])
                     if tail[2] == "void":
                         tail[2] = ""
                     connection.execute(ins, tail)
                 case "Canzoni":
                     ins = "INSERT INTO unive_music.canzoni (titolo, rilascio, durata, colore, id_artista) VALUES (%s," \
                           "%s,%s,%s,%s) "
-                    tail[0] = cambia_caratteri(tail[0])
+                    tail[0] = change_characters(tail[0])
                     connection.execute(ins, tail)
                 case "Album":
                     ins = "INSERT INTO unive_music.album (titolo, rilascio, colore, n_canzoni, id_artista) VALUES (" \
                           "%s,%s,%s,%s,%s) "
-                    tail[0] = cambia_caratteri(tail[0])
+                    tail[0] = change_characters(tail[0])
                     connection.execute(ins, tail)
                 case "Statistiche":
-                    ins = "INSERT INTO unive_music.statistiche (_13_19, _20_29, _30_39, _40_49, _50_65, _65piu, " \
+                    ins = "INSERT INTO unive_music.statistiche (_13_19, _20_29, _30_39, _40_49, _50_65, _65piu," \
                           "n_riproduzioni_totali, n_riproduzioni_settimanali) VALUES (%s,%s,%s,%s,%s,%s,%s,%s) "
                     tail.append(random.randint(1, 1000001))
                     tail.append(random.randint(1, 1000001))
                     connection.execute(ins, tail)
                 case "Tag":
                     ins = "INSERT INTO unive_music.tag (tag) VALUES (%s)"
-                    tail[0] = cambia_caratteri(tail[0])
+                    tail[0] = change_characters(tail[0])
                     connection.execute(ins, tail)
                 case "Raccolte":
                     ins = "INSERT INTO unive_music.raccolte (id_playlist, id_canzone) VALUES (%s,%s)"
@@ -98,11 +83,11 @@ def insert_data(data, connection):
                     connection.execute(ins, tail)
                 case "AttributoCanzone":
                     ins = "INSERT INTO unive_music.attributo_canzone (id_tag, id_canzone) VALUES (%s,%s)"
-                    tail[0] = cambia_caratteri(tail[0])
+                    tail[0] = change_characters(tail[0])
                     connection.execute(ins, tail)
                 case "AttributoAlbum":
                     ins = "INSERT INTO unive_music.attributo_album (id_tag, id_album) VALUES (%s,%s)"
-                    tail[0] = cambia_caratteri(tail[0])
+                    tail[0] = change_characters(tail[0])
                     connection.execute(ins, tail)
                 case "StatCanzoni":
                     ins = "INSERT INTO unive_music.statistiche_canzoni (id_statistica, id_canzone) VALUES (%s,%s)"
@@ -115,10 +100,10 @@ def insert_data(data, connection):
             if head == "Utenti":
                 ins = "INSERT INTO unive_music.utenti (email, nome, cognome, nickname, bio, data_nascita, password, " \
                       "ruolo, premium) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,5s) "
-                tail[1] = cambia_caratteri(tail[1])
-                tail[2] = cambia_caratteri(tail[2])
-                tail[3] = cambia_caratteri(tail[3])
-                tail[4] = cambia_caratteri(tail[4])
+                tail[1] = change_characters(tail[1])
+                tail[2] = change_characters(tail[2])
+                tail[3] = change_characters(tail[3])
+                tail[4] = change_characters(tail[4])
                 tail[6] = generate_password_hash(tail[6])
                 if tail[4] == "void":
                     tail[4] = ""
@@ -128,20 +113,20 @@ def insert_data(data, connection):
                 connection.execute(ins, tail)
             elif head == "Playlist":
                 ins = "INSERT INTO unive_music.playlist (id_utente, nome, descrizione, n_canzoni) VALUES (%s,%s,%s, %s)"
-                tail[1] = cambia_caratteri(tail[1])
-                tail[2] = cambia_caratteri(tail[2])
+                tail[1] = change_characters(tail[1])
+                tail[2] = change_characters(tail[2])
                 if tail[2] == "void":
                     tail[2] = ""
                 connection.execute(ins, tail)
             elif head == "Canzoni":
                 ins = "INSERT INTO unive_music.canzoni (titolo, rilascio, durata, colore, id_artista) VALUES (%s,%s," \
                       "%s,%s,%s) "
-                tail[0] = cambia_caratteri(tail[0])
+                tail[0] = change_characters(tail[0])
                 connection.execute(ins, tail)
             elif head == "Album":
                 ins = "INSERT INTO unive_music.album (titolo, rilascio, colore, n_canzoni, id_artista) VALUES (%s,%s," \
                       "%s,%s,%s) "
-                tail[0] = cambia_caratteri(tail[0])
+                tail[0] = change_characters(tail[0])
                 connection.execute(ins, tail)
             elif head == "Statistiche":
                 ins = "INSERT INTO unive_music.statistiche (_13_19, _20_29, _30_39, _40_49, _50_65, _65piu, " \
@@ -151,7 +136,7 @@ def insert_data(data, connection):
                 connection.execute(ins, tail)
             elif head == "Tag":
                 ins = "INSERT INTO unive_music.tag (tag) VALUES (%s)"
-                tail[0] = cambia_caratteri(tail[0])
+                tail[0] = change_characters(tail[0])
                 connection.execute(ins, tail)
             elif head == "Raccolte":
                 ins = "INSERT INTO unive_music.raccolte (id_playlist, id_canzone) VALUES (%s,%s)"
@@ -161,11 +146,11 @@ def insert_data(data, connection):
                 connection.execute(ins, tail)
             elif head == "AttributoCanzone":
                 ins = "INSERT INTO unive_music.attributo_canzone (id_tag, id_canzone) VALUES (%s,%s)"
-                tail[0] = cambia_caratteri(tail[0])
+                tail[0] = change_characters(tail[0])
                 connection.execute(ins, tail)
             elif head == "AttributoAlbum":
                 ins = "INSERT INTO unive_music.attributo_album (id_tag, id_album) VALUES (%s,%s)"
-                tail[0] = cambia_caratteri(tail[0])
+                tail[0] = change_characters(tail[0])
                 connection.execute(ins, tail)
             elif head == "StatCanzoni":
                 ins = "INSERT INTO unive_music.statistiche_canzoni (id_statistica, id_canzone) VALUES (%s,%s)"

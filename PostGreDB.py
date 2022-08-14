@@ -99,7 +99,7 @@ def insert_data(data, connection):
             head, *tail = c
             if head == "Utenti":
                 ins = "INSERT INTO unive_music.utenti (email, nome, cognome, nickname, bio, data_nascita, password, " \
-                      "ruolo, premium) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,5s) "
+                      "ruolo, premium) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s) "
                 tail[1] = change_characters(tail[1])
                 tail[2] = change_characters(tail[2])
                 tail[3] = change_characters(tail[3])

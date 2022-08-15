@@ -77,6 +77,16 @@ def ResultProxy_To_ListOfDict(query_result):
     return a
 
 
+def sec_to_min(input_second):
+    minutes = input_second / 60
+    seconds = input_second % 60
+    return "" + minutes + ":" + seconds
+
+
+def min_to_sec(input_minutes, input_seconds):
+    return input_minutes*60 + input_seconds
+
+
 @login_manager.user_loader
 def load_user(user_id):
     conn = engine.connect()

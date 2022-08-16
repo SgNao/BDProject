@@ -158,7 +158,7 @@ def home():
 def Reset():
     conn = engine.connect()
 
-    rs = conn.execute('UPDATE statistiche SET n_riproduzioni_settimanali = %s', 0)
+    rs = conn.execute('UPDATE unive_music.statistiche SET n_riproduzioni_settimanali = %s', 0)
 
     conn.close()
     return redirect(url_for('home'))

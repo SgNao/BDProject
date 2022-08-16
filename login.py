@@ -69,6 +69,7 @@ def checkPw(pwd):
         return False
     return True
 
+
 # pagina di registrazione
 @LoginBP.route('/singin', methods=['GET', 'POST'])
 def SingIn():

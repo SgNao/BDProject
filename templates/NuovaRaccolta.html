@@ -2,14 +2,21 @@
 
 {% block pagebody %}
         <div id="container2"><h2 id="subtitle">NUOVO RACCOLTA</h2></div>
+        <div class="error" aria-live="polite"></div>
         <div id="container3">
-            <table id="log-table"> 
-                <form action="/new_playlist" method="POST">
+            <table class="log-table new"> 
+                <form action="/new_playlist" method="POST" novalidate id="form_reg">
                     <tr>
-                        <td class="input-cell-3" colspan="2"><input type="text" name="Nome" placeholder="Nome" class="input-3" style="margin-top: 4%;"></td>
+                        <td class="label-cell" colspan="2"><label class="label"> Nome raccolta:</label></td>
                     </tr>
                     <tr>
-                        <td class="input-cell-3" colspan="2"><input type="text" name="Descrizione" placeholder="Descrizione" class="input-3"></td>
+                        <td class="input-cell-3" colspan="2"><input type="text" required maxlength="16" name="Nome" placeholder="Giro a Paperopoli" class="input-3 sign-in"></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell" colspan="2"><label class="label"> Descrizione:</label></td>
+                    </tr>
+                    <tr>
+                        <td class="input-cell-3" colspan="2"><input type="text" required maxlength="160" name="Descrizione" placeholder="Le migliori canzoni paperopolesi" class="input-3 log-in"></td>
                     </tr>
                     <tr>
                         <td style="font-family: Helvetica;color:#2F2F2F"><h4 style="margin-left: 7%; margin-bottom: 0%;">Per aggiungere canzoni alla playlist:</h4></td>
@@ -25,7 +32,7 @@
                     </tr>
                     <tr>
                         <td id="submit-cell-3" colspan="2">
-                            <input type="submit" id="button-3" value="Crea"> 
+                            <button type="submit" id="button-3">Crea</button>
                         </td>
                     </tr>
                 </form>

@@ -118,10 +118,28 @@ body{
     margin-top: 2%;
     margin-bottom: 2%;
 }
+#container4 {
+    width: 30%;
+    margin-left: 35%;
+    margin-top: 2%;
+    border: 2px solid black;
+    background-color: #b81a19;
+    color: white;
+    text-align: center;
+}
+#container4:hover {
+    background-color: white;
+    color: #b81a19;
+    cursor: pointer;
+}
 .section-title{
     font-family: Helvetica;
     font-weight: lighter;
     margin-bottom: 1%;
+}
+#reset-text{
+    font-family: Helvetica;
+    padding: 10%;
 }
 .text{
     font-family: Helvetica;
@@ -433,16 +451,6 @@ a{
 .section-text{
     font-family: Helvetica;
     margin: 0%;
-}
-#input-2{
-    width: 60%;
-    padding: 2%;
-    border: 2px solid #2e8b57;
-    border-right: 2px solid #006840;
-    font-family: Helvetica;
-    float: right;
-    margin-top: 1%;
-    border-radius: 10px 0px 0px 10px;
 }
 .button-2{
     width: 15%;

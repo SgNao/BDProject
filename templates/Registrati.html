@@ -2,30 +2,42 @@
 
 {% block pagebody %}
         <div id="container2"><h2 id="subtitle">REGISTRATI</h2></div>
+        <div class="error" aria-live="polite">{{ message }}</div>
         <div id="container3">
-            <table id="log-table"> 
-                <form action="/singin" method="POST">
+            <table class="log-table sign-in"> 
+                <form action="/singin" method="POST" novalidate id="form_reg">
                     <tr>
-                        <td id="log-img-cell" colspan="2"><img src="{{ url_for('static', filename='Img/man.png') }}" id="log-img-3"></td>
+                        <td class="label-cell" colspan="2"><label class="label"> Nome & Cognome:</label></td>
                     </tr>
                     <tr>
-                        <td class="input-cell-3-bis"><input type="text" name="nickname" placeholder="Nickname" class="input-3"></td>
-                        <td class="input-cell-3"><input type="text" name="email" placeholder="Email" class="input-3"></td>
+                        <td  class="input-cell-3"><input type="text" required maxlength="16" name="nome" placeholder="mario" class="input-3 sign-in"></td>
+                        <td  class="input-cell-3"><input type="text" required maxlength="16" name="cognome" placeholder="rossi" class="input-3 sign-in"></td>
                     </tr>
                     <tr>
-                        <td class="input-cell-3-bis"><input type="text" name="nome" placeholder="Nome" class="input-3"></td>
-                        <td class="input-cell-3-bis"><input type="text" name="cognome" placeholder="Cognome" class="input-3"></td>
+                        <td class="label-cell" colspan="2"><label class="label"> E-mail & Nickname: </label></td>
                     </tr>
                     <tr>
-                        <td class="input-cell-3-bis"><input type="date" name="DataNascita" class="input-3"></td>
-                        <td class="input-cell-3-bis"><input type="password" name="password" placeholder="Password" class="input-3"></td>
+                        <td  class="input-cell-3"><input type="email" required name="email" placeholder="mario@rossi.it" class="input-3 sign-in"></td>
+                        <td  class="input-cell-3"><input type="text" required maxlength="16" name="nickname" placeholder="max 16 caratteri" class="input-3 sign-in"></td>
                     </tr>
                     <tr>
-                        <td class="input-cell-3" colspan="2"><input type="text" name="bio" placeholder="Biografia" class="input-3"></td>
+                        <td class="label-cell" colspan="2"><label class="label"> Password:</label></td>
+                    </tr>
+                    <tr>
+                        <td  class="input-cell-3"><input type="password" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" required name="password" placeholder="Es: mario98!" class="input-3 sign-in"></td>
+                        <td  class="input-cell-3"></label><input type="password" required name="rip_password" placeholder="Ripeti password" class="input-3 sign-in"></td> 
+                    </tr>
+                    <tr>
+                        <td class="label-cell" colspan="2"><label class="label"> Data di nascita & Biografia:</label></td>
+                    </tr>
+                    <tr>
+                        <td  class="input-cell-3"><input type="date" required name="DataNascita" class="input-3 sign-in"></td>
+                        <td  class="input-cell-3"><textarea rows="10" cols="50" maxlength="160" wrap="soft" required name="bio" placeholder="Parlaci di te e dei tuoi gusti musicali" class="input-3 sign-in" style="resize: none;"></textarea></td>
                     </tr>
                     <tr>
                         <td id="submit-cell-3" colspan="2">
-                            <input type="submit" id="button-3" value="Registrati"> 
+                            <button type="submit" id="button-3">Invia</button>
+                            <button type="reset" id="button-3">Ripristina</button>
                         </td>
                     </tr>
                 </form>

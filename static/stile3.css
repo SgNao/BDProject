@@ -1,54 +1,123 @@
-#log-table{
-    width: 30%;
+.log-table{
     border-collapse: collapse;
-    margin-top: 2%;
-    margin-left: 35%;
-    border: 1px solid lightgrey;
+}
+.log-table.sign-in{
+    width: 60%;
+    margin-left: 20%;
+    margin-top: 4%;
+}
+.log-table.log-in{
+    width: 40%;
+    margin-left: 30%;
+    margin-top: 10%;
+}
+.log-table.new{
+    width: 40%;
+    margin-left: 30%;
+    margin-top: 4%;
+}
+#log-table{
+    width: 60%;
+    margin-left: 20%;
+    border-collapse: collapse;
+    margin-top: 4%;
 }
 #log-img-cell{
     text-align: center;
 }
 #log-img-3{
-    margin-top: 2%;
-    width: 30%;
+    margin-top: 1%;
+    width: 15%;
 }
 .input-cell-3{
-    padding: 3%;
+    width: 33%;
 }
-.input-cell-3-bis{
-    width: 50%;
-    padding: 3%;
+.input-cell-3.mod{
+    width: 70%; 
+}
+.input-cell-3.mod.pwd{
+    width: 35%; 
 }
 .input-3{
-    width: 90%;
-    margin-left: 4%;
-    height: 30px;
+    width: 95%;
+    height: 35px;
     border: 2px solid lightgrey;
     font-size: medium;
     color: #2F2F2F;
 }
+.input-3.sign-in{
+    margin-bottom: 5%;
+}
+.input-3.double{
+    margin-bottom: 5%;
+    width: 90%;
+}
 .input-3:hover{
     border: 2px solid darkgrey;
 }
-#submit-cell-3{
-    text-align: center;
-    padding: 3%;
+.input-3.sign-in.invalid{
+    border: 2px solid #900;
 }
-#button-3{
-    width: 30%;
-    margin-right: 5%;
-    font-family: Helvetica;
-    font-size: large;
-    font-weight: bold;
-    border: 2px solid #006062;
-    background-color: #006062;
-    color: white;
-    padding: 3%;
+.input-3.sign-in.valid{
+    border: 2px solid #006840;
+}
+.input-3.log-in{
     margin-bottom: 2%;
 }
+
+/* This is our style for the invalid fields */
+input:focus {
+    outline: none;
+}
+textarea:focus{
+    outline: none;
+}
+/* This is the style of our error messages */
+.error {
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+    font-family: Helvetica;
+    font-size: 100%;
+    color: white;
+    font-weight: bold;
+}
+.error.active{
+    padding: 0.5em;
+    background-color: #cc8400;
+}
+.error.no_error{
+    padding: 0.5em;
+    background-color: #006840;
+}
+.label-cell{
+    padding: 0%;
+}
+.label{
+    font-family: Helvetica;
+    font-weight: bold;
+    color: #2F2F2F;
+    font-size: 90%;
+}
+#submit-cell-3{
+    margin: 0%;
+    padding: 0%;
+    vertical-align: text-top;
+}
+#button-3{
+    font-family: Helvetica;
+    font-size: 95%;
+    border: 2px solid #00121F;
+    background-color: #00121F;
+    color: #008250;
+    margin-top: 1px;
+    height: 40px;
+    width: 100px;
+    text-align: center;
+}
 #button-3:hover{
-    background-color:white;
-    color: #006062;
+    cursor: pointer;
+    color: white;
 }
 #pwd-table{
     margin-left: 10%;

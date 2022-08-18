@@ -2,30 +2,37 @@
 
 {% block pagebody %}
         <div id="container2"><h2 id="subtitle">MODIFICA RACCOLTA</h2></div>
+        <div class="error" aria-live="polite">{{ message }}</div>
         <div id="container3">
-            <table id="log-table"> 
-                <form action="/ModPlaylist/{{IdPlaylist}}" method="POST">
+            <table class="log-table new"> 
+                <form action="/mod_playlist_Nome/{{IdPlaylist}}" method="POST" novalidate id="form_reg">
                     <tr>
-                        <td class="input-cell-3" colspan="2"><input type="text" name="nome" placeholder="Nome" class="input-3" style="margin-top: 4%;"></td>
+                        <td class="label-cell" colspan="2"><label class="label"> Nome raccolta:</label></td>
                     </tr>
                     <tr>
-                        <td class="input-cell-3" colspan="2"><input type="text" name="descrizione" placeholder="Descrizione" class="input-3"></td>
+                        <td class="input-cell-3 mod"><input type="text" required maxlength="16" name="Nome" placeholder="Giro a Paperopoli" class="input-3 sign-in"></td>
+                        <td id="submit-cell-3"><button type="submit" id="button-3">Modifica</button></td>
+                    </tr>
+                </form>
+                <form action="/mod_playlist_Descr/{{IdPlaylist}}" method="POST" novalidate id="form_reg">
+                    <tr>
+                        <td class="label-cell" colspan="2"><label class="label"> Descrizione:</label></td>
                     </tr>
                     <tr>
-                        <td style="font-family: Helvetica;color:#2F2F2F"><h4 style="margin-left: 7%; margin-bottom: 0%;">Per eliminare canzoni dalla playlist:</h4></td>
+                        <td class="input-cell-3 mod"><input type="text" required maxlength="160" name="Descrizione" placeholder="Le migliori canzoni paperopolesi" class="input-3 log-in"></td>
+                        <td id="submit-cell-3"><button type="submit" id="button-3">Modifica</button></td>
+                    </tr>
+                </form>
+                    <tr>
+                        <td style="font-family: Helvetica;color:#2F2F2F"><h4 style="margin-bottom: 0%;">Per eliminare canzoni dalla playlist:</h4></td>
                     </tr>
                     <tr>
                         <td> 
-                            <ul style="margin-left: 5%;font-family: Helvetica;color: #2F2F2F;">
+                            <ul style="font-family: Helvetica;color: #2F2F2F;">
                                 <li style="margin-top: 1%;">Andare nella propria area utente</li>
                                 <li style="margin-top: 1%;">Cliccare il tasto <i>Elimina</i> della playlist</li>
                                 <li style="margin-top: 1%;">Eliminare le canzoni</li>
                             </ul>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td id="submit-cell-3" colspan="2">
-                            <input type="submit" id="button-3" value="Modifica"> 
                         </td>
                     </tr>
                 </form>

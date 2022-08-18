@@ -2,21 +2,22 @@
 
 {% block pagebody %}
         <div id="container2"><h2 id="subtitle">ACCEDI</h2></div>
+        <div class="error" aria-live="polite">{{ message }}</div>
         <div id="container3">
-            <table id="log-table"> 
-                <form action="/login" method="POST">
+            <table class="log-table log-in"> 
+                <form action="/login" method="POST" novalidate id="form_reg">
                     <tr>
-                        <td id="log-img-cell" colspan="3"><img src="{{ url_for('static', filename='Img/man.png') }}" id="log-img-3"></td>
+                        <td class="label-cell" colspan="2"><label class="label"> Inserisci e-mail & password:</label></td>
                     </tr>
                     <tr>
-                        <td class="input-cell-3" colspan="3"><input name="user" type="text" placeholder="Email" class="input-3"></td>
+                        <td class="input-cell-3"><input name="user" type="email" required placeholder="e-mail" class="input-3 log-in"></td>
                     </tr>
                     <tr>
-                        <td class="input-cell-3" colspan="3"><input name="pass" type="password" placeholder="Password" class="input-3"></td>
+                        <td class="input-cell-3"><input name="pass" type="password" required placeholder="password" class="input-3 log-in"></td>
                     </tr>
                     <tr>
-                        <td id="submit-cell-3" colspan="3">
-                            <input type="submit" id="button-3" value="Accedi"> 
+                        <td id="submit-cell-3">
+                            <button type="submit" id="button-3">Accedi</button>
                         </td>
                     </tr>
                 </form>

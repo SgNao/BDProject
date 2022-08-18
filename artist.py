@@ -8,7 +8,7 @@ from datetime import date
 ArtistBP = Blueprint('ArtistBP', __name__)
 engine = create_engine('postgresql://postgres:BDProject2022@localhost:5432/BDProject')
 
-lentitolo = 15
+#lentitolo = 15
 
 
 # IMPORTANTE NON TOGLIERE
@@ -23,12 +23,12 @@ def inject_enumerate():
 def NewAlbum():
     if request.method == 'POST':
         conn = engine.connect()
-
         # check input
         titolo = request.form["Titolo"]
+        '''
         if len(titolo) > lentitolo:
             return render_template("NuovoAlbum.html")
-
+        '''
         data = (titolo, request.form["Rilascio"], request.form["Colore"], "0", current_user.id)
         rs = conn.execute(
             'INSERT INTO unive_music.album (titolo, rilascio, colore, n_canzoni, id_artista) VALUES (%s,%s,%s,%s,%s)',
@@ -73,7 +73,7 @@ def NewAlbum():
 @ArtistBP.route('/Nuova_Canzone/<IdAlbum>')
 @login_required  # richiede autenticazione
 def NewSongData(IdAlbum):
-    print(IdAlbum)
+    # print(IdAlbum)
     return render_template("NuovaCanzone.html", IdAlbum=IdAlbum)
 
 
@@ -81,11 +81,13 @@ def NewSongData(IdAlbum):
 @ArtistBP.route('/new_song/<IdAlbum>', methods=['GET', 'POST'])
 @login_required
 def NewSong(IdAlbum):
-    print(IdAlbum)
+    # print(IdAlbum)
     if request.method == 'POST':
         conn = engine.connect()
-        data = (request.form["Titolo"], request.form["Rilascio"], request.form["Durata"], request.form["Colore"],
-                current_user.id)
+
+        durata = main.minutes_to_seconds(request.form['Durata_min']) + request.form['Durata_sec']
+
+        data = (request.form["Titolo"], request.form["Rilascio"], durata, request.form["Colore"], current_user.id)
         rs = conn.execute(
             'INSERT INTO unive_music.canzoni (titolo, rilascio, durata, colore, id_artista) VALUES (%s,%s,%s,%s,%s)',
             data)
@@ -96,7 +98,6 @@ def NewSong(IdAlbum):
         IdCanzone = rs.fetchone()
         data = [IdAlbum, IdCanzone[0]]
         rs = conn.execute(' INSERT INTO unive_music.contenuto (id_album, id_canzone) VALUES (%s,%s)', data)
-        # Query necessaria per bug di serial
         rs = conn.execute(
             ' INSERT INTO unive_music.statistiche '
             '(_13_19, _20_29, _30_39, _40_49, _50_65, _65piu , n_riproduzioni_totali, n_riproduzioni_settimanali)'
@@ -174,7 +175,7 @@ def get_albums():
             if song['id_album'] == album.id_album:
                 album_s.append(song)
         albums_songs.append(album_s)
-    print(albums_songs)
+    # print(albums_songs)
     resp = make_response(
         render_template("Produzioni.html", user=current_user, albums=albums, albums_songs=albums_songs))
     conn.close()
@@ -223,6 +224,8 @@ def get_album_data(IdAlbum):
 def DelAlbum(IdAlbum):
     conn = engine.connect()
 
+    # Cancello e lascio i tag. Non sarebbe meglio controllare che non ci siano tag univoci di questo album
+    # per non avere tuple in tag inutilizzate?
     rs = conn.execute('DELETE FROM unive_music.attributo_album WHERE attributo_album.id_album = %s', IdAlbum)
     rs = conn.execute('SELECT contenuto.id_canzone FROM unive_music.contenuto WHERE contenuto.id_album = %s', IdAlbum)
     IdCanzoni = rs.fetchall()

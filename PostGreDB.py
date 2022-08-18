@@ -68,8 +68,10 @@ def insert_data(data, connection):
                 case "Statistiche":
                     ins = "INSERT INTO unive_music.statistiche (_13_19, _20_29, _30_39, _40_49, _50_65, _65piu," \
                           "n_riproduzioni_totali, n_riproduzioni_settimanali) VALUES (%s,%s,%s,%s,%s,%s,%s,%s) "
-                    tail.append(random.randint(1, 1000001))
-                    tail.append(random.randint(1, 1000001))
+                    n = random.randint(1, 1000001)
+                    m = random.randint(1, n)
+                    tail.append(n)
+                    tail.append(m)
                     connection.execute(ins, tail)
                 case "Tag":
                     ins = "INSERT INTO unive_music.tag (tag) VALUES (%s)"

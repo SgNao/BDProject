@@ -2,27 +2,44 @@
 
 {% block pagebody %}
         <div id="container2"><h2 id="subtitle">MODIFICA DATI</h2></div>
+        <div class="error" aria-live="polite">{{ message }}</div>
         <div id="container3">
-            <table id="log-table"> 
-                <form action="/ModData" method="POST">
+            <table class="log-table new"> 
+                <form action="/mod_data_nickname" method="POST" novalidate id="form_reg"> 
                     <tr>
-                        <td id="log-img-cell" colspan="2"><img  src="{{ url_for('static', filename='Img/man.png') }}" id="log-img-3"></td>
+                        <td class="label-cell" colspan="3"><label class="label"> Nickname: </label></td>
                     </tr>
                     <tr>
-                        <td class="input-cell-3-bis"><input type="text" name='Nickname' placeholder="Nickname" class="input-3"></td>
-                        <td class="input-cell-3"><input type="text" name="Email" placeholder="Email" class="input-3"></td>
+                        <td class="input-cell-3 mod" colspan="2"><input type="text" required name='Nickname' placeholder="Nickname" class="input-3 sign-in"></td>
+                        <td id="submit-cell-3"><button type="submit" id="button-3" style="border-bottom: 5%;">Modifica</button></td>
+                    </tr>
+                </form>
+                <form action="/mod_data_email" method="POST" novalidate id="form_reg"> 
+                    <tr>
+                        <td class="label-cell" colspan="3"><label class="label"> E-mail: </label></td>
+                    </tr>
+                    <tr>    
+                        <td class="input-cell-3 mod" colspan="2"><input type="email" required name="Email" placeholder="Email" class="input-3 sign-in"></td>
+                        <td id="submit-cell-3"><button type="submit" id="button-3">Modifica</button></td>
+                    </tr>
+                </form>
+                <form action="/mod_data_biografia" method="POST" novalidate id="form_reg"> 
+                    <tr>
+                        <td class="label-cell" colspan="3"><label class="label"> Biografia: </label></td>
                     </tr>
                     <tr>
-                        <td class="input-cell-3-bis"><input type="password" name="OldPwd" placeholder="VecchiaPassword" class="input-3"></td>
-                        <td class="input-cell-3-bis"><input type="password" name="NewPwd" placeholder="NuovaPassword" class="input-3"></td>
+                        <td class="input-cell-3 mod" colspan="2"><textarea required rows="10" cols="50" maxlength="160" wrap="soft" name="bio" placeholder="Parlaci di te e dei tuoi gusti musicali" class="input-3 sign-in" style="resize: none;"></textarea></td>
+                        <td id="submit-cell-3"><button type="submit" id="button-3">Modifica</button></td>   
+                    </tr>
+                </form>
+                <form action="/mod_data_pwd" method="POST" novalidate id="form_reg">
+                    <tr>
+                        <td class="label-cell" colspan="3"><label class="label"> Password:</label></td>
                     </tr>
                     <tr>
-                        <td class="input-cell-3" colspan="2"><input type="text" name='Bio' placeholder="Biografia" class="input-3"></td>
-                    </tr>
-                    <tr>
-                        <td id="submit-cell-3" colspan="2">
-                            <input type="submit" id="button-3" value="Modifica"> 
-                        </td>
+                        <td class="input-cell-3 mod pwd"><input type="password" required name="new_pwd" placeholder="NuovaPassword" class="input-3 double"></td>
+                        <td class="input-cell-3 mod pwd"><input type="password" required name="old_pwd" placeholder="RipetiPassword" class="input-3 double"></td>
+                        <td id="submit-cell-3"><button type="submit" id="button-3">Modifica</button></td>
                     </tr>
                 </form>
             </table>

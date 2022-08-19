@@ -18,7 +18,7 @@
                         </tr>
                     </table></a></td>
                     {% elif 'Accedi' in request.url_rule.rule %}
-                    <td><a href="{{url_for('LoginBP.Registrati')}}"><table id="tabella00-3">
+                    <td><a href="{{url_for('LoginBP.registrati')}}"><table id="tabella00-3">
                         <tr>
                             <td class="link-cell">
                                 <p class="link">Registrati</p>
@@ -29,7 +29,7 @@
                         </tr>
                     </table></a></td>
                     {% else %}
-                    <td><a href="{{url_for('LoginBP.Accedi')}}"><table id="tabella00">
+                    <td><a href="{{url_for('LoginBP.accedi')}}"><table id="tabella00">
                         <tr>
                             <td class="link-cell">
                                 <p class="link">Accedi</p>
@@ -91,7 +91,7 @@
                 var messaggio = document.getElementById("Message-box").firstChild
                 document.getElementById("box3").style.display = "none";
                 document.getElementById("Message-box").removeChild(messaggio);
-                window.location.href='/DelAlbum/'+globalThis.DeletedAlbum
+                window.location.href='/del_album/'+globalThis.DeletedAlbum
             }
             function AnnullaCancellaAlbum(){
                 var messaggio = document.getElementById("Message-box").firstChild
@@ -139,7 +139,7 @@
                 globalThis.Active = true;
 
                 globalThis.DeletedSongs += [IdPlaylist]
-                window.location.href='/RemoveSongFromPlaylist/' + globalThis.DeletedSongs
+                window.location.href='/remove_song_from_playlist/' + globalThis.DeletedSongs
                 globalThis.DeletedSongs = []
             }
 

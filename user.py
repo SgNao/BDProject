@@ -88,7 +88,7 @@ def new_playlist():
 @UserBP.route('/mod_playlist/<id_playlist>', methods=['GET', 'POST'])
 @login_required
 def mod_playlist(id_playlist):
-    return render_template("ModificaRaccolta.html", IdPlaylist=id_playlist, message='')
+    return render_template("ModificaRaccolta.html", id_playlist=id_playlist, message='')
 
 
 @UserBP.route('/mod_playlist_nome/<id_playlist>', methods=['GET', 'POST'])
@@ -99,7 +99,7 @@ def mod_playlist_nome(id_playlist):
         conn.execute('UPDATE unive_music.playlist SET nome = ? WHERE playlist.id_playlist = ?', request.form['Nome'],
                      id_playlist)
         conn.close()
-        return render_template("ModificaRaccolta.html", IdPlaylist=id_playlist, message='Modifica eseguita')
+        return render_template("ModificaRaccolta.html", id_playlist=id_playlist, message='Modifica eseguita')
 
 
 @UserBP.route('/mod_playlist_descr/<id_playlist>', methods=['GET', 'POST'])
@@ -110,7 +110,7 @@ def mod_playlist_descr(id_playlist):
         conn.execute('UPDATE unive_music.playlist SET descrizione = ? WHERE playlist.id_playlist = ?',
                      request.form['Descrizione'], id_playlist)
         conn.close()
-        return render_template("ModificaRaccolta.html", IdPlaylist=id_playlist, message='Modifica eseguita')
+        return render_template("ModificaRaccolta.html", id_playlist=id_playlist, message='Modifica eseguita')
 
 
 @UserBP.route('/add_song_to_playlist/<id_canzone>', methods=['POST'])

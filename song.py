@@ -78,9 +78,10 @@ def songs(id_canzone):
                           current_user.id, id_canzone)
         playlists = rs.fetchall()
         resp = make_response(
-            render_template("Song.html", playlists=playlists, song=song_data, songAlbum=song_album, album=album,
+            render_template("Song.html", playlists=playlists, song=song_data, song_album=song_album, album=album,
                             tags=tags))
     else:
-        resp = make_response(render_template("Song.html", song=song_data, songAlbum=song_album, album=album, tags=tags))
+        resp = make_response(render_template("Song.html", song=song_data, song_album=song_album, album=album,
+                                             tags=tags))
     conn.close()
     return resp

@@ -58,7 +58,7 @@ def new_album():
 @ArtistBP.route('/nuova_canzone/<id_album>')
 @login_required
 def new_song_data(id_album):
-    return render_template("NuovaCanzone.html", IdAlbum=id_album)
+    return render_template("NuovaCanzone.html", id_album=id_album)
 
 
 @ArtistBP.route('/new_song/<id_album>', methods=['GET', 'POST'])
@@ -175,12 +175,12 @@ def get_album_data(id_album):
                       '= %s', id_album)
     tag = rs.fetchall()
     tags = {'Tag_1': tag[0][0], 'Tag_2': tag[1][0]}
-    resp = make_response(render_template("Album.html", album=album_data, songAlbum=song_album, tags=tags))
+    resp = make_response(render_template("Album.html", album=album_data, song_album=song_album, tags=tags))
     conn.close()
     return resp
 
 
-@ArtistBP.route('/delete_album/<id_album>')
+@ArtistBP.route('/del_album/<id_album>')
 @login_required
 def del_album(id_album):
     conn = engine.connect()

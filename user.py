@@ -11,10 +11,6 @@ import main
 UserBP = Blueprint('UserBP', __name__)
 engine = create_engine('postgresql://postgres:BDProject2022@localhost:5432/BDProject')
 
-lentitolo = 15
-lendesc = 160
-lennome = 16
-lenbio = 160
 
 # IMPORTANTE NON TOGLIERE
 @UserBP.context_processor
@@ -25,42 +21,46 @@ def inject_enumerate():
 @UserBP.route('/private')
 @login_required
 def private():
-    conn = engine.connect()
-    rs = conn.execute(' SELECT * FROM unive_music.playlist WHERE playlist.id_utente = %s', current_user.id)
-    playlists = rs.fetchall()
-    rs = conn.execute(
-        ' SELECT raccolte.id_playlist, canzoni.titolo, canzoni.rilascio, canzoni.durata, canzoni.colore, '
-        'canzoni.id_canzone, utenti.nickname'
-        ' FROM unive_music.canzoni NATURAL JOIN unive_music.raccolte '
-        ' JOIN unive_music.utenti ON canzoni.id_artista = utenti.id_utente'
-        ' WHERE raccolte.id_playlist IN (SELECT playlist.id_playlist FROM unive_music.playlist'
-        ' WHERE playlist.id_utente = %s)'
-        ' GROUP BY raccolte.id_playlist, canzoni.titolo, canzoni.rilascio, canzoni.durata, canzoni.colore, '
-        ' canzoni.id_canzone, utenti.nickname',
-        current_user.id)
-    songs = rs.fetchall()
-    songs = main.ResultProxy_To_ListOfDict(songs)
-    for song in songs:
+    if current_user.Ruolo != 3:
+        conn = engine.connect()
+        rs = conn.execute(' SELECT * FROM unive_music.playlist WHERE playlist.id_utente = %s', current_user.id)
+        playlists = rs.fetchall()
         rs = conn.execute(
-            'SELECT attributo_canzone.id_tag FROM unive_music.attributo_canzone WHERE attributo_canzone.id_canzone = %s'
-            , song['id_canzone'])
-        tags = rs.fetchall()
-        if tags:
-            song['Tag_1'] = tags[0][0]
-            song['Tag_2'] = tags[1][0]
-
-    playlist_songs = []
-    for playlist in playlists:
-        playlist_s = []
+            ' SELECT raccolte.id_playlist, canzoni.titolo, canzoni.rilascio, canzoni.durata, canzoni.colore, '
+            'canzoni.id_canzone, utenti.nickname'
+            ' FROM unive_music.canzoni NATURAL JOIN unive_music.raccolte '
+            ' JOIN unive_music.utenti ON canzoni.id_artista = utenti.id_utente'
+            ' WHERE raccolte.id_playlist IN (SELECT playlist.id_playlist FROM unive_music.playlist'
+            ' WHERE playlist.id_utente = %s)'
+            ' GROUP BY raccolte.id_playlist, canzoni.titolo, canzoni.rilascio, canzoni.durata, canzoni.colore, '
+            ' canzoni.id_canzone, utenti.nickname',
+            current_user.id)
+        songs = rs.fetchall()
+        songs = main.ResultProxy_To_ListOfDict(songs)
         for song in songs:
-            if song['id_playlist'] == playlist.id_playlist:
-                playlist_s.append(song)
-        playlist_songs.append(playlist_s)
+            rs = conn.execute(
+                'SELECT attributo_canzone.id_tag FROM unive_music.attributo_canzone WHERE attributo_canzone.id_canzone = %s'
+                , song['id_canzone'])
+            tags = rs.fetchall()
+            if tags:
+                song['Tag_1'] = tags[0][0]
+                song['Tag_2'] = tags[1][0]
 
-    resp = make_response(
-        render_template("UserPage.html", user=current_user, playlists=playlists, playlist_songs=playlist_songs))
-    conn.close()
-    return resp
+        playlist_songs = []
+        for playlist in playlists:
+            playlist_s = []
+            for song in songs:
+                if song['id_playlist'] == playlist.id_playlist:
+                    playlist_s.append(song)
+            playlist_songs.append(playlist_s)
+
+        resp = make_response(
+            render_template("UserPage.html", user=current_user, playlists=playlists, playlist_songs=playlist_songs))
+        conn.close()
+        return resp
+    else:
+        # pagina dell'admin col bottone
+        return render_template("AdminPage.html", user=current_user)
 
 
 @UserBP.route('/new_playlist', methods=['GET', 'POST'])
@@ -75,13 +75,7 @@ def NewPlaylist():
         playlist_limit = 20
     if len(num) < playlist_limit:
         if request.method == 'POST':
-            # check input
-            nome = request.form["Nome"]
-            descrizione = request.form["Descrizione"]
-            if len(nome) > lentitolo or len(descrizione) > lendesc:
-                return render_template("NuovaRaccolta.html")
             conn = engine.connect()
-            # Query necessaria per bug di serial
             data = (current_user.id, request.form["Nome"], request.form["Descrizione"], "0")
             rs = conn.execute(
                 'INSERT INTO unive_music.playlist (id_utente, nome, descrizione, n_canzoni) VALUES (%s,%s,%s,%s)', data)
@@ -97,24 +91,27 @@ def NewPlaylist():
 @UserBP.route('/ModPlaylist/<IdPlaylist>', methods=['GET', 'POST'])
 @login_required
 def ModPlaylist(IdPlaylist):
+    return render_template("ModificaRaccolta.html", IdPlaylist=IdPlaylist, message='')
+
+
+@UserBP.route('/mod_playlist_Nome/<IdPlaylist>', methods=['GET', 'POST'])
+@login_required
+def ModPlaylist_Nome(IdPlaylist):
     if request.method == 'POST':
-
-        # check input
-        nome = request.form["nome"]
-        descrizione = request.form["descrizione"]
-        if len(nome) > lentitolo:
-            return render_template("NuovaRaccolta.html")
-        if len(descrizione) > lendesc:
-            return render_template("NuovaRaccolta.html")
-
         conn = engine.connect()
-        rs = conn.execute(' UPDATE unive_music.playlist SET nome = %s, descrizione = %s WHERE id_playlist = %s',
-                          nome, descrizione, IdPlaylist)
+        rs = conn.execute(' UPDATE unive_music.playlist SET nome = ? WHERE playlist.id_playlist = ?', request.form['Nome'], IdPlaylist)
         conn.close()
-        return redirect(url_for('UserBP.private'))
-    else:
-        return render_template("ModificaRaccolta.html", IdPlaylist=IdPlaylist)
+        return render_template("ModificaRaccolta.html", IdPlaylist=IdPlaylist, message='Modifica eseguita')
 
+
+@UserBP.route('/mod_playlist_Descr/<IdPlaylist>', methods=['GET', 'POST'])
+@login_required
+def ModPlaylist_Descr(IdPlaylist):
+    if request.method == 'POST':
+        conn = engine.connect()
+        rs = conn.execute(' UPDATE unive_music.playlist SET descrizione = ? WHERE playlist.id_playlist = ?', request.form['Descrizione'], IdPlaylist)
+        conn.close()
+        return render_template("ModificaRaccolta.html", IdPlaylist=IdPlaylist, message='Modifica eseguita')
 
 @UserBP.route('/AddSongToPlaylist/<IdCanzone>', methods=['POST'])
 @login_required
@@ -133,7 +130,7 @@ def AddSongToPlaylist(IdCanzone):
                 NCanzoni = rs.fetchone()
                 rs = conn.execute(' UPDATE unive_music.playlist'
                                   ' SET n_canzoni = %s'
-                                  ' WHERE id_playlist = %s', NCanzoni[0] + 1, playlist.id_playlist)
+                                  ' WHERE playlist.id_playlist = %s', NCanzoni[0] + 1, playlist.id_playlist)
 
                 age = date.today().year - current_user.data_nascita.year
                 att = '_13_19'
@@ -206,47 +203,56 @@ def DelPlaylist(IdPlaylist):
 @UserBP.route('/ModData', methods=['GET', 'POST'])
 @login_required  # richiede autenticazione
 def ModData():
-    if request.method == 'POST':
-        if check_password_hash(current_user.password, request.form['OldPwd']):
+    return render_template("ModificaDatiPersonali.html", message='')
 
-            # check input
-            nome = request.form["nome"]
-            cognome = request.form["cognome"]
-            nick = request.form["nickname"]
-            bio = request.form["bio"]
-            pwd = request.form["password"]
-            if len(nome) > lennome or len(cognome) > lennome or len(nick) > lennome or len(bio) > lenbio:
-                return render_template("ModificaDatiPersonali.html")
-            if not login.checkPw(pwd):
-                return render_template("ModificaDatiPersonali.html")
-
-            conn = engine.connect()
-            rs = conn.execute('SELECT * FROM unive_music.utenti WHERE utenti.email = %s', request.form['Email'])
-            user = rs.fetchone()
-            rs = conn.execute('SELECT * FROM unive_music.utenti WHERE utenti.nickname = %s', nick)
-            nickname = rs.fetchone()
-            if request.form['Email'] != current_user.email:
-                if not nickname:
-                    rs = conn.execute(' UPDATE unive_music.utenti SET nickname = %s, email = %s WHERE id_utente = %s',
-                                      nick, request.form['Email'], current_user.id)
-                else:
-
-                    rs = conn.execute(' UPDATE unive_music.utenti SET email = %s WHERE id_utente = %s',
-                                      request.form['Email'], current_user.id)
-
-            if request.form['Nickname'] != current_user.nickname:
-                if user:
-                    rs = conn.execute(' UPDATE unive_music.utenti SET nickname = %s WHERE id_utente = %s',
-                                      nick, current_user.id)
-            pwhash = generate_password_hash(request.form["NewPwd"], method='pbkdf2:sha256:260000', salt_length=16)
-            rs = conn.execute('UPDATE unive_music.utenti SET bio = %s, password = %s WHERE id_utente = %s ',
-                              request.form['Bio'], pwhash, current_user.id)
-            conn.close()
-            return redirect(url_for('UserBP.private'))
-        else:
-            return render_template("ModificaDatiPersonali.html")
+@UserBP.route('/mod_data_nickname', methods=['GET', 'POST'])
+@login_required  # richiede autenticazione
+def ModData_Nickname():
+    conn = engine.connect()
+    rs = conn.execute('SELECT * FROM unive_music.utenti WHERE utenti.Nickname = ?', request.form['Nickname'])
+    user = rs.fetchone()
+    if not user:
+        rs = conn.execute(' UPDATE unive_music.utenti SET nickname = ? WHERE utenti.id_utente = ?', request.form['Nickname'], current_user.id)
+        conn.close()
+        return render_template("ModificaDatiPersonali.html", message='Modifica eseguita')
     else:
-        return render_template("ModificaDatiPersonali.html")
+        return render_template("ModificaDatiPersonali.html", message='Nickname non disponibile', style='error active')
+
+
+@UserBP.route('/mod_data_email', methods=['GET', 'POST'])
+@login_required  # richiede autenticazione
+def ModData_Email():
+    conn = engine.connect()
+    rs = conn.execute('SELECT * FROM unive_music.utenti WHERE utenti.email = ?', request.form['Email'])
+    user = rs.fetchone()
+    if not user:
+        rs = conn.execute(' UPDATE unive_music.utenti SET email = ? WHERE utenti.id_utente = ?', request.form['Email'], current_user.id)
+        conn.close()
+        return render_template("ModificaDatiPersonali.html", message='Modifica eseguita')
+    else:
+        return render_template("ModificaDatiPersonali.html",  message='E-mail non disponibile')
+
+
+@UserBP.route('/mod_data_biografia', methods=['GET', 'POST'])
+@login_required  # richiede autenticazione
+def ModData_Bio():
+    conn = engine.connect()
+    rs = conn.execute(' UPDATE unive_music.utenti SET bio = ? WHERE utenti.id_utente = ?', request.form['bio'], current_user.id)
+    conn.close()
+    return render_template("ModificaDatiPersonali.html", message='Modifica eseguita', style='error active')
+
+
+@UserBP.route('/mod_data_pwd', methods=['GET', 'POST'])
+@login_required  # richiede autenticazione
+def ModData_Pwd():
+    if request.form['new_pwd'] == request.form['old_pwd']:
+        pwhash = generate_password_hash(request.form["NewPwd"], method='pbkdf2:sha256:260000', salt_length=16)
+        conn = engine.connect()
+        rs = conn.execute(' UPDATE unive_music.utenti SET password = ? WHERE utenti.id_utente = ?', pwhash, current_user.id)
+        conn.close()
+        return render_template("ModificaDatiPersonali.html", message='Modifica eseguita')
+    else:
+        return render_template("ModificaDatiPersonali.html", message='Le password non coincidono')
 
 
 @UserBP.route('/Dati_Personali')

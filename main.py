@@ -73,7 +73,6 @@ def ResultProxy_To_ListOfDict(query_result):
             # build up the dictionary
             d = {**d, **{column: value}}
         a.append(d)
-
     return a
 
 
@@ -100,11 +99,9 @@ def load_user(user_id):
 # pagina principale
 @app.route('/')
 def home():
-    # current_user identifica l’utente attuale utente anonimo prima dell’autenticazione
-
     conn = engine.connect()
 
-    rs = conn.execute(' SELECT canzoni.id_canzone, canzoni.titolo, canzoni.rilascio, utenti.nickname '
+    rs = conn.execute(' SELECT canzoni.id_canzone, canzoni.titolo, canzoni.rilascio, canzoni.colore, utenti.nickname '
                       ' FROM unive_music.canzoni JOIN unive_music.utenti ON canzoni.id_artista = utenti.id_utente')
     all_songs = rs.fetchall()
     all_songs = ResultProxy_To_ListOfDict(all_songs)
@@ -117,7 +114,7 @@ def home():
             song['Tag_1'] = tags[0][0]
             song['Tag_2'] = tags[1][0]
 
-    rs = conn.execute(' SELECT canzoni.id_canzone, canzoni.titolo, canzoni.rilascio, utenti.nickname'
+    rs = conn.execute(' SELECT canzoni.id_canzone, canzoni.titolo, canzoni.rilascio, canzoni.colore, utenti.nickname'
                       ' FROM unive_music.canzoni JOIN unive_music.utenti ON canzoni.id_artista = utenti.id_utente'
                       ' ORDER BY Canzoni.Rilascio DESC LIMIT 5')
     latest_songs = rs.fetchall()
@@ -131,7 +128,7 @@ def home():
             song['Tag_1'] = tags[0][0]
             song['Tag_2'] = tags[1][0]
 
-    rs = conn.execute(' SELECT canzoni.id_canzone, canzoni.titolo, canzoni.rilascio, utenti.nickname'
+    rs = conn.execute(' SELECT canzoni.id_canzone, canzoni.titolo, canzoni.rilascio, canzoni.colore, utenti.nickname'
                       ' FROM unive_music.canzoni JOIN unive_music.utenti ON canzoni.id_artista = utenti.id_utente'
                       ' NATURAL JOIN unive_music.statistiche_canzoni NATURAL JOIN unive_music.statistiche'
                       ' ORDER BY statistiche.n_riproduzioni_totali DESC LIMIT 5')

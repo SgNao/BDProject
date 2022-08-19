@@ -1,3 +1,4 @@
+from email import message
 from flask import *
 from sqlalchemy import *
 from flask_login import login_user, login_required, logout_user
@@ -7,9 +8,6 @@ from datetime import date
 
 LoginBP = Blueprint('LoginBP', __name__)
 engine = create_engine('postgresql://postgres:BDProject2022@localhost:5432/BDProject')
-
-lennome = 16
-lenbio = 160
 
 
 # IMPORTANTE NON TOGLIERE
@@ -38,9 +36,9 @@ def login():
                 login_user(user)
                 return redirect(url_for('home'))
             else:
-                return redirect(url_for('LoginBP.Accedi'))
+                return render_template('Accedi.html', message='E-mail o Password errati')
         else:
-            return redirect(url_for('LoginBP.Accedi'))
+            return render_template('Accedi.html', message='E-mail o Password errati')
     else:
         return redirect(url_for('LoginBP.Accedi'))
 
@@ -80,33 +78,23 @@ def SingIn():
         user = rs.fetchone()
         rs = conn.execute('SELECT * FROM unive_music.utenti WHERE utenti.nickname = %s', request.form['nickname'])
         nickname = rs.fetchone()
-        if age >= 13 and not user and not nickname:
+        # controlli in più: utili?
+        if age >= 13: # and not user and not nickname:
+            if request.form['password'] == request.form['rip_password']:
+                pwhash = generate_password_hash(request.form["password"], method='pbkdf2:sha256:260000', salt_length=16)
+                data = (request.form["email"], request.form["nome"], request.form["cognome"], request.form["nickname"],
+                        request.form["bio"], request.form["DataNascita"], pwhash, "1", "false")
+                rs = conn.execute(
+                    'INSERT INTO unive_music.utenti (email, nome, cognome, nickname, bio, data_nascita, password, '
+                    'ruolo, premium) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)', data)
 
-            # check input
-            nome = request.form["nome"]
-            cognome = request.form["cognome"]
-            nick = request.form["nickname"]
-            bio = request.form["bio"]
-            pwd = request.form["password"]
-            if len(nome) > lennome or len(cognome) > lennome or len(nick) > lennome or len(bio) > lenbio:
-                return redirect(url_for('LoginBP.Registrati'))
-            if not checkPw(pwd):
-                return redirect(url_for('LoginBP.Registrati'))
-
-            pwhash = generate_password_hash(pwd, method='pbkdf2:sha256:260000', salt_length=16)
-            # Query necessaria per bug di serial
-            data = (request.form["email"], nome, cognome, nick,
-                    bio, request.form["DataNascita"], pwhash, "1", "FALSE")
-            rs = conn.execute(
-                'INSERT INTO unive_music.utenti (email, nome, cognome, nickname, bio, data_nascita, password, ruolo, '
-                'premium) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)', data)
-
-            conn.close()
-            return redirect(url_for('LoginBP.Accedi'))
+                conn.close()
+                return redirect(url_for('LoginBP.Accedi'))
+            else:
+                conn.close()
+                return render_template("Registrati.html", message='Le password non coincidono')
         else:
             conn.close()
-            print(1)
-            return redirect(url_for('LoginBP.Registrati'))
+            return render_template("Registrati.html", message='Sei troppo piccolo')
     else:
-        print(2)
         return redirect(url_for('LoginBP.Registrati'))

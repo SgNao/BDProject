@@ -19,7 +19,6 @@ flask run
 '''
 
 app = Flask(__name__)
-
 engine = create_engine('postgresql://postgres:BDProject2022@localhost:5432/BDProject')
 
 app.register_blueprint(LoginBP)
@@ -27,12 +26,11 @@ app.register_blueprint(UserBP)
 app.register_blueprint(SongBP)
 app.register_blueprint(ArtistBP)
 
-app.config['SECRET_KEY'] = 'ubersecret'
+app.config['SECRET_KEY'] = 'uber_secret'
 login_manager = LoginManager()
 login_manager.init_app(app)
 
 
-# IMPORTANTE NON TOGLIERE
 @app.context_processor
 def inject_enumerate():
     return dict(enumerate=enumerate, str=str, len=len)
@@ -51,12 +49,10 @@ class User(UserMixin):
         self.ruolo = ruolo
         self.premium = premium
 
-    # controlla che la password passata corrisponda a quella dell'utente applicando una funzione hash
     def verify_password(self, pwd):
         return check_password_hash(self.password, pwd)
 
 
-# restituisce l'utente data l'email
 def get_user_by_email(email):
     conn = engine.connect()
     rs = conn.execute('SELECT * FROM unive_music.utenti WHERE email = %s', email)
@@ -66,12 +62,11 @@ def get_user_by_email(email):
                 user.password, user.ruolo, user.premium)
 
 
-def ResultProxy_To_ListOfDict(query_result):
+def result_proxy_to_list_of_dict(query_result):
     d, a = {}, []
-    for rowproxy in query_result:
-        for column, value in rowproxy.items():
-            # build up the dictionary
-            d = {**d, **{column: value}}
+    for row_proxy in query_result:
+        for key, value in row_proxy.items():
+            d = {**d, **{key: value}}
         a.append(d)
     return a
 
@@ -96,49 +91,46 @@ def load_user(user_id):
                 user.password, user.ruolo, user.premium)
 
 
-# pagina principale
 @app.route('/')
 def home():
     conn = engine.connect()
-
     rs = conn.execute(' SELECT canzoni.id_canzone, canzoni.titolo, canzoni.rilascio, canzoni.colore, utenti.nickname '
                       ' FROM unive_music.canzoni JOIN unive_music.utenti ON canzoni.id_artista = utenti.id_utente')
     all_songs = rs.fetchall()
-    all_songs = ResultProxy_To_ListOfDict(all_songs)
+    all_songs = result_proxy_to_list_of_dict(all_songs)
+
     for song in all_songs:
-        rs = conn.execute(
-            'SELECT attributo_canzone.id_tag FROM unive_music.attributo_canzone WHERE attributo_canzone.id_canzone = %s'
-            , song['id_canzone'])
+        rs = conn.execute('SELECT attributo_canzone.id_tag FROM unive_music.attributo_canzone WHERE '
+                          'attributo_canzone.id_canzone = %s', song['id_canzone'])
         tags = rs.fetchall()
         if tags:
             song['Tag_1'] = tags[0][0]
             song['Tag_2'] = tags[1][0]
 
-    rs = conn.execute(' SELECT canzoni.id_canzone, canzoni.titolo, canzoni.rilascio, canzoni.colore, utenti.nickname'
-                      ' FROM unive_music.canzoni JOIN unive_music.utenti ON canzoni.id_artista = utenti.id_utente'
-                      ' ORDER BY Canzoni.Rilascio DESC LIMIT 5')
+    rs = conn.execute('SELECT canzoni.id_canzone, canzoni.titolo, canzoni.rilascio, canzoni.colore, utenti.nickname '
+                      'FROM unive_music.canzoni JOIN unive_music.utenti ON canzoni.id_artista = utenti.id_utente '
+                      'ORDER BY Canzoni.Rilascio DESC LIMIT 5')
     latest_songs = rs.fetchall()
-    latest_songs = ResultProxy_To_ListOfDict(latest_songs)
+    latest_songs = result_proxy_to_list_of_dict(latest_songs)
+
     for song in latest_songs:
-        rs = conn.execute(
-            'SELECT attributo_canzone.id_tag FROM unive_music.attributo_canzone WHERE attributo_canzone.id_canzone = %s'
-            , song['id_canzone'])
+        rs = conn.execute('SELECT attributo_canzone.id_tag FROM unive_music.attributo_canzone WHERE '
+                          'attributo_canzone.id_canzone = %s', song['id_canzone'])
         tags = rs.fetchall()
         if tags:
             song['Tag_1'] = tags[0][0]
             song['Tag_2'] = tags[1][0]
 
-    rs = conn.execute(' SELECT canzoni.id_canzone, canzoni.titolo, canzoni.rilascio, canzoni.colore, utenti.nickname'
-                      ' FROM unive_music.canzoni JOIN unive_music.utenti ON canzoni.id_artista = utenti.id_utente'
-                      ' NATURAL JOIN unive_music.statistiche_canzoni NATURAL JOIN unive_music.statistiche'
-                      ' ORDER BY statistiche.n_riproduzioni_totali DESC LIMIT 5')
-
+    rs = conn.execute('SELECT canzoni.id_canzone, canzoni.titolo, canzoni.rilascio, canzoni.colore, utenti.nickname '
+                      'FROM unive_music.canzoni JOIN unive_music.utenti ON canzoni.id_artista = utenti.id_utente '
+                      'NATURAL JOIN unive_music.statistiche_canzoni NATURAL JOIN unive_music.statistiche ORDER BY '
+                      'statistiche.n_riproduzioni_totali DESC LIMIT 5')
     most_played_songs = rs.fetchall()
-    most_played_songs = ResultProxy_To_ListOfDict(most_played_songs)
+    most_played_songs = result_proxy_to_list_of_dict(most_played_songs)
+
     for song in most_played_songs:
-        rs = conn.execute(
-            'SELECT attributo_canzone.id_tag FROM unive_music.attributo_canzone WHERE attributo_canzone.id_canzone = %s'
-            , song['id_canzone'])
+        rs = conn.execute('SELECT attributo_canzone.id_tag FROM unive_music.attributo_canzone WHERE '
+                          'attributo_canzone.id_canzone = %s', song['id_canzone'])
         tags = rs.fetchall()
         if tags:
             song['Tag_1'] = tags[0][0]
@@ -149,13 +141,10 @@ def home():
                            most_played_songs=most_played_songs)
 
 
-# reset delle statistiche settimanali
-@app.route('/Reset')
+@app.route('/reset')
 @login_required
-def Reset():
+def reset():
     conn = engine.connect()
-
-    rs = conn.execute('UPDATE unive_music.statistiche SET n_riproduzioni_settimanali = %s', 0)
-
+    conn.execute('UPDATE unive_music.statistiche SET n_riproduzioni_settimanali = %s', 0)
     conn.close()
     return redirect(url_for('home'))

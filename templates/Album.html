@@ -11,7 +11,7 @@
                         <td style="width: 35%;text-align: left;margin: 0%;border-bottom: 1px solid darkgray;"><h1 id="Playlist">{{album.Titolo}}</h1></td>
                         {% if current_user.is_authenticated and album.IdArtista == current_user.id %}
                         <td style="width: 8%;vertical-align: bottom;border-bottom: 1px solid darkgray;text-align: left;">
-                           <a href="/AlbumStat/{{album.IdAlbum}}"><h5 id="NuovaRaccolta">Statistiche</h5></a>
+                           <a href="/album_stat/{{album.IdAlbum}}"><h5 id="NuovaRaccolta">Statistiche</h5></a>
                         </td>
                         {% endif %}
                         <td style="width: 57%;border-bottom: 1px solid darkgray;"></td>

@@ -94,8 +94,8 @@ def load_user(user_id):
 @app.route('/')
 def home():
     conn = engine.connect()
-    rs = conn.execute(' SELECT canzoni.id_canzone, canzoni.titolo, canzoni.rilascio, canzoni.colore, utenti.nickname '
-                      ' FROM unive_music.canzoni JOIN unive_music.utenti ON canzoni.id_artista = utenti.id_utente')
+    rs = conn.execute('SELECT canzoni.id_canzone, canzoni.titolo, canzoni.rilascio, canzoni.colore, utenti.nickname '
+                      'FROM unive_music.canzoni JOIN unive_music.utenti ON canzoni.id_artista = utenti.id_utente')
     all_songs = rs.fetchall()
     all_songs = result_proxy_to_list_of_dict(all_songs)
 

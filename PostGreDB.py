@@ -21,6 +21,18 @@ def change_characters(word):
     return s
 
 
+def get_colour():
+    ex_list = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "A", "B", "C", "D", "E", "F"]
+    len_list = len(ex_list)
+    output = "#"
+
+    for a in range(0, 6):
+        rnd = random.randint(0, len_list-1)
+        output = output + ex_list[rnd]
+    
+    return output
+
+
 def insert_data(data, conn):
     if sys.version_info[0] >= 3 or sys.version_info[1] >= 10:
         for c in data:
@@ -35,7 +47,7 @@ def insert_data(data, conn):
                     if tail[4] == "void":
                         tail[4] = ""
                     conn.execute('INSERT INTO unive_music.utenti (email, nome, cognome, nickname, bio, data_nascita, '
-                                 'password, ruolo, premium) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)', tail) 
+                                 'password, ruolo, premium) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)', tail)
                 case "Artisti":
                     conn.execute('INSERT INTO unive_music.artisti (id_utente, debutto) VALUES (%s,%s)', tail)
                 case "Playlist":
@@ -44,14 +56,16 @@ def insert_data(data, conn):
                     if tail[2] == "void":
                         tail[2] = ""
                     conn.execute('INSERT INTO unive_music.playlist (id_utente, nome, descrizione, n_canzoni) VALUES ('
-                                 '%s,%s,%s,%s)', tail) 
+                                 '%s,%s,%s,%s)', tail)
                 case "Canzoni":
                     tail[0] = change_characters(tail[0])
-                    conn.execute('INSERT INTO unive_music.canzoni (titolo, rilascio, durata, colore, id_artista) '
-                                 'VALUES (%s,%s,%s,%s,%s)', tail) 
+                    tail.append(get_colour())
+                    conn.execute('INSERT INTO unive_music.canzoni (titolo, rilascio, durata, id_artista, colore) '
+                                 'VALUES (%s,%s,%s,%s,%s)', tail)
                 case "Album":
                     tail[0] = change_characters(tail[0])
-                    conn.execute('INSERT INTO unive_music.album (titolo, rilascio, colore, n_canzoni, id_artista) '
+                    tail.append(get_colour())
+                    conn.execute('INSERT INTO unive_music.album (titolo, rilascio, n_canzoni, id_artista, colore) '
                                  'VALUES (%s,%s,%s,%s,%s)', tail)
                 case "Statistiche":
                     n = random.randint(1, 1000001)
@@ -76,7 +90,7 @@ def insert_data(data, conn):
                     conn.execute('INSERT INTO unive_music.attributo_album (id_tag, id_album) VALUES (%s,%s)', tail)
                 case "StatCanzoni":
                     conn.execute('INSERT INTO unive_music.statistiche_canzoni (id_statistica, id_canzone) VALUES (%s,'
-                                 '%s)', tail) 
+                                 '%s)', tail)
                 case _:
                     print("Something went wrong")
     else:
@@ -91,7 +105,7 @@ def insert_data(data, conn):
                 if tail[4] == "void":
                     tail[4] = ""
                 conn.execute('INSERT INTO unive_music.utenti (email, nome, cognome, nickname, bio, data_nascita, '
-                             'password, ruolo, premium) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)', tail) 
+                             'password, ruolo, premium) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)', tail)
             elif head == "Artisti":
                 conn.execute('INSERT INTO unive_music.artisti (id_utente, debutto) VALUES (%s,%s)', tail)
             elif head == "Playlist":
@@ -100,14 +114,16 @@ def insert_data(data, conn):
                 if tail[2] == "void":
                     tail[2] = ""
                 conn.execute('INSERT INTO unive_music.playlist (id_utente, nome, descrizione, n_canzoni) VALUES (%s,'
-                             '%s,%s, %s)', tail) 
+                             '%s,%s, %s)', tail)
             elif head == "Canzoni":
                 tail[0] = change_characters(tail[0])
-                conn.execute('INSERT INTO unive_music.canzoni (titolo, rilascio, durata, colore, id_artista) VALUES ('
-                             '%s,%s,%s,%s,%s)', tail) 
+                tail.append(get_colour())
+                conn.execute('INSERT INTO unive_music.canzoni (titolo, rilascio, durata, id_artista, colore) VALUES ('
+                             '%s,%s,%s,%s,%s)', tail)
             elif head == "Album":
                 tail[0] = change_characters(tail[0])
-                conn.execute('INSERT INTO unive_music.album (titolo, rilascio, colore, n_canzoni, id_artista) VALUES '
+                tail.append(get_colour())
+                conn.execute('INSERT INTO unive_music.album (titolo, rilascio, n_canzoni, id_artista, colore) VALUES '
                              '(%s,%s,%s,%s,%s)', tail)
             elif head == "Statistiche":
                 tail.append(random.randint(1, 1000001))

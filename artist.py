@@ -166,15 +166,18 @@ def get_album_data(id_album):
     for song in song_album:
         rs = conn.execute('SELECT attributo_canzone.id_tag FROM unive_music.attributo_canzone WHERE '
                           'attributo_canzone.id_canzone = %s', song['id_canzone'])
-        tags = rs.fetchall()
-        if tags:
-            song['Tag_1'] = tags[0][0]
-            song['Tag_2'] = tags[1][0]
+        tmp = rs.fetchall()
+        if tmp:
+            song['Tag_1'] = tmp[0][0]
+            song['Tag_2'] = tmp[1][0]
 
     rs = conn.execute('SELECT attributo_album.id_tag FROM unive_music.attributo_album WHERE attributo_album.id_album '
                       '= %s', id_album)
     tag = rs.fetchall()
-    tags = {'Tag_1': tag[0][0], 'Tag_2': tag[1][0]}
+    if len(tag) > 1:
+        tags = {'Tag_1': tag[0][0], 'Tag_2': tag[1][0]}
+    else:
+        tags = {'Tag_1': tag[0][0] }
     resp = make_response(render_template("Album.html", album=album_data, song_album=song_album, tags=tags))
     conn.close()
     return resp

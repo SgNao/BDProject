@@ -47,7 +47,7 @@
                     <td>
                     {% endif %}
                         <table class="tabella4" onmouseover="Select('S_{{j}}ID_A_{{i}}', 'S_{{j}}ID_B_{{i}}')" onmouseout="Deselect('S_{{j}}ID_A_{{i}}', 'S_{{j}}ID_B_{{i}}')">
-                            <tr><td class="img-cell" colspan="2"><div class="img" style="background-color: {{ song.Colore }}"></div></td></tr>
+                            <tr><td class="img-cell" colspan="2"><div class="img" style="background-color: {{ song.colore }}"></div></td></tr>
                             <tr><td class="manual-title-cell" colspan="2"><a href="Song.html"><h3 class="manual-title">{{song.titolo}}</h3></a></td></tr>
                             <tr>
                                 <td class="footprint">
@@ -63,7 +63,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="2" class="footprint-hastag-4" colspan="2" id="S_{{j}}ID_B_{{i}}" onmouseover="Info_over('S_{{j}}ID_B_{{i}}')" onmouseout="Info_out('S_{{j}}ID_B_{{i}}')" onmousedown="Song('null')">
+                                <td colspan="2" class="footprint-hastag-4" colspan="2" id="S_{{j}}ID_B_{{i}}" onmouseover="Info_over('S_{{j}}ID_B_{{i}}')" onmouseout="Info_out('S_{{j}}ID_B_{{i}}')" onmousedown="Song('{{song.id_canzone}}')">
                                     <h5 class="footprint-text-hastag"> INFO </h5>
                                 </td>
                             </tr>

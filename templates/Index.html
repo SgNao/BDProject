@@ -11,7 +11,7 @@
                     {% for i,song in enumerate(latest_songs) %}
                     <td>
                         <table class="tabella4" onmouseover="Select('S2_ID_A_{{i}}', 'S2_ID_B_{{i}}')" onmouseout="Deselect('S2_ID_A_{{i}}', 'S2_ID_B_{{i}}')">
-                            <tr><td class="img-cell" colspan="2"><div class="img" style="background-color: {{ song.Colore }}"></div></td></tr>
+                            <tr><td class="img-cell" colspan="2"><div class="img" style="background-color: {{ song.colore }}"></div></td></tr>
                             <tr><td class="manual-title-cell" colspan="2"><h3 class="manual-title">{{song.titolo}}</h3></td></tr>
                             <tr>
                                 <td class="footprint">
@@ -40,7 +40,7 @@
                     {% for i,song in enumerate(most_played_songs) %}
                     <td>
                         <table class="tabella4" onmouseover="Select('S3_ID_A_{{i}}', 'S3_ID_B_{{i}}')" onmouseout="Deselect('S3_ID_A_{{i}}', 'S3_ID_B_{{i}}')">
-                            <tr><td class="img-cell" colspan="2"><div class="img" style="background-color: {{ song.Colore }}"></div></td></tr>
+                            <tr><td class="img-cell" colspan="2"><div class="img" style="background-color: {{ song.colore }}"></div></td></tr>
                             <tr><td class="manual-title-cell" colspan="2"><h3 class="manual-title">{{song.titolo}}</h3></td></tr>
                             <tr>
                                 <td class="footprint">
@@ -78,7 +78,7 @@
                     <td>
                     {% endif %}
                         <table class="tabella4" onmouseover="Select('S4_ID_A_{{i}}', 'S4_ID_B_{{i}}')" onmouseout="Deselect('S4_ID_A_{{i}}', 'S4_ID_B_{{i}}')">
-                            <tr><td class="img-cell" colspan="2"><div class="img" style="background-color: {{ song.Colore }}"></div></td></tr>
+                            <tr><td class="img-cell" colspan="2"><div class="img" style="background-color: {{ song.colore }}"></div></td></tr>
                             <tr><td class="manual-title-cell" colspan="2"><h3 class="manual-title">{{song.titolo}}</h3></td></tr>
                             <tr>
                                 <td class="footprint">

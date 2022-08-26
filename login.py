@@ -16,7 +16,7 @@ def inject_enumerate():
 
 @LoginBP.route('/accedi')
 def accedi():
-    return render_template("Accedi.html")
+    return render_template("Accedi.html", message='')
 
 
 @LoginBP.route('/login', methods=['GET', 'POST'])

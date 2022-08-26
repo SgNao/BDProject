@@ -17,7 +17,7 @@
                             </td>
                         </tr>
                     </table></a></td>
-                    {% elif 'Accedi' in request.url_rule.rule %}
+                    {% elif 'accedi' in request.url_rule.rule %}
                     <td><a href="{{url_for('LoginBP.registrati')}}"><table id="tabella00-3">
                         <tr>
                             <td class="link-cell">
@@ -233,14 +233,6 @@
                     {% if current_user.is_authenticated %}
                     <td class="button"><a href={{url_for('UserBP.private')}} class="text-button">{{current_user.nickname}}</a></td>
                     {% endif %}
-                    <td id="serch-container">
-                        <table id="search-table">
-                            <tr>
-                                <td id="search-cell"><input id="search" type="search" placeholder="Cerca in UniveMusic"></td>
-                                <td id="search-button-cell"><input id="search-button" type="button" value="Cerca"></td>
-                            </tr>
-                        </table>
-                    </td>
                 </tr>
             </table>
         </div>

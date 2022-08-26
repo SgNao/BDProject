@@ -177,7 +177,7 @@ def get_album_data(id_album):
     if len(tag) > 1:
         tags = {'Tag_1': tag[0][0], 'Tag_2': tag[1][0]}
     else:
-        tags = {'Tag_1': tag[0][0] }
+        tags = {'Tag_1': tag[0][0]}
     resp = make_response(render_template("Album.html", album=album_data, song_album=song_album, tags=tags))
     conn.close()
     return resp

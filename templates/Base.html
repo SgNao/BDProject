@@ -61,7 +61,7 @@
 
             function CancellaRaccolta(PlaylistName, IdPlaylist){
                 var messaggio = document.createElement('h4')
-                var testo = document.createTextNode('Sei sicuro di voler cancellare la Playlist '+PlaylistName+' ?')
+                var testo = document.createTextNode('Sei sicuro di voler cancellare la playlist '+PlaylistName+' ?')
                 messaggio.appendChild(testo)
                 document.getElementById("Message-box").appendChild(messaggio);
                 document.getElementById("NewPlaylist2").style.display = "block";
@@ -71,7 +71,7 @@
                 var messaggio = document.getElementById("Message-box").firstChild
                 document.getElementById("NewPlaylist2").style.display = "none";
                 document.getElementById("Message-box").removeChild(messaggio);
-                window.location.href='/del_playlist/'+globalThis.DeletedPlaylist
+                window.location.href='/cancella_playlist/'+globalThis.DeletedPlaylist
             }
             function AnnullaCancellaRaccolta(){
                 var messaggio = document.getElementById("Message-box").firstChild
@@ -81,7 +81,7 @@
 
             function CancellaAlbum(AlbumTitolo, IdAlbum){
                 var messaggio = document.createElement('h4')
-                var testo = document.createTextNode("Sei sicuro di voler cancellare l'Album "+AlbumTitolo+' ?')
+                var testo = document.createTextNode("Sei sicuro di voler cancellare l'album "+AlbumTitolo+' ?')
                 messaggio.appendChild(testo)
                 document.getElementById("Message-box").appendChild(messaggio);
                 document.getElementById("box3").style.display = "block";
@@ -91,7 +91,7 @@
                 var messaggio = document.getElementById("Message-box").firstChild
                 document.getElementById("box3").style.display = "none";
                 document.getElementById("Message-box").removeChild(messaggio);
-                window.location.href='/del_album/'+globalThis.DeletedAlbum
+                window.location.href='/cancella_album/'+globalThis.DeletedAlbum
             }
             function AnnullaCancellaAlbum(){
                 var messaggio = document.getElementById("Message-box").firstChild
@@ -139,7 +139,7 @@
                 globalThis.Active = true;
 
                 globalThis.DeletedSongs += [IdPlaylist]
-                window.location.href='/remove_song_from_playlist/' + globalThis.DeletedSongs
+                window.location.href='/rimuovi_canzone_da_playlist/' + globalThis.DeletedSongs
                 globalThis.DeletedSongs = []
             }
 
@@ -221,7 +221,7 @@
             }
 
             function Song(Param){
-                window.location.href='/songs/'+Param
+                window.location.href='/canzone/'+Param
             }
         </script>
     </head>
@@ -231,7 +231,7 @@
                 <tr>
                     <td class="button" style="width: 10%;"><a href={{url_for('home')}} class="text-button">Musica</a></td>
                     {% if current_user.is_authenticated %}
-                    <td class="button" style="width: 90%;"><a href={{url_for('UserBP.private')}} class="text-button">{{current_user.nickname}}</a></td>
+                    <td class="button" style="width: 90%;"><a href={{url_for('UserBP.area_personale')}} class="text-button">{{current_user.nickname}}</a></td>
                     {% endif %}
                 </tr>
             </table>

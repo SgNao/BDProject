@@ -1,11 +1,11 @@
 {% extends "Base.html" %}
 
 {% block pagebody %}
-        <div id="container2"><h2 id="subtitle">MODIFICA DATI</h2></div>
-        <div class="error" aria-live="polite">{{ message }}</div>
+        <div id="container2"><h2 id="subtitle">Modifica dati</h2></div>
+        <div class="error" aria-live="polite">{{message}}</div>
         <div id="container3">
             <table class="log-table new"> 
-                <form action="/mod_data_nickname" method="POST" novalidate id="form_reg"> 
+                <form action="/modifica_informazioni_nickname" method="POST" novalidate id="form_reg">
                     <tr>
                         <td class="label-cell" colspan="3"><label class="label"> Nickname: </label></td>
                     </tr>
@@ -14,7 +14,7 @@
                         <td id="submit-cell-3"><button type="submit" id="button-3" style="border-bottom: 5%;">Modifica</button></td>
                     </tr>
                 </form>
-                <form action="/mod_data_email" method="POST" novalidate id="form_reg"> 
+                <form action="/modifica_informazioni_email" method="POST" novalidate id="form_reg">
                     <tr>
                         <td class="label-cell" colspan="3"><label class="label"> E-mail: </label></td>
                     </tr>
@@ -23,7 +23,7 @@
                         <td id="submit-cell-3"><button type="submit" id="button-3">Modifica</button></td>
                     </tr>
                 </form>
-                <form action="/mod_data_biografia" method="POST" novalidate id="form_reg"> 
+                <form action="/modifica_informazioni_biografia" method="POST" novalidate id="form_reg">
                     <tr>
                         <td class="label-cell" colspan="3"><label class="label"> Biografia: </label></td>
                     </tr>
@@ -32,13 +32,13 @@
                         <td id="submit-cell-3"><button type="submit" id="button-3">Modifica</button></td>   
                     </tr>
                 </form>
-                <form action="/mod_data_pwd" method="POST" novalidate id="form_reg">
+                <form action="/modifica_informazioni_password" method="POST" novalidate id="form_reg">
                     <tr>
                         <td class="label-cell" colspan="3"><label class="label"> Password:</label></td>
                     </tr>
                     <tr>
-                        <td class="input-cell-3 mod pwd"><input type="password" required name="new_pwd" placeholder="NuovaPassword" class="input-3 double"></td>
-                        <td class="input-cell-3 mod pwd"><input type="password" required name="old_pwd" placeholder="RipetiPassword" class="input-3 double"></td>
+                        <td class="input-cell-3 mod pwd"><input type="password" required name="new_pwd" placeholder="Nuova Password" class="input-3 double"></td>
+                        <td class="input-cell-3 mod pwd"><input type="password" required name="old_pwd" placeholder="Ripeti Password" class="input-3 double"></td>
                         <td id="submit-cell-3"><button type="submit" id="button-3">Modifica</button></td>
                     </tr>
                 </form>

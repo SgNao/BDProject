@@ -1,8 +1,8 @@
 {% extends "Base.html" %}
 
 {% block pagebody %}
-        <div id="container2"><h2 id="subtitle">ACCEDI</h2></div>
-        <div class="error" aria-live="polite">{{ message }}</div>
+        <div id="container2"><h2 id="subtitle">Accedi</h2></div>
+        <div class="error" aria-live="polite">{{message}}</div>
         <div id="container3">
             <table class="log-table log-in"> 
                 <form action="/login" method="POST" novalidate id="form_reg">
@@ -10,10 +10,10 @@
                         <td class="label-cell" colspan="2"><label class="label"> Inserisci e-mail & password:</label></td>
                     </tr>
                     <tr>
-                        <td class="input-cell-3"><input name="user" type="email" required placeholder="e-mail" class="input-3 log-in"></td>
+                        <td class="input-cell-3"><input name="user" type="email" required placeholder="E-mail" class="input-3 log-in"></td>
                     </tr>
                     <tr>
-                        <td class="input-cell-3"><input name="pass" type="password" required placeholder="password" class="input-3 log-in"></td>
+                        <td class="input-cell-3"><input name="pass" type="password" required placeholder="Password" class="input-3 log-in"></td>
                     </tr>
                     <tr>
                         <td id="submit-cell-3">

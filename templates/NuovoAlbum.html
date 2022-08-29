@@ -1,11 +1,11 @@
 {% extends "Base.html" %}
 
 {% block pagebody %}
-        <div id="container2"><h2 id="subtitle">NUOVO ALBUM</h2></div>
+        <div id="container2"><h2 id="subtitle">Nuovo album</h2></div>
         <div class="error" aria-live="polite"></div>
         <div id="container3">
             <table class="log-table new"> 
-                <form action="/new_album" method="POST" novalidate id="form_reg">
+                <form action="/nuovo_album" method="POST" novalidate id="form_reg">
                     <tr>
                         <td id="log-img-cell" colspan="2">
                             <table style="width: 100%; margin-top: 2%;margin-bottom: 0%;">
@@ -23,7 +23,7 @@
                         <td class="label-cell" colspan="2"><label class="label"> Titolo:</label></td>
                     </tr>
                     <tr>
-                        <td class="input-cell-3" colspan="2"><input type="text" required maxlength="15" name="Titolo" placeholder="La mia paperina" class="input-3 sign-in"></td>
+                        <td class="input-cell-3" colspan="2"><input type="text" required maxlength="15" name="Titolo" placeholder="Inserire titolo album" class="input-3 sign-in"></td>
                     </tr>
                     <tr>
                         <td class="label-cell" colspan="2"><label class="label"> Data di rilascio:</label></td>

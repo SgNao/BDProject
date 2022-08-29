@@ -12,8 +12,8 @@ def inject_enumerate():
     return dict(enumerate=enumerate, str=str, len=len)
 
 
-@SongBP.route('/song_stat/<id_canzone>')
-def song_stat(id_canzone):
+@SongBP.route('/canzone_statistiche/<id_canzone>')
+def canzone_statistiche(id_canzone):
     conn = engine.connect()
     rs = conn.execute('SELECT * FROM unive_music.statistiche WHERE statistiche.id_statistica = (SELECT '
                       'statistiche.id_statistica FROM unive_music.statistiche_canzoni NATURAL JOIN '
@@ -35,8 +35,8 @@ def song_stat(id_canzone):
     return render_template("SongStatistics.html", stat=statistiche, song=song, tags=tags, song_duration=song_duration,)
 
 
-@SongBP.route('/songs/<id_canzone>')
-def songs(id_canzone):
+@SongBP.route('/canzone/<id_canzone>')
+def canzone(id_canzone):
     conn = engine.connect()
     rs = conn.execute('SELECT statistiche.n_riproduzioni_totali, statistiche.n_riproduzioni_settimanali FROM '
                       'unive_music.statistiche NATURAL JOIN unive_music.statistiche_canzoni WHERE '

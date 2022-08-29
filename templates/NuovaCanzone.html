@@ -1,11 +1,11 @@
 {% extends "Base.html" %}
 
 {% block pagebody %}
-        <div id="container2"><h2 id="subtitle">AGGIUNGI CANZONE</h2></div>
+        <div id="container2"><h2 id="subtitle">Aggiungi canzone</h2></div>
         <div class="error" aria-live="polite"></div>
         <div id="container3">
             <table class="log-table new"> 
-                <form action="/new_song/{{ id_album }}" method="POST" novalidate id="form_reg">
+                <form action="/nuova_canzone/{{ id_album }}" method="POST" novalidate id="form_reg">
                     <tr>
                         <td id="log-img-cell" colspan="2">
                             <table style="width: 100%; margin-top: 2%;margin-bottom: 0%;">
@@ -23,7 +23,7 @@
                         <td class="label-cell" colspan="2"><label class="label"> Titolo:</label></td>
                     </tr>
                     <tr>
-                        <td class="input-cell-3" colspan="2"><input type="text" required maxlength="15" name="Titolo" placeholder="La mia paperina" class="input-3 sign-in"></td>
+                        <td class="input-cell-3" colspan="2"><input type="text" required maxlength="15" name="Titolo" placeholder="Inserire titolo" class="input-3 sign-in"></td>
                     </tr>
                     <tr>
                         <td class="label-cell" colspan="2"><label class="label"> Data di rilascio:</label></td>
@@ -35,21 +35,21 @@
                         <td class="label-cell" colspan="2"><label class="label"> Lingua:</label></td>
                     </tr>
                     <tr>
-                        <td class="input-cell-3" colspan="2"><input type="text" name="Lingua" placeholder="italiano" class="input-3 sign-in"></td>
+                        <td class="input-cell-3" colspan="2"><input type="text" name="Lingua" placeholder="Italiano" class="input-3 sign-in"></td>
                     </tr>
                     <tr>
                         <td class="label-cell" colspan="2"><label class="label"> Durata:</label></td>
                     </tr>
                     <tr>
-                        <td class="input-cell-3"><input type="number" required name="Durata_min" placeholder="minuti" class="input-3 double"></td>
-                        <td class="input-cell-3"><input type="number" required name="Durata_sec" placeholder="secondi" class="input-3 double"></td>
+                        <td class="input-cell-3"><input type="number" required name="Durata_min" placeholder="Minuti" class="input-3 double"></td>
+                        <td class="input-cell-3"><input type="number" required name="Durata_sec" placeholder="Secondi" class="input-3 double"></td>
                     </tr>
                     <tr>
                         <td class="label-cell" colspan="2"><label class="label"> Tags:</label></td>
                     </tr>
                     <tr>
-                        <td class="input-cell-3"><input type="text" name="Tag_1" placeholder="tag 1" class="input-3 double"></td>
-                        <td class="input-cell-3"><input type="text" name="Tag_2" placeholder="tag 2" class="input-3 double"></td>
+                        <td class="input-cell-3"><input type="text" name="Tag_1" placeholder="Tag 1" class="input-3 double"></td>
+                        <td class="input-cell-3"><input type="text" name="Tag_2" placeholder="Tag 2" class="input-3 double"></td>
                     </tr>
                     <tr>
                         <td id="submit-cell-3" colspan="2">

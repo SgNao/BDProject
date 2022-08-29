@@ -14,9 +14,9 @@ def inject_enumerate():
     return dict(enumerate=enumerate, str=str, len=len)
 
 
-@ArtistBP.route('/new_album', methods=['GET', 'POST'])
+@ArtistBP.route('/nuovo_album', methods=['GET', 'POST'])
 @login_required
-def new_album():
+def nuovo_album():
     if request.method == 'POST':
         conn = engine.connect()
         data = (request.form["Titolo"], request.form["Rilascio"], request.form["Colore"], "0", current_user.id)
@@ -42,20 +42,20 @@ def new_album():
         conn.execute('INSERT INTO unive_music.attributo_album (id_tag, id_album) VALUES (%s, %s)',
                      [request.form['Tag_2'], id_album[0]])
         conn.close()
-        return redirect(url_for('ArtistBP.get_albums'))
+        return redirect(url_for('ArtistBP.produzioni'))
     else:
         return render_template("NuovoAlbum.html")
 
 
-@ArtistBP.route('/nuova_canzone/<id_album>')
+@ArtistBP.route('/nuova_canzone_info/<id_album>')
 @login_required
-def new_song_data(id_album):
+def nuova_canzone_info(id_album):
     return render_template("NuovaCanzone.html", id_album=id_album)
 
 
-@ArtistBP.route('/new_song/<id_album>', methods=['GET', 'POST'])
+@ArtistBP.route('/nuova_canzone/<id_album>', methods=['GET', 'POST'])
 @login_required
-def new_song(id_album):
+def nuova_canzone(id_album):
     if request.method == 'POST':
         conn = engine.connect()
         durata = str(int(main.minutes_to_seconds(request.form['Durata_min'])) + int(request.form['Durata_sec']))
@@ -100,14 +100,14 @@ def new_song(id_album):
         conn.execute('INSERT INTO unive_music.attributo_canzone (id_tag, id_canzone) VALUES (%s,%s)',
                      [request.form['Lingua'], id_canzone[0]])
         conn.close()
-        return redirect(url_for('ArtistBP.get_albums'))
+        return redirect(url_for('ArtistBP.produzioni'))
     else:
         return render_template("NuovaCanzone.html")
 
 
 @ArtistBP.route('/produzioni')
 @login_required
-def get_albums():
+def produzioni():
     conn = engine.connect()
     rs = conn.execute('SELECT album.id_album, album.titolo, album.rilascio FROM unive_music.album WHERE '
                       'album.id_artista = %s', current_user.id)
@@ -144,8 +144,8 @@ def get_albums():
     return resp
 
 
-@ArtistBP.route('/album/<id_album>')
-def get_album_data(id_album):
+@ArtistBP.route('/album_informazioni/<id_album>')
+def album_informazioni(id_album):
     conn = engine.connect()
     rs = conn.execute('SELECT * FROM unive_music.album JOIN unive_music.utenti ON album.id_artista = utenti.id_utente '
                       'WHERE album.id_album = %s', id_album)
@@ -175,9 +175,9 @@ def get_album_data(id_album):
     return resp
 
 
-@ArtistBP.route('/del_album/<id_album>')
+@ArtistBP.route('/cancella_album/<id_album>')
 @login_required
-def del_album(id_album):
+def cancella_album(id_album):
     conn = engine.connect()
     # Cancello e lascio i tag. Non sarebbe meglio controllare che non ci siano tag univoci di questo album
     # per non avere tuple in tag inutilizzate?
@@ -200,12 +200,12 @@ def del_album(id_album):
     conn.execute(' DELETE FROM unive_music.contenuto WHERE id_album = %s', id_album)
     conn.execute(' DELETE FROM unive_music.album WHERE id_album = %s', id_album)
     conn.close()
-    return redirect(url_for('ArtistBP.get_albums'))
+    return redirect(url_for('ArtistBP.produzioni'))
 
 
-@ArtistBP.route('/album_stat/<id_album>')
+@ArtistBP.route('/album_statistiche/<id_album>')
 @login_required
-def album_stat(id_album):
+def album_statistiche(id_album):
     conn = engine.connect()
     rs = conn.execute('SELECT canzoni.id_canzone FROM unive_music.canzoni NATURAL JOIN unive_music.contenuto WHERE '
                       'contenuto.id_album = %s', id_album)
@@ -238,11 +238,11 @@ def album_stat(id_album):
     return render_template("AlbumStatistics.html", stat=statistiche, album=album, tags=tags)
 
 
-@ArtistBP.route('/become_artist')
+@ArtistBP.route('/diventa_artista')
 @login_required
-def become_artist():
+def diventa_artista():
     conn = engine.connect()
     conn.execute('UPDATE unive_music.utenti SET ruolo = %s WHERE id_utente = %s', 2, current_user.id)
     conn.execute('INSERT INTO unive_music.artisti (id_utente, debutto) VALUES (%s,%s)', current_user.id, date.today())
     conn.close()
-    return redirect(url_for('ArtistBP.get_albums'))
+    return redirect(url_for('ArtistBP.produzioni'))

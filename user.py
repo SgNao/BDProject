@@ -15,9 +15,9 @@ def inject_enumerate():
     return dict(enumerate=enumerate, str=str, len=len)
 
 
-@UserBP.route('/private')
+@UserBP.route('/area_personale')
 @login_required
-def private():
+def area_personale():
     if current_user.ruolo != 3:
         conn = engine.connect()
         rs = conn.execute('SELECT * FROM unive_music.playlist WHERE playlist.id_utente = %s', current_user.id)
@@ -56,9 +56,9 @@ def private():
         return render_template("AdminPage.html", user=current_user)
 
 
-@UserBP.route('/new_playlist', methods=['GET', 'POST'])
+@UserBP.route('/nuova_playlist', methods=['GET', 'POST'])
 @login_required
-def new_playlist():
+def nuova_playlist():
     conn = engine.connect()
     rs = conn.execute('SELECT COUNT(*) FROM unive_music.playlist WHERE playlist.id_utente = %s', current_user.id)
     conn.close()
@@ -75,23 +75,23 @@ def new_playlist():
             conn.execute('INSERT INTO unive_music.playlist (id_utente, nome, descrizione, n_canzoni) VALUES (%s,%s,'
                          '%s,%s)', data)
             conn.close()
-            return redirect(url_for('UserBP.private'))
+            return redirect(url_for('UserBP.area_personale'))
         else:
             return render_template("NuovaRaccolta.html")
     else:
         flash("Hai raggiunto il numero massimo di playlist creabili")
-        return redirect(url_for('UserBP.private'))
+        return redirect(url_for('UserBP.area_personale'))
 
 
-@UserBP.route('/mod_playlist/<id_playlist>', methods=['GET', 'POST'])
+@UserBP.route('/modifica_playlist/<id_playlist>', methods=['GET', 'POST'])
 @login_required
-def mod_playlist(id_playlist):
+def modifica_playlist(id_playlist):
     return render_template("ModificaRaccolta.html", id_playlist=id_playlist, message='')
 
 
-@UserBP.route('/mod_playlist_nome/<id_playlist>', methods=['GET', 'POST'])
+@UserBP.route('/modifica_playlist_nome/<id_playlist>', methods=['GET', 'POST'])
 @login_required
-def mod_playlist_nome(id_playlist):
+def modifica_playlist_nome(id_playlist):
     if request.method == 'POST':
         conn = engine.connect()
         conn.execute('UPDATE unive_music.playlist SET nome = %s WHERE playlist.id_playlist = %s', request.form['Nome'],
@@ -100,9 +100,9 @@ def mod_playlist_nome(id_playlist):
         return render_template("ModificaRaccolta.html", id_playlist=id_playlist, message='Modifica eseguita')
 
 
-@UserBP.route('/mod_playlist_descr/<id_playlist>', methods=['GET', 'POST'])
+@UserBP.route('/modifica_playlist_descrizione/<id_playlist>', methods=['GET', 'POST'])
 @login_required
-def mod_playlist_descr(id_playlist):
+def modifica_playlist_descrizione(id_playlist):
     if request.method == 'POST':
         conn = engine.connect()
         conn.execute('UPDATE unive_music.playlist SET descrizione = %s WHERE playlist.id_playlist = %s',
@@ -111,9 +111,9 @@ def mod_playlist_descr(id_playlist):
         return render_template("ModificaRaccolta.html", id_playlist=id_playlist, message='Modifica eseguita')
 
 
-@UserBP.route('/add_song_to_playlist/<id_canzone>', methods=['POST'])
+@UserBP.route('/aggiungi_canzone_a_playlist/<id_canzone>', methods=['POST'])
 @login_required
-def add_song_to_playlist(id_canzone):
+def aggiungi_canzone_a_playlist(id_canzone):
     if request.method == 'POST':
         conn = engine.connect()
         rs = conn.execute('SELECT * FROM unive_music.playlist WHERE playlist.id_utente = %s ORDER BY playlist.nome',
@@ -157,14 +157,14 @@ def add_song_to_playlist(id_canzone):
                 stat = rs.fetchone()
                 conn.execute(query_2, stat[0] + 1, id_canzone)
         conn.close()
-        return redirect(url_for('UserBP.private'))
+        return redirect(url_for('UserBP.area_personale'))
     else:
         return render_template("ModificaRaccolta.html")
 
 
-@UserBP.route('/remove_song_from_playlist/<data>')
+@UserBP.route('/rimuovi_canzone_da_playlist/<data>')
 @login_required
-def remove_song_from_playlist(data):
+def rimuovi_canzone_da_playlist(data):
     data_list = list(data.split(' '))
     id_playlist = int(data_list.pop())
     conn = engine.connect()
@@ -179,44 +179,44 @@ def remove_song_from_playlist(data):
 
     conn.execute('UPDATE unive_music.playlist SET n_canzoni = %s WHERE id_playlist = %s', n_canzoni, id_playlist)
     conn.close()
-    return redirect(url_for('UserBP.private'))
+    return redirect(url_for('UserBP.area_personale'))
 
 
-@UserBP.route('/del_playlist/<id_playlist>')
+@UserBP.route('/cancella_playlist/<id_playlist>')
 @login_required
-def del_playlist(id_playlist):
+def cancella_playlist(id_playlist):
     conn = engine.connect()
     conn.execute('DELETE FROM unive_music.raccolte WHERE raccolte.id_playlist = %s', id_playlist)
     conn.execute('DELETE FROM unive_music.playlist WHERE playlist.id_playlist = %s', id_playlist)
     conn.close()
-    return redirect(url_for('UserBP.private'))
+    return redirect(url_for('UserBP.area_personale'))
 
 
-@UserBP.route('/mod_data', methods=['GET', 'POST'])
+@UserBP.route('/modifica_informazioni', methods=['GET', 'POST'])
 @login_required
-def mod_data():
+def modifica_informazioni():
     return render_template("ModificaDatiPersonali.html", message='')
 
 
-@UserBP.route('/mod_data_nickname', methods=['GET', 'POST'])
+@UserBP.route('/modifica_informazioni_nickname', methods=['GET', 'POST'])
 @login_required
-def mod_data_nickname():
+def modifica_informazioni_nickname():
     conn = engine.connect()
     rs = conn.execute('SELECT * FROM unive_music.utenti WHERE utenti.nickname = %s', request.form['Nickname'])
     user = rs.fetchone()
 
     if not user:
-        conn.execute('UPDATE unive_music.utenti SET nickname = %s WHERE utenti.id_utente = %s', request.form['Nickname'],
-                     current_user.id)
+        conn.execute('UPDATE unive_music.utenti SET nickname = %s WHERE utenti.id_utente = %s',
+                     request.form['Nickname'], current_user.id)
         conn.close()
         return render_template("ModificaDatiPersonali.html", message='Modifica eseguita')
     else:
         return render_template("ModificaDatiPersonali.html", message='Nickname non disponibile', style='error active')
 
 
-@UserBP.route('/mod_data_email', methods=['GET', 'POST'])
+@UserBP.route('/modifica_informazioni_email', methods=['GET', 'POST'])
 @login_required
-def mod_data_email():
+def modifica_informazioni_email():
     conn = engine.connect()
     rs = conn.execute('SELECT * FROM unive_music.utenti WHERE utenti.email = %s', request.form['Email'])
     user = rs.fetchone()
@@ -230,9 +230,9 @@ def mod_data_email():
         return render_template("ModificaDatiPersonali.html",  message='E-mail non disponibile')
 
 
-@UserBP.route('/mod_data_biografia', methods=['GET', 'POST'])
+@UserBP.route('/modifica_informazioni_biografia', methods=['GET', 'POST'])
 @login_required
-def mod_data_biografia():
+def modifica_informazioni_biografia():
     conn = engine.connect()
     conn.execute('UPDATE unive_music.utenti SET bio = %s WHERE utenti.id_utente = %s', request.form['bio'],
                  current_user.id)
@@ -240,9 +240,9 @@ def mod_data_biografia():
     return render_template("ModificaDatiPersonali.html", message='Modifica eseguita', style='error active')
 
 
-@UserBP.route('/mod_data_pwd', methods=['GET', 'POST'])
+@UserBP.route('/modifica_informazioni_password', methods=['GET', 'POST'])
 @login_required
-def mod_data_pwd():
+def modifica_informazioni_password():
     if request.form['new_pwd'] == request.form['old_pwd']:
         pwhash = generate_password_hash(request.form["NewPwd"], method='pbkdf2:sha256:260000', salt_length=16)
         conn = engine.connect()
@@ -255,7 +255,7 @@ def mod_data_pwd():
 
 @UserBP.route('/dati_personali')
 @login_required
-def get_data():
+def dati_personali():
     conn = engine.connect()
     resp = make_response(render_template("DatiPersonali.html", user=current_user))
     conn.close()

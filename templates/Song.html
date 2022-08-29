@@ -2,14 +2,14 @@
 
 {% block pagebody %}
         <div id="container2">
-            <h2 id="subtitle">INFO - CANZONE</h2>
+            <h2 id="subtitle">Info canzone</h2>
         </div>
         {% if current_user.is_authenticated %}
         <div id="box2">
             <table id="Playlist-table" style="border-collapse: collapse;">
-                <form action="/add_song_to_playlist/{{song.id_canzone}}" method="POST">
+                <form action="/aggiungi_canzone_a_playlist/{{song.id_canzone}}" method="POST">
                     <tr>
-                        <td colspan="2" style="text-align: center;background-color: #00323F;"><h2 style="margin-top:3%; margin-bottom: 2%; color:white">AGGIUNGI A</h2></td>
+                        <td colspan="2" style="text-align: center;background-color: #00323F;"><h2 style="margin-top:3%; margin-bottom: 2%; color:white">Aggiungi a</h2></td>
                     </tr>
                     {% for i,playlist in enumerate(playlists) %}
                     <tr>
@@ -36,7 +36,7 @@
                         </td>
                         {% if song.id_artista == current_user.id %}
                         <td style="width: 8%;vertical-align: bottom;border-bottom: 1px solid darkgray;text-align: left;">
-                           <a href="/song_stat/{{song.id_canzone}}"><h5 id="NuovaRaccolta">Statistiche</h5></a>
+                           <a href="/canzone_statistiche/{{song.id_canzone}}"><h5 id="NuovaRaccolta">Statistiche</h5></a>
                         </td>
                         {% endif %}
                         {% endif %}
@@ -56,7 +56,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="4">
-                                            <a href="/album/{{album.id_album}}"><h3 class="text-section-2" style="color: #006840;margin-top: 1%;">{{album.titolo}}</h3></a>
+                                            <a href="/album_informazioni/{{album.id_album}}"><h3 class="text-section-2" style="color: #006840;margin-top: 1%;">{{album.titolo}}</h3></a>
                                         </td>
                                     </tr>
                                 </table>

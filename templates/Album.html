@@ -2,7 +2,7 @@
 
 {% block pagebody %}
         <div id="container2">
-            <h2 id="subtitle">INFO - ALBUM</h2>
+            <h2 id="subtitle">Info album</h2>
         </div>
         <div id="container3">
             <table class="tabella3">
@@ -11,7 +11,7 @@
                         <td style="width: 35%;text-align: left;margin: 0%;border-bottom: 1px solid darkgray;"><h1 id="Playlist">{{album.titolo}}</h1></td>
                         {% if current_user.is_authenticated and album.id_artista == current_user.id %}
                         <td style="width: 8%;vertical-align: bottom;border-bottom: 1px solid darkgray;text-align: left;">
-                           <a href="/album_stat/{{album.id_album}}"><h5 id="NuovaRaccolta">Statistiche</h5></a>
+                           <a href="/album_statistiche/{{album.id_album}}"><h5 id="NuovaRaccolta">Statistiche</h5></a>
                         </td>
                         {% endif %}
                         <td style="width: 57%;border-bottom: 1px solid darkgray;"></td>
@@ -26,7 +26,7 @@
                                         <tr>
                                             <td style="width: 10%;"><h3 class="text-section-2" style="font-weight: lighter;margin: 0%;">{{album.rilascio}}</h3></td>
                                             <td style="width: 20%;"><h3 class="text-section-2" style="font-weight: lighter;margin: 0%;">{{album.nickname}}</h3></td>
-                                            <td style="width: 65%;text-align:right;"><h4 class="text-section-2" style="margin: 0%;color: #00323F;">{{tags.Tag_1}} {{ " | " }} {{tags.Tag_2}}</h4></td>
+                                            <td style="width: 65%;text-align:right;"><h4 class="text-section-2" style="margin: 0%;color: #00323F;">{{tags.Tag_1}}{{ " | " }}{{tags.Tag_2}}</h4></td>
                                         </tr>
                                     </table>
                                 </td>
@@ -47,7 +47,7 @@
                     <td>
                     {% endif %}
                         <table class="tabella4" onmouseover="Select('S_{{j}}ID_A_{{i}}', 'S_{{j}}ID_B_{{i}}')" onmouseout="Deselect('S_{{j}}ID_A_{{i}}', 'S_{{j}}ID_B_{{i}}')">
-                            <tr><td class="img-cell" colspan="2"><div class="img" style="background-color: {{ song.colore }}"></div></td></tr>
+                            <tr><td class="img-cell" colspan="2"><div class="img" style="background-color: {{song.colore}}"></div></td></tr>
                             <tr><td class="manual-title-cell" colspan="2"><a href="Song.html"><h3 class="manual-title">{{song.titolo}}</h3></a></td></tr>
                             <tr>
                                 <td class="footprint">
@@ -59,12 +59,12 @@
                             </tr>
                             <tr>
                                 <td colspan="2" class="footprint-hastag" colspan="2" id="S_{{j}}ID_A_{{i}}">
-                                    <h5 class="footprint-text-hastag"> {{song.Tag_1}} {{ " | " }} {{song.Tag_2}} </h5>
+                                    <h5 class="footprint-text-hastag"> {{song.Tag_1}}{{ " | " }}{{song.Tag_2}} </h5>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="2" class="footprint-hastag-4" colspan="2" id="S_{{j}}ID_B_{{i}}" onmouseover="Info_over('S_{{j}}ID_B_{{i}}')" onmouseout="Info_out('S_{{j}}ID_B_{{i}}')" onmousedown="Song('{{song.id_canzone}}')">
-                                    <h5 class="footprint-text-hastag"> INFO </h5>
+                                    <h5 class="footprint-text-hastag"> Info </h5>
                                 </td>
                             </tr>
                             <tr>
@@ -94,7 +94,7 @@
                             </tr><tr>
                                 <td colspan="2" style="background-color: #00323F; color: white;" class="footprint-hastag-bis" id="ESPANDI-BUTTON" 
                                 onmousedown="Espandi()" onmouseover="Select_Espandi('ESPANDI-BUTTON')" onmouseout="DeSelect_Espandi('ESPANDI-BUTTON')">
-                                    <h5 class="footprint-text-hastag"> ESPANDI </h5>
+                                    <h5 class="footprint-text-hastag"> Espandi </h5>
                                 </td>
                             </tr>
                             <tr>
@@ -125,7 +125,7 @@
                             </tr><tr>
                                 <td colspan="2" style="background-color: #00323F; color: white;" class="footprint-hastag-bis" id="RIDUCI-BUTTON" 
                                 onmousedown="Riduci()" onmouseover="Select_Espandi('RIDUCI-BUTTON')" onmouseout="DeSelect_Espandi('RIDUCI-BUTTON')">
-                                    <h5 class="footprint-text-hastag"> RIDUCI </h5>
+                                    <h5 class="footprint-text-hastag"> Riduci </h5>
                                 </td>
                             </tr>
                             <tr>

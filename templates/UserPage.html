@@ -7,7 +7,7 @@
         <div id="NewPlaylist2">
             <table id="Playlist-table" style="border-collapse: collapse;">
                 <tr>
-                    <td colspan="2" style="text-align: center;background-color: #00323F;"><h2 style="margin-top:4%; margin-bottom: 3%; color:white">ELIMINA PLAYLIST</h2></td>
+                    <td colspan="2" style="text-align: center;background-color: #00323F;"><h2 style="margin-top:4%; margin-bottom: 3%; color:white">Elimina playlist</h2></td>
                 </tr>
                 <tr>
                     <td id="Message-box" colspan="2" style="text-align: center;"></td> 
@@ -24,20 +24,20 @@
                     <table style="width: 100%;margin-bottom: 1%;margin-top: 1%;border-collapse: collapse;"><tr>
                         <td style="width: 22%;text-align: left;margin: 0%;border-bottom: 1px solid darkgray;"><h1 id="Playlist">Le tue raccolte</h1></td>
                         <td style="width: 10%;vertical-align: bottom;border-bottom: 1px solid darkgray;text-align: left;">
-                            <a href="{{url_for('UserBP.new_playlist')}}"><h5 id="NuovaRaccolta">Nuova raccolta</h5></a>
+                            <a href="{{url_for('UserBP.nuova_playlist')}}"><h5 id="NuovaRaccolta">Nuova raccolta</h5></a>
                         </td>
                         <td style="width: 9%;vertical-align: bottom;border-bottom: 1px solid darkgray;text-align: left;">
-                            <a href="{{url_for('UserBP.get_data')}}"><h5 id="NuovaRaccolta">Dati Personali</h5></a>
+                            <a href="{{url_for('UserBP.dati_personali')}}"><h5 id="NuovaRaccolta">Dati personali</h5></a>
                         </td>
                         {% if user.ruolo == 2 %}
                         <td style="width: 15%;vertical-align: bottom;border-bottom: 1px solid darkgray;text-align: left;">
-                            <a href="{{url_for('ArtistBP.get_albums')}}"><h5 id="NuovaRaccolta">Produzioni</h5></a>
+                            <a href="{{url_for('ArtistBP.produzioni')}}"><h5 id="NuovaRaccolta">Produzioni</h5></a>
                         </td>
                         {% endif %}
                         <td style="width: 44%;border-bottom: 1px solid darkgray;"></td>
                         {% if user.ruolo == 1 %}
                         <td style="width: 15%;vertical-align: bottom;border-bottom: 1px solid darkgray;text-align: right;">
-                            <a href="{{url_for('ArtistBP.become_artist')}}"><h5 id="NuovaRaccolta">Diventa Artista</h5></a>
+                            <a href="{{url_for('ArtistBP.diventa_artista')}}"><h5 id="NuovaRaccolta">Diventa artista</h5></a>
                         </td>
                         {% endif %}
                     </tr></table>
@@ -53,10 +53,10 @@
                                             <td style="width: 15%;"><h3 class="text-section-2">{{playlist.nome}}</h3></td>
                                             <td style="width: 58%;"></td>
                                             <td id="Mod">
-                                                <a id="Mod_link" href="/mod_playlist/{{playlist.id_playlist}}"><h5 style="margin: 0%;">Modifica</h5></a>
+                                                <a id="Mod_link" href="/modifica_playlist/{{playlist.id_playlist}}"><h5 style="margin: 0%;">Modifica</h5></a>
                                             </td>
                                             <td id="Del" onmousedown="Elimina()"><h5 style="margin: 0%;">Elimina</h5></td>
-                                            <td id="Elimina_tutto" onmousedown='CancellaRaccolta("{{playlist.nome}}", "{{playlist.id_playlist}}")'><h5 style="margin: 0%;">Elimina Raccolta</h5></td>
+                                            <td id="Elimina_tutto" onmousedown='CancellaRaccolta("{{playlist.nome}}", "{{playlist.id_playlist}}")'><h5 style="margin: 0%;">Elimina raccolta</h5></td>
                                             <td id="Fatto" onmousedown="SalvaModifiche('{{playlist.id_playlist}}')"><h5 style="margin: 0%;">Fatto</h5></td>
                                         </tr>
                                     </table>

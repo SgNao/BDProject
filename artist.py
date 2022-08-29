@@ -41,14 +41,6 @@ def new_album():
 
         conn.execute('INSERT INTO unive_music.attributo_album (id_tag, id_album) VALUES (%s, %s)',
                      [request.form['Tag_2'], id_album[0]])
-        rs = conn.execute('SELECT tag.tag FROM unive_music.tag WHERE tag.tag = %s', request.form['CasaDiscografica'])
-        tag = rs.fetchone()
-
-        if not tag:
-            conn.execute('INSERT INTO unive_music.tag (tag) VALUES (%s)', request.form['CasaDiscografica'])
-
-        conn.execute('INSERT INTO unive_music.attributo_album (id_tag, id_album) VALUES (%s,%s)',
-                     [request.form['CasaDiscografica'], id_album[0]])
         conn.close()
         return redirect(url_for('ArtistBP.get_albums'))
     else:
@@ -66,7 +58,7 @@ def new_song_data(id_album):
 def new_song(id_album):
     if request.method == 'POST':
         conn = engine.connect()
-        durata = main.minutes_to_seconds(request.form['Durata_min']) + request.form['Durata_sec']
+        durata = str(int(main.minutes_to_seconds(request.form['Durata_min'])) + int(request.form['Durata_sec']))
         data = (request.form["Titolo"], request.form["Rilascio"], durata, request.form["Colore"], current_user.id)
         conn.execute('INSERT INTO unive_music.canzoni (titolo, rilascio, durata, colore, id_artista) VALUES (%s,%s,'
                      '%s,%s,%s)', data)
@@ -195,8 +187,8 @@ def del_album(id_album):
     id_canzoni = rs.fetchall()
 
     for id_canzone in id_canzoni:
-        for _ in id_canzone[0]:
-            conn.execute('DELETE FROM unive_music.attributo_canzone WHERE id_canzone = %s', id_canzone)
+        for _ in id_canzone:
+            conn.execute('DELETE FROM unive_music.attributo_canzone WHERE id_canzone = %s', id_canzone[0])
             rs = conn.execute('SELECT statistiche.id_statistica FROM unive_music.statistiche NATURAL JOIN '
                               'unive_music.statistiche_canzoni WHERE statistiche_canzoni.id_canzone = %s', id_canzone)
             id_statistica = rs.fetchone()
@@ -222,10 +214,10 @@ def album_stat(id_album):
                    'n_riproduzioni_totali': 0, 'n_riproduzioni_settimanali': 0}
 
     for id_canzone in id_canzoni:
-        for value in id_canzone[0]:
+        for _ in id_canzone:
             rs = conn.execute('SELECT * FROM unive_music.statistiche WHERE statistiche.id_statistica = ( SELECT '
                               'statistiche.id_statistica FROM unive_music.statistiche_canzoni NATURAL JOIN '
-                              'unive_music.statistiche WHERE statistiche_canzoni.id_canzone = %s)', value)
+                              'unive_music.statistiche WHERE statistiche_canzoni.id_canzone = %s)', id_canzone[0])
             stat = rs.fetchone()
             tot = stat[1] + stat[2] + stat[3] + stat[4] + stat[5] + stat[6]
             statistiche = {'Fascia1': statistiche['Fascia1'] + stat[1], 'Fascia2': statistiche['Fascia2'] + stat[2],

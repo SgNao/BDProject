@@ -72,13 +72,15 @@ def result_proxy_to_list_of_dict(query_result):
 
 
 def seconds_to_minutes(input_second):
-    minutes = input_second / 60
+    minutes = input_second // 60
     seconds = input_second % 60
-    return "" + minutes + ":" + seconds
+    if seconds < 10:
+        seconds = "0" + str(seconds)
+    return "" + str(minutes) + ":" + str(seconds)
 
 
 def minutes_to_seconds(minutes):
-    return minutes*60
+    return int(minutes)*60
 
 
 @login_manager.user_loader

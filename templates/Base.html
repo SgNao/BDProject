@@ -229,9 +229,9 @@
         <div id="container1">
             <table id="tabella1">
                 <tr>
-                    <td class="button"><a href={{url_for('home')}} class="text-button">Musica</a></td>
+                    <td class="button" style="width: 10%;"><a href={{url_for('home')}} class="text-button">Musica</a></td>
                     {% if current_user.is_authenticated %}
-                    <td class="button"><a href={{url_for('UserBP.private')}} class="text-button">{{current_user.nickname}}</a></td>
+                    <td class="button" style="width: 90%;"><a href={{url_for('UserBP.private')}} class="text-button">{{current_user.nickname}}</a></td>
                     {% endif %}
                 </tr>
             </table>

@@ -49,7 +49,7 @@
                                             <td style="width: 15%;display: none;" id="Nome_Mod_2"><input type="text" placeholder="Nome raccolta" style="width: 100%;padding: 2%;"></td>
                                             <td style="width: 49%;"></td>
                                             <td id="Mod" style="width: 12%;text-align: right;">
-                                                <a id="Mod_link" href="/Nuova_Canzone/{{album.id_album}}"><h5 style="margin: 0%;">Aggiungi Canzone</h5></a>
+                                                <a id="Mod_link" href="/nuova_canzone/{{album.id_album}}"><h5 style="margin: 0%;">Aggiungi Canzone</h5></a>
                                             </td>
                                             <td id="Elimina_tutto_A" style="width: 9%;" onmousedown='CancellaAlbum("{{album.titolo}}","{{album.id_album}}")'><h5 style="margin: 0%;">Elimina Album</h5></td>
                                         </tr>
@@ -61,7 +61,6 @@
                                     <table style="width: 100%;">
                                         <tr>
                                             <td id="Desc_Mod_1" style="width: 5%;text-align: left;"><p style="color: #2F2F2F;margin-bottom:0%;margin-top: 0%;">{{album.rilascio}}</p></td>
-                                            <td id="Desc_Mod_1" style="width: 95%;text-align: left;"><p style="color: #006840;margin-bottom:0%;margin-top: 0%;">{{album.CasaDiscografica}}</p></td>
                                             <td id="Desc_Mod_2" style="width: 92%;text-align: left;display: none;"><input type="text" placeholder="Descrizione" style="width: 80%;padding: 1%;" maxlength="50"></td>
                                         </tr>
                                     </table>
@@ -83,7 +82,7 @@
                     <td>
                     {% endif %}
                         <table class="tabella4" onmouseover="Select('S_{{j}}ID_A_{{i}}', 'S_{{j}}ID_B_{{i}}')" onmouseout="Deselect('S_{{j}}ID_A_{{i}}', 'S_{{j}}ID_B_{{i}}')">
-                            <tr><td class="img-cell" colspan="2"><div class="img" style="background-color: {{ song.Colore }}"></div></td></tr>
+                            <tr><td class="img-cell" colspan="2"><div class="img" style="background-color: {{song.colore}}"></div></td></tr>
                             <tr><td class="manual-title-cell" colspan="2"><a href="Song.html"><h3 class="manual-title">{{song.titolo}}</h3></a></td></tr>
                             <tr>
                                 <td class="footprint">

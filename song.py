@@ -15,7 +15,7 @@ def inject_enumerate():
 @SongBP.route('/song_stat/<id_canzone>')
 def song_stat(id_canzone):
     conn = engine.connect()
-    rs = conn.execute('SELECT * FROM unive_music.statistiche WHERE statistiche.id_statistica = ( SELECT '
+    rs = conn.execute('SELECT * FROM unive_music.statistiche WHERE statistiche.id_statistica = (SELECT '
                       'statistiche.id_statistica FROM unive_music.statistiche_canzoni NATURAL JOIN '
                       'unive_music.statistiche WHERE statistiche_canzoni.id_canzone = %s)', id_canzone)
     stat = rs.fetchone()
@@ -26,12 +26,13 @@ def song_stat(id_canzone):
     rs = conn.execute('SELECT * FROM unive_music.canzoni JOIN unive_music.utenti ON canzoni.id_artista = '
                       'utenti.id_utente WHERE canzoni.id_canzone = %s', id_canzone) 
     song = rs.fetchone()
+    song_duration = main.seconds_to_minutes(song['durata'])
     rs = conn.execute('SELECT attributo_canzone.id_tag FROM unive_music.attributo_canzone WHERE '
                       'attributo_canzone.id_canzone = %s', id_canzone)
     tag = rs.fetchall()
     tags = {'Tag_1': tag[0][0], 'Tag_2': tag[1][0]}
     conn.close()
-    return render_template("SongStatistics.html", stat=statistiche, song=song, tags=tags)
+    return render_template("SongStatistics.html", stat=statistiche, song=song, tags=tags, song_duration=song_duration,)
 
 
 @SongBP.route('/songs/<id_canzone>')
@@ -48,6 +49,7 @@ def songs(id_canzone):
     rs = conn.execute('SELECT * FROM unive_music.canzoni JOIN unive_music.utenti ON canzoni.id_artista = '
                       'utenti.id_utente WHERE canzoni.id_canzone = %s', id_canzone) 
     song_data = rs.fetchone()
+    song_duration = main.seconds_to_minutes(song_data['durata'])
     rs = conn.execute('SELECT contenuto.id_album FROM unive_music.canzoni NATURAL JOIN unive_music.contenuto WHERE '
                       'canzoni.id_canzone = %s', id_canzone) 
     id_album = rs.fetchone()
@@ -78,10 +80,10 @@ def songs(id_canzone):
                           current_user.id, id_canzone)
         playlists = rs.fetchall()
         resp = make_response(
-            render_template("Song.html", playlists=playlists, song=song_data, song_album=song_album, album=album,
-                            tags=tags))
+            render_template("Song.html", playlists=playlists, song=song_data, song_duration=song_duration,
+                            song_album=song_album, album=album, tags=tags))
     else:
-        resp = make_response(render_template("Song.html", song=song_data, song_album=song_album, album=album,
-                                             tags=tags))
+        resp = make_response(render_template("Song.html", song=song_data, song_duration=song_duration,
+                                             song_album=song_album, album=album, tags=tags))
     conn.close()
     return resp
